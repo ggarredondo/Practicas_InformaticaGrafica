@@ -48,8 +48,8 @@ class Escena
    bool conActivo = false; //K
    bool sphActivo = false; //M
 
-   bool tapaSup = true;
-   bool tapaInf = true;
+   bool tapaSup = false;
+   bool tapaInf = false;
 
    GLenum sombreado = GL_SMOOTH;
    std::map<patron,GLenum> polygonMode;
