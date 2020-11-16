@@ -9,7 +9,6 @@ Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, con
 		perfil.push_back(Tupla3f(radio, 0, 0));
 	for (int i = 1; i <= n; ++i) {
 		perfil.push_back(Tupla3f(radio, altura*i/n, 0));
-		//std::cout << radio << " " << altura*i/n << " " << 0 << std::endl;
 	}
 
 	if (n >= 0) {

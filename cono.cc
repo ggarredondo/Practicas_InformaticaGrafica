@@ -11,7 +11,6 @@ Cono::Cono(const int num_vert_perfil, const int num_instancias_perf, const float
 	for (int i = n; i > 0; --i) {
 		r = (n-i+1.0f)/i;
 		perfil.push_back(Tupla3f(radio/(1.0f+r), altura*r/(1.0f+r), 0));
-		//std::cout << radio/(1.0f+r) << " " << altura*r/(1.0f+r) << " " << 0 << std::endl;
 	}
 
 	if (n >= 0) {

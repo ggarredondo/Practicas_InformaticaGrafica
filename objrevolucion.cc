@@ -44,7 +44,6 @@ void ObjRevolucion::crearMalla(const std::vector<Tupla3f>& perfil_original, int 
 			v_aux[2] = -v_aux[0]*sin(2*M_PI*i/N);
 			v_aux[0] *= cos(2*M_PI*i/N);
 			v.push_back(v_aux);
-			//std::cout << v_aux[0] << " " << v_aux[1] << " " << v_aux[2] << std::endl;
 		}
 	}
 
@@ -70,31 +69,25 @@ void ObjRevolucion::insertarPolos(const std::vector<Tupla3f>& perfil_original, i
 	int sur = v.size()-2, norte = v.size()-1, anterior = -1, primero, N = num_instancias, M = perfil_original.size();
 
 	if (tapa_inf) {
-		//std::cout << "tapa_inf: \n";
 		for (unsigned i = 0; i < N; ++i) {
 				if (anterior == -1)
 					primero = M*i;
 				if (anterior != -1)
 					f.push_back(Tupla3i(sur, M*i, anterior));
-					//std::cout << sur << " " << i  << " " << anterior << std::endl;
 				anterior = M*i;
 		}
 		f.push_back(Tupla3i(sur, primero, anterior));
-		//std::cout << sur << " p" << primero << " " << anterior << std::endl;
 	}
 
 	if (tapa_sup) {
-		//std::cout << "tapa_sup: \n";
 		anterior = -1;
 		for (unsigned i = 0; i < N; ++i) {
 				if (anterior == -1)
 					primero = M*(i+1)-1;
 				if (anterior != -1) 
 					f.push_back(Tupla3i(anterior, M*(i+1)-1, norte));
-					//std::cout << anterior << " " << i  << " " << norte << std::endl;
 				anterior = M*(i+1)-1;
 		}
 		f.push_back(Tupla3i(anterior, primero, norte));
-		//std::cout << anterior << " p" << primero << " " << norte << std::endl;
 	}
 }
