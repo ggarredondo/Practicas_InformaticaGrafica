@@ -40,8 +40,16 @@ class Escena
    menu modoMenu=NADA;
    dibujado modoDibujado = DIFERIDO;
 
-   bool cuboActivo = false;
-   bool tetraedroActivo = false;
+   bool cuboActivo = false; //C
+   bool tetraedroActivo = false; //T
+   bool plyActivo = false; //G
+   bool revActivo = false; //H
+   bool cilActivo = false; //J
+   bool conActivo = false; //K
+   bool sphActivo = false; //M
+
+   bool tapaSup = true;
+   bool tapaInf = true;
 
    GLenum sombreado = GL_SMOOTH;
    std::map<patron,GLenum> polygonMode;
@@ -52,7 +60,9 @@ class Escena
    Tetraedro * tetraedro= nullptr ; // es importante inicializarlo a 'nullptr'
    ObjPLY* ply = nullptr;
    ObjRevolucion* rev = nullptr;
-
+   Cilindro* cil = nullptr;
+   Cono* con = nullptr;
+   Esfera* sph = nullptr;
    
    public:
 

@@ -1,5 +1,3 @@
-
-
 #include "aux.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
 #include "escena.h"
 #include "malla.h" // objetos: Cubo y otros....
@@ -19,7 +17,11 @@ Escena::Escena()
     ejes.changeAxisSize( 5000 );
     cubo = new Cubo(70);
     tetraedro = new Tetraedro();
-    rev = new Esfera(50, 50, 70, true, true);
+    ply = new ObjPLY("./plys/ant.ply");
+    rev = new ObjRevolucion("./plys/peon.ply", 50, tapaSup, tapaInf);
+    cil = new Cilindro(2, 50, 70, 50, tapaSup, tapaInf);
+    con = new Cono(20, 50, 70, 50, tapaSup, tapaInf);
+    sph = new Esfera(20, 50, 60, tapaSup, tapaInf);
 }
 
 //**************************************************************************
@@ -62,11 +64,33 @@ void Escena::dibujar()
   glShadeModel(sombreado);
   for (auto i : polygonMode) {
     glPolygonMode(GL_FRONT, i.second);
-    if (cuboActivo)
+    if (cuboActivo) {
       cubo->draw(modoDibujado, i.first);
-    if (tetraedroActivo)
+    }
+    if (tetraedroActivo) {
       tetraedro->draw(modoDibujado, i.first);
-    rev->draw(modoDibujado, i.first);
+    }
+    if (plyActivo) {
+      glPushMatrix();
+        glScalef(4,4,4);
+        ply->draw(modoDibujado, i.first);
+      glPopMatrix();
+    }
+    if (revActivo) {
+      glPushMatrix();
+        glScalef(40,40,40);
+        rev->draw(modoDibujado, i.first);
+      glPopMatrix();
+    }
+    if (cilActivo) {
+      cil->draw(modoDibujado, i.first);
+    }
+    if (conActivo) {
+      con->draw(modoDibujado, i.first);
+    }
+    if (sphActivo) {
+      sph->draw(modoDibujado, i.first);
+    }
   }
 }
 
@@ -95,7 +119,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
     case 'O' :
     // ESTAMOS EN MODO SELECCION DE OBJETO
       modoMenu=SELOBJETO; 
-      printf("Opciones disponibles: \n'C': Cubo \n'T': Tetraedro\n");
+      printf("Opciones disponibles: \n'C': Cubo \n'T': Tetraedro\n'G': Objeto ply\n'H': Objeto revolución\n'J': Cilindro\n'K': Cono\n'M': Esfera\n");
       break ;
       case 'C' :
         if (modoMenu==SELOBJETO) {
@@ -111,6 +135,46 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             tetraedroActivo = false;
           else
             tetraedroActivo = true;
+        }
+      break;
+      case 'G' :
+        if (modoMenu==SELOBJETO) {
+          if (plyActivo)
+            plyActivo = false;
+          else
+            plyActivo = true;
+        }
+      break;
+      case 'H' :
+        if (modoMenu==SELOBJETO) {
+          if (revActivo)
+            revActivo = false;
+          else
+            revActivo = true;
+        }
+      break;
+      case 'J' :
+        if (modoMenu==SELOBJETO) {
+          if (cilActivo)
+            cilActivo = false;
+          else
+            cilActivo = true;
+        }
+      break;
+      case 'K' :
+        if (modoMenu==SELOBJETO) {
+          if (conActivo)
+            conActivo = false;
+          else
+            conActivo = true;
+        }
+      break;
+      case 'M' :
+        if (modoMenu==SELOBJETO) {
+          if (sphActivo)
+            sphActivo = false;
+          else
+            sphActivo = true;
         }
       break;
 
