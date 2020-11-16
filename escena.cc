@@ -19,7 +19,7 @@ Escena::Escena()
     ejes.changeAxisSize( 5000 );
     cubo = new Cubo(70);
     tetraedro = new Tetraedro();
-    rev = new Cilindro(1, 50, 60, 50);
+    rev = new Esfera(50, 50, 70, true, true);
 }
 
 //**************************************************************************
