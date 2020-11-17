@@ -31,7 +31,7 @@ class Escena
     // Transformación de cámara
 	void change_projection( const float ratio_xy );
 	void change_observer();
-    
+  void inicializar_objsRevolucion();
 
 
    void clear_window();
@@ -40,16 +40,16 @@ class Escena
    menu modoMenu=NADA;
    dibujado modoDibujado = DIFERIDO;
 
-   bool cuboActivo = false; //C
-   bool tetraedroActivo = false; //T
-   bool plyActivo = false; //G
-   bool revActivo = false; //H
-   bool cilActivo = false; //J
-   bool conActivo = false; //K
-   bool sphActivo = false; //M
+   bool cuboActivo = true; //C
+   bool tetraedroActivo = true; //T
+   bool plyActivo = true; //G
+   bool revActivo = true; //H
+   bool cilActivo = true; //J
+   bool conActivo = true; //K
+   bool sphActivo = true; //M
 
-   bool tapaSup = false;
-   bool tapaInf = false;
+   bool tapaSup = true;
+   bool tapaInf = true;
 
    GLenum sombreado = GL_SMOOTH;
    std::map<patron,GLenum> polygonMode;

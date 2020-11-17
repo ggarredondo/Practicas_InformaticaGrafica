@@ -6,6 +6,18 @@
 // constructor de la escena (no puede usar ordenes de OpenGL)
 //**************************************************************************
 
+void Escena::inicializar_objsRevolucion() 
+{
+  delete rev;
+  rev = new ObjRevolucion("./plys/peon.ply", 50, tapaSup, tapaInf);
+  delete cil;
+  cil = new Cilindro(2, 50, 70, 50, tapaSup, tapaInf);
+  delete con;
+  con = new Cono(20, 50, 70, 50, tapaSup, tapaInf);
+  delete sph;
+  sph = new Esfera(20, 50, 60, tapaSup, tapaInf);
+}
+
 Escena::Escena()
 {
     Front_plane       = 50.0;
@@ -18,10 +30,7 @@ Escena::Escena()
     cubo = new Cubo(70);
     tetraedro = new Tetraedro();
     ply = new ObjPLY("./plys/ant.ply");
-    rev = new ObjRevolucion("./plys/peon.ply", 50, tapaSup, tapaInf);
-    cil = new Cilindro(2, 50, 70, 50, tapaSup, tapaInf);
-    con = new Cono(20, 50, 70, 50, tapaSup, tapaInf);
-    sph = new Esfera(20, 50, 60, tapaSup, tapaInf);
+    inicializar_objsRevolucion();
 }
 
 //**************************************************************************
@@ -42,7 +51,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
    change_projection( float(UI_window_width)/float(UI_window_height) );
 	glViewport( 0, 0, UI_window_width, UI_window_height );
   glEnable(GL_CULL_FACE);
-  glPointSize(5);
+  glPointSize(3);
   polygonMode.insert(std::pair<patron, GLenum>(SOLIDO, GL_FILL));
 }
 
@@ -65,31 +74,48 @@ void Escena::dibujar()
   for (auto i : polygonMode) {
     glPolygonMode(GL_FRONT, i.second);
     if (cuboActivo) {
-      cubo->draw(modoDibujado, i.first);
+      glPushMatrix();
+        glTranslatef(100, 0, -100);
+        cubo->draw(modoDibujado, i.first);
+      glPopMatrix();
     }
     if (tetraedroActivo) {
-      tetraedro->draw(modoDibujado, i.first);
+      glPushMatrix();
+        glTranslatef(0, 0, -100);
+        tetraedro->draw(modoDibujado, i.first);
+      glPopMatrix();
     }
     if (plyActivo) {
       glPushMatrix();
+        glTranslatef(-110, 0, -100);
         glScalef(4,4,4);
         ply->draw(modoDibujado, i.first);
       glPopMatrix();
     }
     if (revActivo) {
       glPushMatrix();
+        glTranslatef(-110, 110, -100);
         glScalef(40,40,40);
         rev->draw(modoDibujado, i.first);
       glPopMatrix();
     }
     if (cilActivo) {
-      cil->draw(modoDibujado, i.first);
+      glPushMatrix();
+        glTranslatef(0, 100, -100);
+        cil->draw(modoDibujado, i.first);
+      glPopMatrix();
     }
     if (conActivo) {
-      con->draw(modoDibujado, i.first);
+      glPushMatrix();
+        glTranslatef(110, 100, -100);
+        con->draw(modoDibujado, i.first);
+      glPopMatrix();
     }
     if (sphActivo) {
-      sph->draw(modoDibujado, i.first);
+      glPushMatrix();
+        glTranslatef(210, 0, -60);
+        sph->draw(modoDibujado, i.first);
+      glPopMatrix();
     }
   }
 }
@@ -181,7 +207,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
     case 'V' :
     // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
       modoMenu=SELVISUALIZACION;
-      printf("Opciones disponibles: \n'L': Línea \n'P': Puntos\n'S': Sólido\n'A': Ajedrez\n");
+      printf("Opciones disponibles: \n'L': Línea \n'P': Puntos\n'S': Sólido\n'A': Ajedrez\n'U': Ver tapa superior\n'I': Ver tapa inferior\n");
       break ;
       case 'L' :
         if (modoMenu==SELVISUALIZACION) {
@@ -217,6 +243,24 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             polygonMode.erase(AJEDREZ);
             sombreado = GL_SMOOTH;
           }
+        }
+      break;
+      case 'U' :
+        if (modoMenu==SELVISUALIZACION) {
+          if (tapaSup)
+            tapaSup = false;
+          else
+            tapaSup = true;
+          inicializar_objsRevolucion();
+        }
+      break;
+      case 'I' :
+        if (modoMenu==SELVISUALIZACION) {
+          if (tapaInf)
+            tapaInf = false;
+          else
+            tapaInf = true;
+          inicializar_objsRevolucion();
         }
       break;
 
