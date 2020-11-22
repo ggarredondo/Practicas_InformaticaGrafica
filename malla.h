@@ -59,7 +59,7 @@ class Malla3D
 
    GLuint id_vbo_ver = 0, id_vbo_tri = 0, id_vbo_tri1 = 0, id_vbo_tri2 = 0,
    id_vbo_cSolido = 0, id_vbo_cAjedrezPares = 0, id_vbo_cAjedrezImpares = 0,
-   id_vbo_cLinea = 0, id_vbo_cPunto = 0, id_vbo_normales = 0;
+   id_vbo_cLinea = 0, id_vbo_cPunto = 0;
 
 } ;
 
