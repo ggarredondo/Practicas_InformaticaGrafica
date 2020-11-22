@@ -51,7 +51,6 @@ class Escena
    bool tapaSup = true;
    bool tapaInf = true;
 
-   GLenum sombreado = GL_SMOOTH;
    std::map<patron,GLenum> polygonMode;
 
    // Objetos de la escena

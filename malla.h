@@ -45,6 +45,7 @@ class Malla3D
    GLuint CrearVBO (GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid* puntero_ram);
 
    std::vector<Tupla3f> v ;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
+   std::vector<Tupla3f> nv ; // vector de normales de vértices
    std::vector<Tupla3i> f ; // una terna de 3 enteros por cada cara o triángulo
 
    std::vector<Tupla3i> f1;
@@ -58,7 +59,7 @@ class Malla3D
 
    GLuint id_vbo_ver = 0, id_vbo_tri = 0, id_vbo_tri1 = 0, id_vbo_tri2 = 0,
    id_vbo_cSolido = 0, id_vbo_cAjedrezPares = 0, id_vbo_cAjedrezImpares = 0,
-   id_vbo_cLinea = 0, id_vbo_cPunto = 0;
+   id_vbo_cLinea = 0, id_vbo_cPunto = 0, id_vbo_normales = 0;
 
 } ;
 

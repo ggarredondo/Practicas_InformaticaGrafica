@@ -70,7 +70,6 @@ void Escena::dibujar()
 	change_observer();
   ejes.draw();
 
-  glShadeModel(sombreado);
   for (auto i : polygonMode) {
     glPolygonMode(GL_FRONT, i.second);
     if (cuboActivo) {
@@ -235,14 +234,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       break;
       case 'A' :
         if (modoMenu==SELVISUALIZACION) {
-          if (polygonMode.find(AJEDREZ) == polygonMode.end()) {
+          if (polygonMode.find(AJEDREZ) == polygonMode.end())
             polygonMode.insert(std::pair<patron, GLenum>(AJEDREZ,GL_FILL));
-            sombreado = GL_FLAT;
-          }
-          else {
+          else
             polygonMode.erase(AJEDREZ);
-            sombreado = GL_SMOOTH;
-          }
         }
       break;
       case 'U' :
