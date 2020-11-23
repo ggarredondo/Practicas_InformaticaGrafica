@@ -41,6 +41,7 @@ void Malla3D::preparar_modos()
 		cPunto.push_back({0,0,0});
 
 	preparar_ajedrez();
+	//calcular_normales();
 }
 
 inline Tupla3f producto_vectorial(const Tupla3f& a, const Tupla3f& b) {
@@ -80,6 +81,10 @@ void Malla3D::calcular_normales()
 			mv[j][2] += nc[2];             
 		}
 	}
+
+	//normalizamos mv para cada vértice y lo introducimos en nv
+	for (auto i : mv)
+		nv.push_back(normalizar(i));
 }
 
 // Visualización en modo inmediato con 'glDrawElements'

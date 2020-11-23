@@ -51,6 +51,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
    change_projection( float(UI_window_width)/float(UI_window_height) );
 	glViewport( 0, 0, UI_window_width, UI_window_height );
   glEnable(GL_CULL_FACE);
+  glEnable(GL_NORMALIZE);
   glPointSize(3);
   polygonMode.insert(std::pair<patron, GLenum>(SOLIDO, GL_FILL));
 }
@@ -206,7 +207,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
     case 'V' :
     // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
       modoMenu=SELVISUALIZACION;
-      printf("Opciones disponibles: \n'L': Línea \n'P': Puntos\n'S': Sólido\n'A': Ajedrez\n'U': Ver tapa superior\n'I': Ver tapa inferior\n");
+      printf("Opciones disponibles: \n'L': Línea \n'P': Puntos\n'S': Sólido\n'A': Ajedrez\n'Y': Ver tapa superior\n'U': Ver tapa inferior\n");
+      printf("'R': Desactivar suavizado\n'I': Activar iluminación\n");
       break ;
       case 'L' :
         if (modoMenu==SELVISUALIZACION) {
@@ -240,7 +242,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             polygonMode.erase(AJEDREZ);
         }
       break;
-      case 'U' :
+      case 'Y' :
         if (modoMenu==SELVISUALIZACION) {
           if (tapaSup)
             tapaSup = false;
@@ -249,7 +251,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
           inicializar_objsRevolucion();
         }
       break;
-      case 'I' :
+      case 'U' :
         if (modoMenu==SELVISUALIZACION) {
           if (tapaInf)
             tapaInf = false;
@@ -258,6 +260,32 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
           inicializar_objsRevolucion();
         }
       break;
+      case 'R' :
+        if (modoMenu==SELVISUALIZACION) {
+          if (suavizado) {
+            suavizado = false;
+            glShadeModel(GL_FLAT);
+          }
+          else {
+            suavizado = true;
+            glShadeModel(GL_SMOOTH);
+          }
+        }
+      break;
+      case 'I' :
+        if (modoMenu==SELVISUALIZACION) {
+          if (iluminacion) {
+            iluminacion = false;
+            glDisable(GL_LIGHTING);
+          }
+          else {
+            iluminacion = true;
+            glEnable(GL_LIGHTING);
+            printf("Opciones de iluminación: \n'0..7': Activar luz n\n'A': variación de alfa\n'B': variación de beta\n'>': incrementar ángulo\n");
+            printf("'<': decrementar ángulo\n");
+          }
+        }
+        break;
 
     case 'D' :
     // ESTAMOS EN MODO SELECCION DE DIBUJADO
