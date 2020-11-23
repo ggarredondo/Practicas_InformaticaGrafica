@@ -41,7 +41,7 @@ void Malla3D::preparar_modos()
 		cPunto.push_back({0,0,0});
 
 	preparar_ajedrez();
-	//calcular_normales();
+	calcular_normales();
 }
 
 inline Tupla3f producto_vectorial(const Tupla3f& a, const Tupla3f& b) {
@@ -162,6 +162,7 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 
 void Malla3D::draw(dibujado d, patron p)
 {
+	m.aplicar();
 	switch(d)
 	{
 		case INMEDIATO:

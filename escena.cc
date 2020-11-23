@@ -31,6 +31,8 @@ Escena::Escena()
     tetraedro = new Tetraedro();
     ply = new ObjPLY("./plys/ant.ply");
     inicializar_objsRevolucion();
+
+    luz = new LuzPosicional(Tupla3f(10, 10, 10), GL_LIGHT0); //temporal
 }
 
 //**************************************************************************
@@ -117,6 +119,8 @@ void Escena::dibujar()
         sph->draw(modoDibujado, i.first);
       glPopMatrix();
     }
+
+    luz->activar(); //temporal
   }
 }
 

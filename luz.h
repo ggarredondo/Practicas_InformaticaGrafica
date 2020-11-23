@@ -5,7 +5,7 @@
 
 class Luz 
 {
-private:
+protected:
 	Tupla4f posicion, colorAmbiente, colorDifuso, colorEspecular;
 	GLenum id;
 

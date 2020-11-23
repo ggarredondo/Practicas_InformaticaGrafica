@@ -11,6 +11,7 @@
 #define MALLA3D_H_INCLUDED
 
 #include "aux.h"
+#include "material.h"
 
 // *****************************************************************************
 //
@@ -35,6 +36,8 @@ class Malla3D
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
    void draw(dibujado d, patron p);
 
+   void setMaterial(Material& mat);
+
    protected:
 
    void calcular_normales() ; // calcula tabla de normales de vértices (práctica 3)
@@ -56,6 +59,8 @@ class Malla3D
    std::vector<Tupla3f> cAjedrezImpares;
    std::vector<Tupla3f> cLinea;
    std::vector<Tupla3f> cPunto;
+
+   Material m = Material(Tupla4f(1,1,0,0),Tupla4f(0,0,0,0),Tupla4f(0,0,0,0), 10);
 
    GLuint id_vbo_ver = 0, id_vbo_tri = 0, id_vbo_tri1 = 0, id_vbo_tri2 = 0,
    id_vbo_cSolido = 0, id_vbo_cAjedrezPares = 0, id_vbo_cAjedrezImpares = 0,

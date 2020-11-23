@@ -7,7 +7,7 @@
 class LuzPosicional : public Luz
 {
 public:
-	LuzPosicional(const Tupla3f& posicion, GLenum idLuz);
+	LuzPosicional(const Tupla3f& lposicion, GLenum idLuz);
 };
 
 #endif

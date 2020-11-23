@@ -11,6 +11,8 @@
 #include "cono.h"
 #include "cubo.h"
 #include "esfera.h"
+#include "luzposicional.h"
+#include "luzdireccional.h"
 #include <map>
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
@@ -66,6 +68,7 @@ class Escena
    Cilindro* cil = nullptr;
    Cono* con = nullptr;
    Esfera* sph = nullptr;
+   Luz* luz = nullptr; //temporal
    
    public:
 
