@@ -99,6 +99,9 @@ void Malla3D::draw_ModoInmediato(std::vector<Tupla3f>& c, std::vector<Tupla3i>& 
 	//(son tuplas de 3 valores float, sin espacio entre ellas)
 	glVertexPointer(3, GL_FLOAT, 0, v.data());
 
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glNormalPointer(GL_FLOAT, 0, nv.data());
+
 	//visualizar, indicando: tipo de primitva, número de índices,
 	//tipo de los índices, y dirección de la tabla de índices
 	glDrawElements(GL_TRIANGLES, f0.size()*3, GL_UNSIGNED_INT, f0.data());
@@ -107,6 +110,8 @@ void Malla3D::draw_ModoInmediato(std::vector<Tupla3f>& c, std::vector<Tupla3i>& 
 	glDisableClientState(GL_VERTEX_ARRAY);
 
 	glDisableClientState(GL_COLOR_ARRAY);
+
+	glDisableClientState(GL_NORMAL_ARRAY);
 }
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
@@ -132,6 +137,8 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 		id_vbo_tr = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, f0.size()*3*sizeof(int), f0.data());
 	if (id_vbo_c == 0)
 		id_vbo_c = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, c.size()*3*sizeof(float), c.data());
+	if (id_vbo_normales == 0)
+		id_vbo_normales = CrearVBO(GL_ARRAY_BUFFER, nv.size()*3*sizeof(float), nv.data());
 
 	glBindBuffer(GL_ARRAY_BUFFER, id_vbo_c);
 	glColorPointer(3, GL_FLOAT, 0, 0);
@@ -145,6 +152,12 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //desactiva VBO de vértices
 	glEnableClientState(GL_VERTEX_ARRAY); //habilitar tabla de vértices
 
+	//dibujar normales
+	glBindBuffer(GL_ARRAY_BUFFER, id_vbo_normales);
+	glNormalPointer(GL_FLOAT, 0, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glEnableClientState(GL_NORMAL_ARRAY);
+
 	//visualizar triángulos con glDrawElements (puntero a tabla == 0)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tr); //activar VBO de triángulos
@@ -155,6 +168,7 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
 }
 // -----------------------------------------------------------------------------
 // Función de visualización de la malla,
@@ -167,6 +181,7 @@ void Malla3D::draw(dibujado d, patron p)
 	{
 		case INMEDIATO:
 			switch (p) {
+				case LUZ:
 				case SOLIDO:
 					draw_ModoInmediato(cSolido, f);
 					break;
@@ -184,6 +199,7 @@ void Malla3D::draw(dibujado d, patron p)
 			break;
 		case DIFERIDO:	
 			switch (p) {
+				case LUZ:
 				case SOLIDO:
 					draw_ModoDiferido(id_vbo_cSolido, id_vbo_tri, cSolido, f);
 					break;

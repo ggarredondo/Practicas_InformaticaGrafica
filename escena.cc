@@ -32,7 +32,7 @@ Escena::Escena()
     ply = new ObjPLY("./plys/ant.ply");
     inicializar_objsRevolucion();
 
-    luz = new LuzPosicional(Tupla3f(10, 10, 10), GL_LIGHT0); //temporal
+    luz = new LuzPosicional(Tupla3f(0, -10, 100), GL_LIGHT0); //temporal
 }
 
 //**************************************************************************
@@ -216,32 +216,44 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       break ;
       case 'L' :
         if (modoMenu==SELVISUALIZACION) {
-          if (polygonMode.find(LINEA) == polygonMode.end())
+          if (polygonMode.find(LINEA) == polygonMode.end()) {
             polygonMode.insert(std::pair<patron, GLenum>(LINEA,GL_LINE));
+            polygonMode.erase(LUZ); 
+            glDisable(GL_LIGHTING);
+          }
           else
             polygonMode.erase(LINEA);
         }
       break;
       case 'P' :
         if (modoMenu==SELVISUALIZACION) {
-          if (polygonMode.find(PUNTO) == polygonMode.end())
+          if (polygonMode.find(PUNTO) == polygonMode.end()) {
             polygonMode.insert(std::pair<patron, GLenum>(PUNTO,GL_POINT));
+            polygonMode.erase(LUZ); 
+            glDisable(GL_LIGHTING);
+          }
           else
             polygonMode.erase(PUNTO);
         }
       break;
       case 'S' :
         if (modoMenu==SELVISUALIZACION) {
-          if (polygonMode.find(SOLIDO) == polygonMode.end())
+          if (polygonMode.find(SOLIDO) == polygonMode.end()) {
             polygonMode.insert(std::pair<patron, GLenum>(SOLIDO,GL_FILL));
+            polygonMode.erase(LUZ); 
+            glDisable(GL_LIGHTING);
+          }
           else
             polygonMode.erase(SOLIDO);
         }
       break;
       case 'A' :
         if (modoMenu==SELVISUALIZACION) {
-          if (polygonMode.find(AJEDREZ) == polygonMode.end())
+          if (polygonMode.find(AJEDREZ) == polygonMode.end()) {
             polygonMode.insert(std::pair<patron, GLenum>(AJEDREZ,GL_FILL));
+            polygonMode.erase(LUZ); 
+            glDisable(GL_LIGHTING);
+          }
           else
             polygonMode.erase(AJEDREZ);
         }
@@ -278,15 +290,18 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       break;
       case 'I' :
         if (modoMenu==SELVISUALIZACION) {
-          if (iluminacion) {
-            iluminacion = false;
-            glDisable(GL_LIGHTING);
-          }
-          else {
-            iluminacion = true;
-            glEnable(GL_LIGHTING);
-            printf("Opciones de iluminación: \n'0..7': Activar luz n\n'A': variación de alfa\n'B': variación de beta\n'>': incrementar ángulo\n");
-            printf("'<': decrementar ángulo\n");
+          if (modoMenu==SELVISUALIZACION) {
+            if (polygonMode.find(LUZ) == polygonMode.end()) {
+              polygonMode.clear();
+              polygonMode.insert(std::pair<patron, GLenum>(LUZ,GL_FILL));
+              glEnable(GL_LIGHTING);
+              printf("Opciones de iluminación: \n'0..7': Activar luz n\n'A': variación de alfa\n'B': variación de beta\n'>': incrementar ángulo\n");
+              printf("'<': decrementar ángulo\n");
+            }
+            else {
+              glDisable(GL_LIGHTING);
+              polygonMode.erase(LUZ); 
+            }
           }
         }
         break;

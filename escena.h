@@ -54,7 +54,6 @@ class Escena
    bool tapaSup = true;
    bool tapaInf = true;
    bool suavizado = true;
-   bool iluminacion = false;
    angulo angle = NINGUNO;
 
    std::map<patron,GLenum> polygonMode;
