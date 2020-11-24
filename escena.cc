@@ -227,11 +227,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       break;
       case 'P' :
         if (modoMenu==SELVISUALIZACION) {
-          if (polygonMode.find(PUNTO) == polygonMode.end()) {
+          if (polygonMode.find(PUNTO) == polygonMode.end())
             polygonMode.insert(std::pair<patron, GLenum>(PUNTO,GL_POINT));
-            polygonMode.erase(LUZ); 
-            glDisable(GL_LIGHTING);
-          }
           else
             polygonMode.erase(PUNTO);
         }
@@ -292,7 +289,9 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
         if (modoMenu==SELVISUALIZACION) {
           if (modoMenu==SELVISUALIZACION) {
             if (polygonMode.find(LUZ) == polygonMode.end()) {
-              polygonMode.clear();
+              polygonMode.erase(SOLIDO);
+              polygonMode.erase(AJEDREZ);
+              polygonMode.erase(LINEA);
               polygonMode.insert(std::pair<patron, GLenum>(LUZ,GL_FILL));
               glEnable(GL_LIGHTING);
               printf("Opciones de iluminación: \n'0..7': Activar luz n\n'A': variación de alfa\n'B': variación de beta\n'>': incrementar ángulo\n");
