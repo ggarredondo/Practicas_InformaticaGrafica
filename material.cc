@@ -1,6 +1,6 @@
 #include "material.h"
 
-Material::Material(Tupla4f mdifuso, Tupla4f mespecular, Tupla4f mambiente, float mbrillo)
+Material::Material(const Tupla4f& mdifuso, const Tupla4f& mespecular, const Tupla4f& mambiente, float mbrillo)
 {
 	difuso = mdifuso;
 	especular = mespecular;

@@ -7,6 +7,10 @@
 //
 // *****************************************************************************
 
+void Malla3D::setMaterial(Material& mat) {
+	m = mat;
+}
+
 void Malla3D::preparar_ajedrez()
 {
 	for (unsigned i = 0; i < v.size(); ++i) 
@@ -44,47 +48,23 @@ void Malla3D::preparar_modos()
 	calcular_normales();
 }
 
-inline Tupla3f producto_vectorial(const Tupla3f& a, const Tupla3f& b) {
-	return Tupla3f(a[1]*b[2]-b[1]*a[2], a[0]*b[2]-b[0]*a[2], a[0]*b[1]-b[0]*a[1]);
-}
-
-inline float modulo_vector(const Tupla3f& vector) {
-	return sqrt(pow(vector[0],2)+pow(vector[1],2)+pow(vector[2],2));
-}
-
-inline Tupla3f normalizar(Tupla3f& vector) {
-	return Tupla3f(vector[0]/modulo_vector(vector), vector[1]/modulo_vector(vector), vector[2]/modulo_vector(vector));
-}
-
 void Malla3D::calcular_normales()
 {
-	std::vector<Tupla3f> mv;
-	Tupla3f a, b, mc, nc;
-	std::vector<int> vertices_cara;
+	nv.resize(v.size(), Tupla3f(0, 0, 0));
+	Tupla3f a, b, nc;
 
-	//inicializamos tabla de vectores perpendiculares a los vértices
-	for (unsigned i = 0; i < v.size(); ++i)
-		mv.push_back(Tupla3f(0,0,0));
+	for (auto& cara : f) 
+	{
+		a = v[cara[1]] - v[cara[0]];
+		b = v[cara[2]] - v[cara[0]];
+		nc = a.cross(b).normalized();
 
-	for (auto i : f) {
-		for (unsigned j = 0; j < 3; ++j) {
-			vertices_cara.push_back(i[j]);         //se obtienen los vértices que forman la cara
-			a[j] = v[i[1]][j] - v[i[0]][j];        //se calcula el vector a
-			b[j] = v[i[2]][j] - v[i[0]][j];        //se calcula el vector b
-		}
-		mc = producto_vectorial(a, b);             //obtenemos el vector perpendicular a la cara
-		nc = normalizar(mc);                       //obtenemos el vector normal de la cara
-
-		for (auto j : vertices_cara) {             //sumamos la normal de la cara para el vértice
-			mv[j][0] += nc[0];
-			mv[j][1] += nc[1];
-			mv[j][2] += nc[2];             
-		}
+		for (unsigned i = 0; i < 3; ++i)
+			nv[cara[i]] = nv[cara[i]] + nc;
 	}
 
-	//normalizamos mv para cada vértice y lo introducimos en nv
-	for (auto i : mv)
-		nv.push_back(normalizar(i));
+	for (auto& n : nv)
+		n = n.normalized();
 }
 
 // Visualización en modo inmediato con 'glDrawElements'

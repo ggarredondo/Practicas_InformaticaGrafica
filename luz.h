@@ -6,7 +6,7 @@
 class Luz 
 {
 protected:
-	Tupla4f posicion, colorAmbiente, colorDifuso, colorEspecular;
+	Tupla4f posicion, colorDifuso, colorEspecular, colorAmbiente;
 	GLenum id;
 
 public:

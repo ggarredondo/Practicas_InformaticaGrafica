@@ -60,7 +60,7 @@ class Malla3D
    std::vector<Tupla3f> cLinea;
    std::vector<Tupla3f> cPunto;
 
-   Material m = Material(Tupla4f(1,0,0,0),Tupla4f(0,0,0,0),Tupla4f(0,0,0,0), 10);
+   Material m = Material(Tupla4f(1,0,0,0),Tupla4f(0,0,0,0),Tupla4f(0,0,0,0), 1);
 
    GLuint id_vbo_ver = 0, id_vbo_tri = 0, id_vbo_tri1 = 0, id_vbo_tri2 = 0,
    id_vbo_cSolido = 0, id_vbo_cAjedrezPares = 0, id_vbo_cAjedrezImpares = 0,

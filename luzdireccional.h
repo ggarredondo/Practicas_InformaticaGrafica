@@ -10,7 +10,7 @@ protected:
 	float alpha, beta;
 
 public:
-	LuzDireccional(const Tupla2f& orientacion, GLenum idLuz);
+	LuzDireccional(const Tupla2f& orientacion, GLenum idLuz, const Tupla4f& cdifuso, const Tupla4f& cespecular, const Tupla4f& cambiente);
 	void variarAnguloAlpha(float incremento);
 	void variarAnguloBeta(float incremento);
 };

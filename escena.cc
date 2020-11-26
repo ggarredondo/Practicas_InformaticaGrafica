@@ -32,7 +32,9 @@ Escena::Escena()
     ply = new ObjPLY("./plys/ant.ply");
     inicializar_objsRevolucion();
 
-    luz = new LuzPosicional(Tupla3f(0, -10, 100), GL_LIGHT0); //temporal
+    pos = {-100, 0, 0}; //temporal
+    cluz = new Cubo(10); //temporal
+    luz = new LuzPosicional(pos, GL_LIGHT0, Tupla4f(1,1,1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1)); //temporal
 }
 
 //**************************************************************************
@@ -69,6 +71,8 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 
 void Escena::dibujar()
 {
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 	change_observer();
   ejes.draw();
@@ -120,6 +124,10 @@ void Escena::dibujar()
       glPopMatrix();
     }
 
+    glPushMatrix(); //temporal
+      glTranslatef(pos[0], pos[1], pos[2]); //temporal
+      cluz->draw(modoDibujado, i.first); //temporal
+    glPopMatrix(); //temporal
     luz->activar(); //temporal
   }
 }
