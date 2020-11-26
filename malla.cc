@@ -53,17 +53,17 @@ void Malla3D::calcular_normales()
 	nv.resize(v.size(), Tupla3f(0, 0, 0));
 	Tupla3f a, b, nc;
 
-	for (auto& cara : f) 
+	for (auto cara : f) 
 	{
 		a = v[cara[1]] - v[cara[0]];
 		b = v[cara[2]] - v[cara[0]];
-		nc = a.cross(b).normalized();
+		nc = a.cross(b);
 
 		for (unsigned i = 0; i < 3; ++i)
 			nv[cara[i]] = nv[cara[i]] + nc;
 	}
 
-	for (auto& n : nv)
+	for (auto n : nv)
 		n = n.normalized();
 }
 
