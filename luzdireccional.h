@@ -10,9 +10,14 @@ protected:
 	float alpha, beta;
 
 public:
-	LuzDireccional(const Tupla3f& orientacion, GLenum idLuz, const Tupla4f& cdifuso, const Tupla4f& cespecular, const Tupla4f& cambiente);
-	void variarAnguloAlpha(float incremento);
-	void variarAnguloBeta(float incremento);
+	LuzDireccional(const Tupla2f& orientacion, GLenum idLuz, const Tupla4f& cdifuso, const Tupla4f& cespecular, const Tupla4f& cambiente);
+	void activar();
+	inline void variarAnguloAlpha(float incremento) {
+		alpha += incremento;
+	}
+	inline void variarAnguloBeta(float incremento) {
+		beta += incremento;
+	}
 };
 
 #endif

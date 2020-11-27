@@ -11,6 +11,9 @@ protected:
 
 public:
 	void activar();
+	inline void desactivar() {
+		glDisable(id);
+	}
 };
 
 #endif

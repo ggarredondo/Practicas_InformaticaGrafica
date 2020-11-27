@@ -68,9 +68,7 @@ class Escena
    Cono* con = nullptr;
    Esfera* sph = nullptr;
 
-   Luz* luz = nullptr; //temporal
-   Cubo* cluz = nullptr; //temporal
-   Tupla3f pos; //temporal
+   LuzDireccional* luz = nullptr; //temporal
    
    public:
 
