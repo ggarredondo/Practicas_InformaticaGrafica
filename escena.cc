@@ -32,7 +32,7 @@ Escena::Escena()
     ply = new ObjPLY("./plys/ant.ply");
     inicializar_objsRevolucion();
 
-    pos = {-100, 0, 0}; //temporal
+    pos = {0, 0, 0}; //temporal
     cluz = new Cubo(10); //temporal
     luz = new LuzPosicional(pos, GL_LIGHT0, Tupla4f(1,1,1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1)); //temporal
 }
