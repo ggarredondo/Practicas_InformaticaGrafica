@@ -73,7 +73,11 @@ void Escena::dibujar()
   glLoadIdentity();
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 	change_observer();
+  if (luzActiva)
+    glDisable(GL_LIGHTING);
   ejes.draw();
+  if (luzActiva)
+    glEnable(GL_LIGHTING);
 
   for (auto i : polygonMode) {
     glPolygonMode(GL_FRONT, i.second);
@@ -291,15 +295,16 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
         if (modoMenu==SELVISUALIZACION) {
           if (modoMenu==SELVISUALIZACION) {
             if (polygonMode.find(LUZ) == polygonMode.end()) {
+              luzActiva = true;
               polygonMode.erase(SOLIDO);
               polygonMode.erase(AJEDREZ);
               polygonMode.erase(LINEA);
               polygonMode.insert(std::pair<patron, GLenum>(LUZ,GL_FILL));
-              glEnable(GL_LIGHTING);
               printf("Opciones de iluminación: \n'0..7': Activar luz n\n'A': variación de alfa\n'B': variación de beta\n'>': incrementar ángulo\n");
               printf("'<': decrementar ángulo\n");
             }
             else {
+              luzActiva = false;
               glDisable(GL_LIGHTING);
               polygonMode.erase(LUZ); 
             }

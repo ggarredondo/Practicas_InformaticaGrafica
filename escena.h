@@ -51,6 +51,8 @@ class Escena
    bool conActivo = true; //K
    bool sphActivo = true; //M
 
+   bool luzActiva = false;
+
    bool tapaSup = true;
    bool tapaInf = true;
    bool suavizado = true;
