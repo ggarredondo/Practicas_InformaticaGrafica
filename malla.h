@@ -36,7 +36,9 @@ class Malla3D
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
    void draw(dibujado d, patron p);
 
-   void setMaterial(Material& mat);
+   inline void setMaterial(const Material& mat) {
+      m = mat;
+   }
 
    protected:
 

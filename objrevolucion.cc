@@ -62,32 +62,32 @@ void ObjRevolucion::insertarPolos(const std::vector<Tupla3f>& perfil_original, i
 {
 	float min_h = perfil_original[0][1], max_h = perfil_original[perfil_original.size()-1][1];
 
-	v.push_back(Tupla3f{0, min_h, 0});
-	v.push_back(Tupla3f{0, max_h, 0});
-
 	//formar tapas
-	int sur = v.size()-2, norte = v.size()-1, anterior = -1, primero, N = num_instancias, M = perfil_original.size();
+	int polo = v.size(), anterior = -1, primero, N = num_instancias, M = perfil_original.size();
 
 	if (tapa_inf) {
+		v.push_back(Tupla3f{0, min_h, 0});
 		for (unsigned i = 0; i < N; ++i) {
 				if (anterior == -1)
 					primero = M*i;
 				if (anterior != -1)
-					f.push_back(Tupla3i(sur, M*i, anterior));
+					f.push_back(Tupla3i(polo, M*i, anterior));
 				anterior = M*i;
 		}
-		f.push_back(Tupla3i(sur, primero, anterior));
+		f.push_back(Tupla3i(polo, primero, anterior));
 	}
 
+	polo = v.size();
 	if (tapa_sup) {
+		v.push_back(Tupla3f{0, max_h, 0});
 		anterior = -1;
 		for (unsigned i = 0; i < N; ++i) {
 				if (anterior == -1)
 					primero = M*(i+1)-1;
 				if (anterior != -1) 
-					f.push_back(Tupla3i(anterior, M*(i+1)-1, norte));
+					f.push_back(Tupla3i(anterior, M*(i+1)-1, polo));
 				anterior = M*(i+1)-1;
 		}
-		f.push_back(Tupla3i(anterior, primero, norte));
+		f.push_back(Tupla3i(anterior, primero, polo));
 	}
 }

@@ -52,10 +52,13 @@ class Escena
    bool sphActivo = true; //M
 
    bool luzActiva = false;
+   bool luzPActiva = false;
+   bool luzDActiva = false;
 
    bool tapaSup = true;
    bool tapaInf = true;
    bool suavizado = true;
+
    angulo angle = NINGUNO;
 
    std::map<patron,GLenum> polygonMode;
@@ -70,7 +73,8 @@ class Escena
    Cono* con = nullptr;
    Esfera* sph = nullptr;
 
-   LuzDireccional* luz = nullptr; //temporal
+   LuzPosicional* luzP = nullptr;
+   LuzDireccional* luzD = nullptr;
    
    public:
 

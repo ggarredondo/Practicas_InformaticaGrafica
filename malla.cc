@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-void Malla3D::setMaterial(Material& mat) {
-	m = mat;
-}
-
 void Malla3D::preparar_ajedrez()
 {
 	for (unsigned i = 0; i < v.size(); ++i) 

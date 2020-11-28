@@ -16,6 +16,8 @@ void Escena::inicializar_objsRevolucion()
   con = new Cono(20, 50, 70, 50, tapaSup, tapaInf);
   delete sph;
   sph = new Esfera(20, 50, 60, tapaSup, tapaInf);
+  rev->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,1,0),Tupla4f(0,0,0,0), 10));
+  cil->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,0,0),Tupla4f(0,1,0,0), 50));
 }
 
 Escena::Escena()
@@ -31,8 +33,9 @@ Escena::Escena()
     tetraedro = new Tetraedro();
     ply = new ObjPLY("./plys/ant.ply");
     inicializar_objsRevolucion();
-
-    luz = new LuzDireccional(Tupla2f(0,0), GL_LIGHT0, Tupla4f(1,1,1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1)); //temporal
+    
+    luzP = new LuzPosicional(Tupla3f(100,0,0), GL_LIGHT0, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
+    luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
 }
 
 //**************************************************************************
@@ -125,9 +128,11 @@ void Escena::dibujar()
         sph->draw(modoDibujado, i.first);
       glPopMatrix();
     }
-    
-    luz->activar();//temporal
   }
+  if (luzPActiva)
+    luzP->activar();
+  if (luzDActiva)
+    luzD->activar();
 }
 
 //**************************************************************************
@@ -226,6 +231,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             polygonMode.insert(std::pair<patron, GLenum>(LINEA,GL_LINE));
             polygonMode.erase(LUZ); 
             glDisable(GL_LIGHTING);
+            luzActiva = false;
           }
           else
             polygonMode.erase(LINEA);
@@ -245,6 +251,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             polygonMode.insert(std::pair<patron, GLenum>(SOLIDO,GL_FILL));
             polygonMode.erase(LUZ); 
             glDisable(GL_LIGHTING);
+            luzActiva = false;
           }
           else
             polygonMode.erase(SOLIDO);
@@ -256,6 +263,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             polygonMode.insert(std::pair<patron, GLenum>(AJEDREZ,GL_FILL));
             polygonMode.erase(LUZ); 
             glDisable(GL_LIGHTING);
+            luzActiva = false;
           }
           else
             polygonMode.erase(AJEDREZ);
@@ -293,23 +301,71 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       break;
       case 'I' :
         if (modoMenu==SELVISUALIZACION) {
-          if (modoMenu==SELVISUALIZACION) {
-            if (polygonMode.find(LUZ) == polygonMode.end()) {
-              luzActiva = true;
-              polygonMode.erase(SOLIDO);
-              polygonMode.erase(AJEDREZ);
-              polygonMode.erase(LINEA);
-              polygonMode.insert(std::pair<patron, GLenum>(LUZ,GL_FILL));
-              printf("Opciones de iluminación: \n'0..7': Activar luz n\n'A': variación de alfa\n'B': variación de beta\n'>': incrementar ángulo\n");
-              printf("'<': decrementar ángulo\n");
-            }
-            else {
-              luzActiva = false;
-              glDisable(GL_LIGHTING);
-              polygonMode.erase(LUZ); 
-            }
+          if (polygonMode.find(LUZ) == polygonMode.end()) {
+            luzActiva = true;
+            polygonMode.erase(SOLIDO);
+            polygonMode.erase(AJEDREZ);
+            polygonMode.erase(LINEA);
+            polygonMode.insert(std::pair<patron, GLenum>(LUZ,GL_FILL));
+            printf("Opciones de iluminación: \n'3-4': Activar luz n\n'X': variación de alfa\n'B': variación de beta\n'>': incrementar ángulo\n");
+            printf("'<': decrementar ángulo\n");
+          }
+          else {
+            luzActiva = false;
+            glDisable(GL_LIGHTING);
+            polygonMode.erase(LUZ); 
           }
         }
+        break;
+        case '3' :
+          if (modoMenu==SELVISUALIZACION && luzActiva) {
+            if (luzPActiva) {
+              luzPActiva = false;
+              luzP->desactivar();
+            }
+            else {
+              luzPActiva = true;
+              dibujar();
+            }
+          }
+        break;
+        case '4' :
+          if (modoMenu==SELVISUALIZACION && luzActiva) {
+            if (luzDActiva) {
+              luzDActiva = false;
+              luzD->desactivar();
+            }
+            else {
+              luzDActiva = true;
+              dibujar();
+            }
+          }
+        break;
+        case 'X' :
+          if (modoMenu==SELVISUALIZACION && luzActiva) {
+            angle = ALFA;
+          }
+        break;
+        case 'B' :
+          if (modoMenu==SELVISUALIZACION && luzActiva) {
+            angle = BETA;
+          }
+        break;
+        case '>' :
+          if (modoMenu==SELVISUALIZACION && luzActiva) {
+            if (angle == ALFA)
+              luzD->variarAnguloAlpha(10);
+            else if (angle == BETA)
+              luzD->variarAnguloBeta(10);
+          }
+        break;
+        case '<' :
+          if (modoMenu==SELVISUALIZACION && luzActiva) {
+            if (angle == ALFA)
+              luzD->variarAnguloAlpha(-10);
+            else if (angle == BETA)
+              luzD->variarAnguloBeta(-10);
+          }
         break;
 
     case 'D' :
