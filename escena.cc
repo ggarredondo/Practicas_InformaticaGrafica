@@ -342,14 +342,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
           }
         break;
         case 'X' :
-          if (modoMenu==SELVISUALIZACION && luzActiva) {
+          if (modoMenu==SELVISUALIZACION && luzActiva)
             angle = ALFA;
-          }
         break;
         case 'B' :
-          if (modoMenu==SELVISUALIZACION && luzActiva) {
+          if (modoMenu==SELVISUALIZACION && luzActiva)
             angle = BETA;
-          }
         break;
         case '>' :
           if (modoMenu==SELVISUALIZACION && luzActiva) {
