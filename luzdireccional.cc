@@ -15,7 +15,6 @@ void LuzDireccional::activar()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
-		glLoadIdentity();
 		glRotatef(alpha, 0, 1, 0);
 		glRotatef(beta, -1, 0, 0);
 		Luz::activar();
