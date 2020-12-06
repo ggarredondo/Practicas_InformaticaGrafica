@@ -13,10 +13,7 @@ LuzDireccional::LuzDireccional(const Tupla2f& orientacion, GLenum idLuz, const T
 
 void LuzDireccional::activar()
 {
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-		glRotatef(alpha, 0, 1, 0);
-		glRotatef(beta, -1, 0, 0);
-		Luz::activar();
-	glPopMatrix();
+	rotacionEjeY();
+	rotacionEjeX();
+	Luz::activar();
 }

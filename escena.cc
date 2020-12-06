@@ -352,17 +352,17 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
         case '>' :
           if (modoMenu==SELVISUALIZACION && luzActiva) {
             if (angle == ALFA)
-              luzD->variarAnguloAlpha(10);
+              luzD->variarAnguloAlpha(0.1);
             else if (angle == BETA)
-              luzD->variarAnguloBeta(10);
+              luzD->variarAnguloBeta(0.1);
           }
         break;
         case '<' :
           if (modoMenu==SELVISUALIZACION && luzActiva) {
             if (angle == ALFA)
-              luzD->variarAnguloAlpha(-10);
+              luzD->variarAnguloAlpha(-0.1);
             else if (angle == BETA)
-              luzD->variarAnguloBeta(-10);
+              luzD->variarAnguloBeta(-0.1);
           }
         break;
 
