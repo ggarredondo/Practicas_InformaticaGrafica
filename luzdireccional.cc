@@ -11,6 +11,18 @@ LuzDireccional::LuzDireccional(const Tupla2f& orientacion, GLenum idLuz, const T
 	beta = orientacion[1];
 }
 
+void LuzDireccional::rotacionEjeY() {
+	posicion[0] = posicion[2]*sin(alpha) + posicion[0]*cos(alpha);
+	posicion[2] = posicion[2]*cos(alpha) - posicion[0]*sin(alpha);
+	alpha = 0;
+}
+	
+void LuzDireccional::rotacionEjeX() {
+	posicion[1] = posicion[1]*cos(beta) - posicion[2]*sin(beta);	
+	posicion[2] = posicion[1]*sin(beta) + posicion[2]*cos(beta);
+	beta = 0;
+}
+
 void LuzDireccional::activar()
 {
 	rotacionEjeY();
