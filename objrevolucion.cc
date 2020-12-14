@@ -1,7 +1,7 @@
 #include "aux.h"
 #include "objrevolucion.h"
 #include "ply_reader.h"
-
+#include <algorithm>
 
 
 // *****************************************************************************
@@ -19,6 +19,9 @@ ObjRevolucion::ObjRevolucion() {}
 ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias, bool tapas) {
 	std::vector<Tupla3f> vertices;
 	ply::read_vertices(archivo, vertices);
+
+	if (vertices[0][1] > vertices[vertices.size()-1][1])
+		std::reverse(vertices.begin(), vertices.end());
 	prepararObj(vertices, num_instancias, tapas);
 }
 
