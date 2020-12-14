@@ -6,36 +6,36 @@
 // constructor de la escena (no puede usar ordenes de OpenGL)
 //**************************************************************************
 
-void Escena::inicializar_objsRevolucion() 
+void Escena::actualizarTapas()
 {
-  delete rev;
-  rev = new ObjRevolucion("./plys/peon.ply", 50, tapaSup, tapaInf);
-  delete cil;
-  cil = new Cilindro(2, 50, 70, 50, tapaSup, tapaInf);
-  delete con;
-  con = new Cono(20, 50, 70, 50, tapaSup, tapaInf);
-  delete sph;
-  sph = new Esfera(20, 50, 60, tapaSup, tapaInf);
-  rev->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,1,0),Tupla4f(0,0,0,0), 10));
-  cil->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,0,0),Tupla4f(0,1,0,0), 50));
+  rev->actualizarTapas(tapas);
+  cil->actualizarTapas(tapas);
+  con->actualizarTapas(tapas);
+  sph->actualizarTapas(tapas);
 }
 
 Escena::Escena()
 {
-    Front_plane       = 50.0;
-    Back_plane        = 2000.0;
-    Observer_distance = 4*Front_plane;
-    Observer_angle_x  = 0.0 ;
-    Observer_angle_y  = 0.0 ;
+  Front_plane       = 50.0;
+  Back_plane        = 2000.0;
+  Observer_distance = 4*Front_plane;
+  Observer_angle_x  = 0.0 ;
+  Observer_angle_y  = 0.0 ;
 
-    ejes.changeAxisSize( 5000 );
-    cubo = new Cubo(70);
-    tetraedro = new Tetraedro();
-    ply = new ObjPLY("./plys/ant.ply");
-    inicializar_objsRevolucion();
-    
-    luzP = new LuzPosicional(Tupla3f(100,0,0), GL_LIGHT0, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
-    luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
+  ejes.changeAxisSize( 5000 );
+  cubo = new Cubo(70);
+  tetraedro = new Tetraedro();
+  ply = new ObjPLY("./plys/ant.ply");
+
+  rev = new ObjRevolucion("./plys/peon.ply", 50, tapas);
+  cil = new Cilindro(2, 50, 70, 50, tapas);
+  con = new Cono(20, 50, 70, 50, tapas);
+  sph = new Esfera(20, 50, 60, tapas);
+  rev->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,1,0),Tupla4f(0,0,0,0), 10));
+  cil->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,0,0),Tupla4f(0,1,0,0), 50));
+  
+  luzP = new LuzPosicional(Tupla3f(100,0,0), GL_LIGHT0, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
+  luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
 }
 
 //**************************************************************************
@@ -222,7 +222,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
     case 'V' :
     // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
       modoMenu=SELVISUALIZACION;
-      printf("Opciones disponibles: \n'L': Línea \n'P': Puntos\n'S': Sólido\n'A': Ajedrez\n'Y': Ver tapa superior\n'U': Ver tapa inferior\n");
+      printf("Opciones disponibles: \n'L': Línea \n'P': Puntos\n'S': Sólido\n'A': Ajedrez\n'Y': Activar tapas\n");
       printf("'R': Desactivar suavizado\n'I': Activar iluminación\n");
       break ;
       case 'L' :
@@ -271,20 +271,14 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       break;
       case 'Y' :
         if (modoMenu==SELVISUALIZACION) {
-          if (tapaSup)
-            tapaSup = false;
-          else
-            tapaSup = true;
-          inicializar_objsRevolucion();
-        }
-      break;
-      case 'U' :
-        if (modoMenu==SELVISUALIZACION) {
-          if (tapaInf)
-            tapaInf = false;
-          else
-            tapaInf = true;
-          inicializar_objsRevolucion();
+          if (tapas) {
+            tapas = false;
+            actualizarTapas();
+          }
+          else {
+            tapas = true;
+            actualizarTapas();
+          }
         }
       break;
       case 'R' :

@@ -1,6 +1,6 @@
 #include "cilindro.h"
 
-Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, const float altura, const float radio, bool tapa_sup, bool tapa_inf)
+Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, const float altura, const float radio, bool tapas)
 {
 	std::vector<Tupla3f> perfil;
 	int n = num_vert_perfil-1;
@@ -11,9 +11,6 @@ Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, con
 		perfil.push_back(Tupla3f(radio, altura*i/n, 0));
 	}
 
-	if (n >= 0) {
-		crearMalla(perfil, num_instancias_perf);
-	    insertarPolos(perfil, num_instancias_perf, tapa_sup, tapa_inf);
-		preparar_modos();
-	}
+	if (n >= 0)
+		prepararObj(perfil, num_instancias_perf, tapas);
 }

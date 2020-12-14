@@ -7,7 +7,7 @@
 class Cono : public ObjRevolucion
 {
 public:
-	Cono(const int num_vert_perfil, const int num_instancias_perf, const float altura, const float radio, bool tapa_sup=true, bool tapa_inf=true);
+	Cono(const int num_vert_perfil, const int num_instancias_perf, const float altura, const float radio, bool tapas=true);
 };
 
 #endif

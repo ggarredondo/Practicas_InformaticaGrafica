@@ -16,22 +16,38 @@
 
 ObjRevolucion::ObjRevolucion() {}
 
-ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias, bool tapa_sup, bool tapa_inf) {
+ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias, bool tapas) {
 	std::vector<Tupla3f> vertices;
 	ply::read_vertices(archivo, vertices);
-	crearMalla(vertices, num_instancias);
-	insertarPolos(vertices, num_instancias, tapa_sup, tapa_inf);
-	preparar_modos();
+	prepararObj(vertices, num_instancias, tapas);
 }
 
 // *****************************************************************************
 // objeto de revolución obtenido a partir de un perfil (en un vector de puntos)
 
  
-ObjRevolucion::ObjRevolucion(const std::vector<Tupla3f>& archivo, int num_instancias, bool tapa_sup, bool tapa_inf) {
-    crearMalla(archivo, num_instancias);
-    insertarPolos(archivo, num_instancias, tapa_sup, tapa_inf);
+ObjRevolucion::ObjRevolucion(const std::vector<Tupla3f>& archivo, int num_instancias, bool tapas) {
+    prepararObj(archivo, num_instancias, tapas);
+}
+
+void ObjRevolucion::actualizarTapas(bool tapas) {
+	if (!tapas) {
+		tam1 -= size_tapas;
+		diferencia = size_tapas;
+	}
+	else {
+		tam1 += diferencia;
+		diferencia = 0;
+	}
+	tamA = tam1*0.5;
+	tamB = tam1-tamA;
+}
+
+void ObjRevolucion::prepararObj(const std::vector<Tupla3f>& perfil, int num_instancias, bool tapas) {
+	crearMalla(perfil, num_instancias);
+    insertarPolos(perfil, num_instancias);
 	preparar_modos();
+	actualizarTapas(tapas);
 }
 
 void ObjRevolucion::crearMalla(const std::vector<Tupla3f>& perfil_original, int num_instancias) {
@@ -58,36 +74,38 @@ void ObjRevolucion::crearMalla(const std::vector<Tupla3f>& perfil_original, int 
 	}
 }
 
-void ObjRevolucion::insertarPolos(const std::vector<Tupla3f>& perfil_original, int num_instancias, bool tapa_sup, bool tapa_inf)
+void ObjRevolucion::insertarPolos(const std::vector<Tupla3f>& perfil_original, int num_instancias)
 {
 	float min_h = perfil_original[0][1], max_h = perfil_original[perfil_original.size()-1][1];
 
 	//formar tapas
 	int polo = v.size(), anterior = -1, primero, N = num_instancias, M = perfil_original.size();
 
-	if (tapa_inf) {
-		v.push_back(Tupla3f{0, min_h, 0});
-		for (unsigned i = 0; i < N; ++i) {
-				if (anterior == -1)
-					primero = M*i;
-				if (anterior != -1)
-					f.push_back(Tupla3i(polo, M*i, anterior));
-				anterior = M*i;
-		}
-		f.push_back(Tupla3i(polo, primero, anterior));
+	v.push_back(Tupla3f{0, min_h, 0});
+	for (unsigned i = 0; i < N; ++i) {
+			if (anterior == -1)
+				primero = M*i;
+			if (anterior != -1) {
+				f.push_back(Tupla3i(polo, M*i, anterior));
+				size_tapas++;
+			}
+			anterior = M*i;
 	}
+	f.push_back(Tupla3i(polo, primero, anterior));
+	size_tapas++;
 
 	polo = v.size();
-	if (tapa_sup) {
-		v.push_back(Tupla3f{0, max_h, 0});
-		anterior = -1;
-		for (unsigned i = 0; i < N; ++i) {
-				if (anterior == -1)
-					primero = M*(i+1)-1;
-				if (anterior != -1) 
-					f.push_back(Tupla3i(anterior, M*(i+1)-1, polo));
-				anterior = M*(i+1)-1;
-		}
-		f.push_back(Tupla3i(anterior, primero, polo));
+	v.push_back(Tupla3f{0, max_h, 0});
+	anterior = -1;
+	for (unsigned i = 0; i < N; ++i) {
+			if (anterior == -1)
+				primero = M*(i+1)-1;
+			if (anterior != -1) {
+				f.push_back(Tupla3i(anterior, M*(i+1)-1, polo));
+				size_tapas++;
+			}
+			anterior = M*(i+1)-1;
 	}
+	f.push_back(Tupla3i(anterior, primero, polo));
+	size_tapas++;
 }

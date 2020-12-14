@@ -26,10 +26,10 @@ class Malla3D
    public:
 
    // dibuja el objeto en modo inmediato
-   void draw_ModoInmediato(std::vector<Tupla3f>& c, std::vector<Tupla3i>& f0);
+   void draw_ModoInmediato(std::vector<Tupla3f>& c, std::vector<Tupla3i>& f0, GLuint tam);
 
    // dibuja el objeto en modo diferido (usando VBOs)
-   void draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector<Tupla3f>& c, std::vector<Tupla3i>& f0);
+   void draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector<Tupla3f>& c, std::vector<Tupla3i>& f0, GLuint tam);
 
    // función que redibuja el objeto
    // está función llama a 'draw_ModoInmediato' (modo inmediato)
@@ -41,6 +41,8 @@ class Malla3D
    }
 
    protected:
+
+   GLuint tam1, tamA, tamB;
 
    void calcular_normales() ; // calcula tabla de normales de vértices (práctica 3)
 

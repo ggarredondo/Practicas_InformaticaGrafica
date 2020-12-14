@@ -15,7 +15,7 @@ void Malla3D::preparar_ajedrez()
 	for (unsigned i = 0; i < v.size(); ++i)
 		cAjedrezImpares.push_back({0,0,0});
 
-	for (unsigned i = 0; i < f.size(); ++i) {
+	for (unsigned i = 0; i < tam1; ++i) {
 		if (i%2 == 0)
 			f1.push_back(f[i]);
 		else
@@ -25,6 +25,7 @@ void Malla3D::preparar_ajedrez()
 
 void Malla3D::preparar_modos()
 {
+	tam1 = f.size();
 	unsigned size = v.size();
 
 	for (unsigned i = 0; i < size; ++i) {
@@ -41,6 +42,9 @@ void Malla3D::preparar_modos()
 		cPunto.push_back({0,0,0});
 
 	preparar_ajedrez();
+	tamA = f1.size();
+	tamB = f2.size();
+
 	calcular_normales();
 }
 
@@ -65,7 +69,7 @@ void Malla3D::calcular_normales()
 
 // Visualización en modo inmediato con 'glDrawElements'
 
-void Malla3D::draw_ModoInmediato(std::vector<Tupla3f>& c, std::vector<Tupla3i>& f0)
+void Malla3D::draw_ModoInmediato(std::vector<Tupla3f>& c, std::vector<Tupla3i>& f0, GLuint tam)
 {
 	glEnableClientState(GL_COLOR_ARRAY);
 	glColorPointer(3, GL_FLOAT, 0, c.data());
@@ -80,7 +84,7 @@ void Malla3D::draw_ModoInmediato(std::vector<Tupla3f>& c, std::vector<Tupla3i>& 
 
 	//visualizar, indicando: tipo de primitva, número de índices,
 	//tipo de los índices, y dirección de la tabla de índices
-	glDrawElements(GL_TRIANGLES, f0.size()*3, GL_UNSIGNED_INT, f0.data());
+	glDrawElements(GL_TRIANGLES, tam*3, GL_UNSIGNED_INT, f0.data());
 
 	//deshabilitar array de vértices
 	glDisableClientState(GL_VERTEX_ARRAY);
@@ -104,13 +108,13 @@ GLuint Malla3D::CrearVBO (GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid* puntero
 	return id_vbo; //devolver el identificador resultado
 }
 
-void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector<Tupla3f>& c, std::vector<Tupla3i>& f0)
+void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector<Tupla3f>& c, std::vector<Tupla3i>& f0, GLuint tam)
 {
 	//Se verifica si los identificadores de VBO son 0, y, si lo son, se invoca a CrearVBO para cada tabla
 	if (id_vbo_ver == 0) 
 		id_vbo_ver = CrearVBO(GL_ARRAY_BUFFER, v.size()*3*sizeof(float), v.data());
 	if (id_vbo_tr == 0)
-		id_vbo_tr = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, f0.size()*3*sizeof(int), f0.data());
+		id_vbo_tr = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, tam*3*sizeof(int), f0.data());
 	if (id_vbo_c == 0)
 		id_vbo_c = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, c.size()*3*sizeof(float), c.data());
 	if (id_vbo_normales == 0)
@@ -137,7 +141,7 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 	//visualizar triángulos con glDrawElements (puntero a tabla == 0)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tr); //activar VBO de triángulos
-	glDrawElements(GL_TRIANGLES, 3*f0.size(), GL_UNSIGNED_INT, 0); 
+	glDrawElements(GL_TRIANGLES, 3*tam, GL_UNSIGNED_INT, 0); 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); //desactivar VBO de triángulos
 
 	//desactivar uso de array de vértices
@@ -159,17 +163,17 @@ void Malla3D::draw(dibujado d, patron p)
 			switch (p) {
 				case LUZ:
 				case SOLIDO:
-					draw_ModoInmediato(cSolido, f);
+					draw_ModoInmediato(cSolido, f, tam1);
 					break;
 				case AJEDREZ:
-					draw_ModoInmediato(cAjedrezPares, f1);
-					draw_ModoInmediato(cAjedrezImpares, f2);
+					draw_ModoInmediato(cAjedrezPares, f1, tamA);
+					draw_ModoInmediato(cAjedrezImpares, f2, tamB);
 					break;
 				case LINEA:
-					draw_ModoInmediato(cLinea, f);
+					draw_ModoInmediato(cLinea, f, tam1);
 					break;
 				case PUNTO:
-					draw_ModoInmediato(cPunto, f);
+					draw_ModoInmediato(cPunto, f, tam1);
 					break;	
 			}
 			break;
@@ -177,17 +181,17 @@ void Malla3D::draw(dibujado d, patron p)
 			switch (p) {
 				case LUZ:
 				case SOLIDO:
-					draw_ModoDiferido(id_vbo_cSolido, id_vbo_tri, cSolido, f);
+					draw_ModoDiferido(id_vbo_cSolido, id_vbo_tri, cSolido, f, tam1);
 					break;
 				case AJEDREZ:
-					draw_ModoDiferido(id_vbo_cAjedrezPares, id_vbo_tri1, cAjedrezPares, f1);
-					draw_ModoDiferido(id_vbo_cAjedrezImpares, id_vbo_tri2, cAjedrezImpares, f2);
+					draw_ModoDiferido(id_vbo_cAjedrezPares, id_vbo_tri1, cAjedrezPares, f1, tamA);
+					draw_ModoDiferido(id_vbo_cAjedrezImpares, id_vbo_tri2, cAjedrezImpares, f2, tamB);
 					break;
 				case LINEA:
-					draw_ModoDiferido(id_vbo_cLinea, id_vbo_tri, cLinea, f);
+					draw_ModoDiferido(id_vbo_cLinea, id_vbo_tri, cLinea, f, tam1);
 					break;
 				case PUNTO:
-					draw_ModoDiferido(id_vbo_cPunto, id_vbo_tri, cPunto, f);
+					draw_ModoDiferido(id_vbo_cPunto, id_vbo_tri, cPunto, f, tam1);
 					break;	
 			}
 			break;

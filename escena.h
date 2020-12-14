@@ -34,7 +34,7 @@ class Escena
     // Transformación de cámara
 	void change_projection( const float ratio_xy );
 	void change_observer();
-  void inicializar_objsRevolucion();
+  	void actualizarTapas();
 
 
    void clear_window();
@@ -55,8 +55,7 @@ class Escena
    bool luzPActiva = false;
    bool luzDActiva = false;
 
-   bool tapaSup = true;
-   bool tapaInf = true;
+   bool tapas = true;
    bool suavizado = true;
 
    angulo angle = NINGUNO;
