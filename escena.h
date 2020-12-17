@@ -15,6 +15,8 @@
 #include "luzdireccional.h"
 #include <map>
 
+#include "cabeza.h" //temporal
+
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
 typedef enum {NINGUNO, ALFA, BETA} angulo;
 class Escena
@@ -43,13 +45,13 @@ class Escena
    menu modoMenu=NADA;
    dibujado modoDibujado = DIFERIDO;
 
-   bool cuboActivo = true; //C
-   bool tetraedroActivo = true; //T
-   bool plyActivo = true; //G
-   bool revActivo = true; //H
-   bool cilActivo = true; //J
-   bool conActivo = true; //K
-   bool sphActivo = true; //M
+   bool cuboActivo = false; //C
+   bool tetraedroActivo = false; //T
+   bool plyActivo = false; //G
+   bool revActivo = false; //H
+   bool cilActivo = false; //J
+   bool conActivo = false; //K
+   bool sphActivo = false; //M
 
    bool luzActiva = false;
    bool luzPActiva = false;
@@ -74,6 +76,8 @@ class Escena
 
    LuzPosicional* luzP = nullptr;
    LuzDireccional* luzD = nullptr;
+
+   Cabeza* head = nullptr; //temporal
    
    public:
 
