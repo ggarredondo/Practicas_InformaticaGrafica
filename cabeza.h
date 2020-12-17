@@ -8,8 +8,7 @@ class Cabeza {
 private:
 	ObjPLY* hair = nullptr;
 	ObjPLY* upperhead = nullptr; 
-	ObjPLY* left_tendon = nullptr;
-	ObjPLY* right_tendon = nullptr;
+	ObjPLY* tendons = nullptr;
 	ObjPLY* lowerhead = nullptr;
 
 public:
