@@ -15,7 +15,7 @@
 #include "luzdireccional.h"
 #include <map>
 
-#include "cabeza.h" //temporal
+#include "brazo.h" //temporal
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
 typedef enum {NINGUNO, ALFA, BETA} angulo;
@@ -77,7 +77,7 @@ class Escena
    LuzPosicional* luzP = nullptr;
    LuzDireccional* luzD = nullptr;
 
-   Cabeza* head = nullptr; //temporal
+   Brazo* arm = nullptr; //temporal
    
    public:
 

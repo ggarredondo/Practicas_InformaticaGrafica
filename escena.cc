@@ -37,7 +37,7 @@ Escena::Escena()
   luzP = new LuzPosicional(Tupla3f(100,0,0), GL_LIGHT0, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
   luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
 
-  head = new Cabeza(); //temp
+  arm = new Brazo(); //temp
 }
 
 //**************************************************************************
@@ -131,7 +131,7 @@ void Escena::dibujar()
       glPopMatrix();
     }
 
-    head->draw(modoDibujado, i.first); //Temp
+    arm->draw(modoDibujado, i.first); //Temp
   }
   if (luzPActiva)
     luzP->activar();
