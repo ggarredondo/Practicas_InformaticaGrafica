@@ -1,9 +1,9 @@
-#ifndef BRAZO_H_INCLUDED
-#define BRAZO_H_INCLUDED
+#ifndef BRAZOIZQ_H_INCLUDED
+#define BRAZOIZQ_H_INCLUDED
 
 #include "objply.h"
 
-class Brazo {
+class BrazoIzq {
 
 private:
 	ObjPLY* shoulder = nullptr;
@@ -13,7 +13,7 @@ private:
 	ObjPLY* thumb = nullptr;
 
 public:
-	Brazo();
+	BrazoIzq();
 	void draw(dibujado d, patron p);
 };
 

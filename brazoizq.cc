@@ -1,7 +1,6 @@
-#include "brazo.h"
-#include "cabeza.h"
+#include "brazoizq.h"
 
-Brazo::Brazo() 
+BrazoIzq::BrazoIzq() 
 {
 	shoulder = new ObjPLY("./morsmanum/ply/arm.ply");
 	forearm = new ObjPLY("./morsmanum/ply/forearm.ply");
@@ -10,7 +9,7 @@ Brazo::Brazo()
 	thumb = new ObjPLY("./morsmanum/ply/thumb.ply");
 }
 
-void Brazo::draw(dibujado d, patron p)
+void BrazoIzq::draw(dibujado d, patron p)
 {	
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
@@ -20,11 +19,11 @@ void Brazo::draw(dibujado d, patron p)
 		glPopMatrix();
 
 		glPushMatrix();
-			glTranslatef(3.15,-0.36,-0.15);
+			glTranslatef(3.1,-0.4,-0.15);
 			forearm->draw(d,p);
 
 			glPushMatrix();
-				glTranslatef(2.9,0.1,0.65);
+				glTranslatef(2.8,0.1,0.65);
 				hand->draw(d,p);
 
 				glPushMatrix();
