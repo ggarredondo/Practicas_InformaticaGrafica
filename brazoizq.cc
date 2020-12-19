@@ -13,10 +13,7 @@ void BrazoIzq::draw(dibujado d, patron p)
 {	
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
-
-		glPushMatrix();
-			shoulder->draw(d,p);
-		glPopMatrix();
+		shoulder->draw(d,p);
 
 		glPushMatrix();
 			glTranslatef(3.1,-0.4,-0.15);

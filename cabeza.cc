@@ -4,7 +4,6 @@ Cabeza::Cabeza()
 {
 	hair = new ObjPLY("./morsmanum/ply/hair.ply");
 	upperhead = new ObjPLY("./morsmanum/ply/upperhead.ply");
-	tendon = new ObjPLY("./morsmanum/ply/tendon.ply");
 	lowerhead = new ObjPLY("./morsmanum/ply/lowerhead.ply");
 }
 
