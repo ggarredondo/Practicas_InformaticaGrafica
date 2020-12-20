@@ -12,16 +12,11 @@ void PiernaIzq::draw(dibujado d, patron p)
 	glPushMatrix();
 		thigh->draw(d,p);
 
-		glPushMatrix();
-			glTranslatef(-0.1,-3.6,0.1);
-			lowerleg->draw(d,p);
-
-			glPushMatrix();
-				glTranslatef(-0.3,-4,-0.6);
-				foot->draw(d,p);
-			glPopMatrix();
-
-		glPopMatrix();
+		glTranslatef(-0.1,-3.6,0.1);
+		lowerleg->draw(d,p);
+			
+		glTranslatef(-0.3,-4,-0.6);
+		foot->draw(d,p);
 
 	glPopMatrix();
 }
