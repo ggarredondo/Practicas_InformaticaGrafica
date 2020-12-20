@@ -44,9 +44,13 @@ public:
 
 	//PiernaIzq
 	void rotarPiernaIzq(float x, float y, float z);
+	void rotarRodillaIzq(float x);
+	void rotarTalonIzq(float x);
 
 	//PiernaDech
 	void rotarPiernaDech(float x, float y, float z);
+	void rotarRodillaDech(float x);
+	void rotarTalonDech(float x);
 };
 
 #endif
