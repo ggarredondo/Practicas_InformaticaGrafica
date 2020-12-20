@@ -11,9 +11,15 @@ private:
 	ObjPLY* tendon = nullptr;
 	ObjPLY* lowerhead = nullptr;
 
+	float aperturaFauces;
+
 public:
 	Cabeza();
 	void draw(dibujado d, patron p);
+
+	inline void abrirFauces(float apertura) {
+		aperturaFauces = apertura;
+	}
 };
 
 #endif
