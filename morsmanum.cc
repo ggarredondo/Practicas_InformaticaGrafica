@@ -41,11 +41,11 @@ void Morsmanum::draw(dibujado d, patron p)
 		glTranslatef(0,70,0);
 			
 		glPushMatrix();
-			glTranslatef(0,10,-3);
-			glRotatef(120,0,1,0);
+			glTranslatef(0,8,3);
 			glRotatef(cabezaX,1,0,0);
 			glRotatef(cabezaY,0,1,0);
 			glRotatef(cabezaZ,0,0,1);
+			glRotatef(120,0,1,0);
 			cabeza->draw(d,p);
 		glPopMatrix();
 
@@ -117,12 +117,44 @@ void Morsmanum::rotarBrazoIzq(float x, float y, float z) {
 	BrazoIzqZ = z;
 }
 
+void Morsmanum::rotarAntebrazoIzq(float y) {
+	brazo_izq->rotarAntebrazo(y);
+}
+
+void Morsmanum::rotarManoIzq(float y, float z) {
+	brazo_izq->rotarMano(y,z);
+}
+
+void Morsmanum::rotarDedosIzq(float z) {
+	brazo_izq->rotarDedos(z);
+}
+
+void Morsmanum::rotarPulgarIzq(float y, float z) {
+	brazo_izq->rotarPulgar(y,z);
+}
+
 
 //BrazoDech
 void Morsmanum::rotarBrazoDech(float x, float y, float z) {
 	BrazoDechX = x;
 	BrazoDechY = y;
 	BrazoDechZ = z;
+}
+
+void Morsmanum::rotarAntebrazoDech(float y) {
+	brazo_dech->rotarAntebrazo(y);
+}
+
+void Morsmanum::rotarManoDech(float y, float z) {
+	brazo_dech->rotarMano(y,z);
+}
+
+void Morsmanum::rotarDedosDech(float z) {
+	brazo_dech->rotarDedos(z);
+}
+
+void Morsmanum::rotarPulgarDech(float y, float z) {
+	brazo_dech->rotarPulgar(y,z);
 }
 
 
@@ -134,11 +166,11 @@ void Morsmanum::rotarPiernaIzq(float x, float y, float z) {
 }
 
 void Morsmanum::rotarRodillaIzq(float x) {
-	pierna_izq->rotarRodillaIzq(x);
+	pierna_izq->rotarRodilla(x);
 }
 
 void Morsmanum::rotarTalonIzq(float x) {
-	pierna_izq->rotarTalonIzq(x);
+	pierna_izq->rotarTalon(x);
 }
 
 
@@ -150,9 +182,9 @@ void Morsmanum::rotarPiernaDech(float x, float y, float z) {
 }
 
 void Morsmanum::rotarRodillaDech(float x) {
-	pierna_dech->rotarRodillaDech(x);
+	pierna_dech->rotarRodilla(x);
 }
 
 void Morsmanum::rotarTalonDech(float x) {
-	pierna_dech->rotarTalonDech(x);
+	pierna_dech->rotarTalon(x);
 }

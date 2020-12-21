@@ -16,10 +16,10 @@ public:
 	PiernaIzq();
 	void draw(dibujado d, patron p);
 
-	inline void rotarRodillaIzq(float x) {
+	inline void rotarRodilla(float x) {
 		PiernaInfX = x;
 	}
-	inline void rotarTalonIzq(float x) {
+	inline void rotarTalon(float x) {
 		PieX = x;
 	}
 };

@@ -38,9 +38,17 @@ public:
 
 	//BrazoIzq
 	void rotarBrazoIzq(float x, float y, float z);
+	void rotarAntebrazoIzq(float y);
+	void rotarManoIzq(float y, float z);
+	void rotarDedosIzq(float z);
+	void rotarPulgarIzq(float y, float z);
 
 	//BrazoDech
 	void rotarBrazoDech(float x, float y, float z);
+	void rotarAntebrazoDech(float y);
+	void rotarManoDech(float y, float z);
+	void rotarDedosDech(float z);
+	void rotarPulgarDech(float y, float z);
 
 	//PiernaIzq
 	void rotarPiernaIzq(float x, float y, float z);
