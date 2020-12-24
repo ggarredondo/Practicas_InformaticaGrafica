@@ -17,7 +17,7 @@ Cabeza::Cabeza()
 	tendon = new ObjPLY("./morsmanum/ply/tendon.ply");
 	tendon->setMaterial(Material({1,0.5,0.5,1},{0,0,0,1},{0,0,0,0},1));
 
-	aperturaFauces = 3;
+	aperturaFauces = 0;
 }
 
 void Cabeza::draw(dibujado d, patron p)
