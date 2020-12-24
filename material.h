@@ -10,6 +10,7 @@ private:
 	float brillo;
 
 public:
+	Material();
 	Material(const Tupla4f& mdifuso, const Tupla4f& mespecular, const Tupla4f& mambiente, float mbrillo);
 	void aplicar();
 };

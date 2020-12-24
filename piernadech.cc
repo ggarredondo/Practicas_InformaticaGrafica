@@ -3,8 +3,11 @@
 PiernaDech::PiernaDech()
 {
 	thigh = new ObjPLY("./morsmanum/ply/Rleg.ply");
+	thigh->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
 	lowerleg = new ObjPLY("./morsmanum/ply/Rshin.ply");
+	lowerleg->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
 	foot = new ObjPLY("./morsmanum/ply/Rfoot.ply");
+	foot->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
 
 	PiernaInfX = 0;
 	PieX = 0;

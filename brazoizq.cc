@@ -3,10 +3,15 @@
 BrazoIzq::BrazoIzq() 
 {
 	shoulder = new ObjPLY("./morsmanum/ply/arm.ply");
+	shoulder->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
 	forearm = new ObjPLY("./morsmanum/ply/forearm.ply");
+	forearm->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
 	hand = new ObjPLY("./morsmanum/ply/hand.ply");
+	hand->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
 	fingers = new ObjPLY("./morsmanum/ply/fingers.ply");
+	fingers->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
 	thumb = new ObjPLY("./morsmanum/ply/thumb.ply");
+	thumb->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
 
 	AntebrazoY = 0;
 	ManoY = 0;
