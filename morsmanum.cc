@@ -3,6 +3,7 @@
 Morsmanum::Morsmanum()
 {
 	torso = new ObjPLY("./morsmanum/ply/torso.ply");
+
 	cabeza = new Cabeza();
 	brazo_izq = new BrazoIzq();
 	brazo_dech = new BrazoDech();
