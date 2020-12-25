@@ -18,6 +18,7 @@ Cabeza::Cabeza()
 	tendon->setMaterial(Material({1,0.5,0.5,1},{0,0,0,1},{0,0,0,0},1));
 
 	aperturaFauces = 0;
+	cabezaSup = 0;
 }
 
 void Cabeza::draw(dibujado d, patron p)
@@ -48,6 +49,7 @@ void Cabeza::draw(dibujado d, patron p)
 		glTranslatef(0, 9, 0);
 		glTranslatef(0,aperturaFauces,0);
 		glRotatef(aperturaFauces*3,1,0,-1);
+		glRotatef(cabezaSup,1,0,1);
 		upperhead->draw(d,p);
 		hair->draw(d,p);
 	glPopMatrix();

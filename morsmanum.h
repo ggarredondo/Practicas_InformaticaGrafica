@@ -32,6 +32,7 @@ public:
 	//Cabeza
 	void rotarCabeza(float x, float y, float z);
 	void abrirFauces(float apertura);
+	void inclinarCabezaSuperior(float inclinacion);
 
 	//Torso
 	void rotarTorso(float x, float y, float z);

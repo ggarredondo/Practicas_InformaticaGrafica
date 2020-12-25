@@ -103,6 +103,10 @@ void Morsmanum::abrirFauces(float apertura) {
 	cabeza->abrirFauces(apertura);
 }
 
+void Morsmanum::inclinarCabezaSuperior(float inclinacion) {
+	cabeza->inclinarCabezaSuperior(inclinacion);
+}
+
 
 //Torso
 void Morsmanum::rotarTorso(float x, float y, float z) {

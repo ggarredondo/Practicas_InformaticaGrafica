@@ -16,7 +16,10 @@ void Escena::actualizarTapas()
 
 void Escena::animarModeloJerarquico() 
 {
+  float t = 0.01*glutGet(GLUT_ELAPSED_TIME);
 
+  mors->abrirFauces(abs(sin(t)*1.5));
+  mors->inclinarCabezaSuperior(sin(t)*2);
 }
 
 Escena::Escena()

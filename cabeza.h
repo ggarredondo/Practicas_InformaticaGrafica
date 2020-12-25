@@ -12,7 +12,7 @@ private:
 	ObjPLY* tendon = nullptr;
 	ObjPLY* fangs = nullptr;
 
-	float aperturaFauces;
+	float aperturaFauces, cabezaSup;
 
 public:
 	Cabeza();
@@ -20,6 +20,9 @@ public:
 
 	inline void abrirFauces(float apertura) {
 		aperturaFauces = apertura;
+	}
+	inline void inclinarCabezaSuperior(float inclinacion) {
+		cabezaSup = inclinacion;
 	}
 };
 
