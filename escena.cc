@@ -33,11 +33,11 @@ Escena::Escena()
   sph = new Esfera(20, 50, 60, tapas);
   rev->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,1,0),Tupla4f(0,0,0,0), 10));
   cil->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,0,0),Tupla4f(0,1,0,0), 50));
+
+  mors = new Morsmanum();
   
   luzP = new LuzPosicional(Tupla3f(100,0,0), GL_LIGHT0, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
   luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
-
-  mors = new Morsmanum(); //temp
 }
 
 //**************************************************************************
@@ -131,7 +131,7 @@ void Escena::dibujar()
       glPopMatrix();
     }
 
-    mors->draw(modoDibujado, i.first); //Temp
+    mors->draw(modoDibujado, i.first);
   }
   if (luzPActiva)
     luzP->activar();

@@ -77,7 +77,7 @@ class Escena
    LuzPosicional* luzP = nullptr;
    LuzDireccional* luzD = nullptr;
 
-   Morsmanum* mors = nullptr; //temporal
+   Morsmanum* mors = nullptr;
    
    public:
 
