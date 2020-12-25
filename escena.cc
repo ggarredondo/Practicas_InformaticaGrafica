@@ -16,7 +16,7 @@ void Escena::actualizarTapas()
 
 void Escena::animarModeloJerarquico() 
 {
-  mors->abrirFauces(5);
+
 }
 
 Escena::Escena()
@@ -41,10 +41,10 @@ Escena::Escena()
 
   mors = new Morsmanum();
   mors->rotarCabeza(30,0,0);
-  mors->rotarTorso(20,0,0);
+  mors->rotarTorso(30,0,0);
 
-  mors->rotarBrazoIzq(-20,-60,-70);
-  mors->rotarBrazoDech(-20,60,70);
+  mors->rotarBrazoIzq(-25,-60,-70);
+  mors->rotarBrazoDech(-25,60,70);
 
   mors->rotarPiernaIzq(-60,0,10);
   mors->rotarRodillaIzq(40,-30,0);
