@@ -23,7 +23,8 @@ private:
 		BrazoIzqX, BrazoIzqY, BrazoIzqZ,
 		BrazoDechX, BrazoDechY, BrazoDechZ,
 		PiernaIzqX, PiernaIzqY, PiernaIzqZ,
-		PiernaDechX, PiernaDechY, PiernaDechZ;
+		PiernaDechX, PiernaDechY, PiernaDechZ,
+		respiracionT, respiracionR;
 
 public:
 	Morsmanum();
@@ -36,6 +37,12 @@ public:
 
 	//Torso
 	void rotarTorso(float x, float y, float z);
+	inline void trasladarTorsoAislado(float y) {
+		respiracionT = y;
+	}
+	inline void rotarTorsoAislado(float x) {
+		respiracionR = x;
+	}
 
 	//BrazoIzq
 	void rotarBrazoIzq(float x, float y, float z);

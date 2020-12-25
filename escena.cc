@@ -18,8 +18,23 @@ void Escena::animarModeloJerarquico()
 {
   float t = 0.01*glutGet(GLUT_ELAPSED_TIME);
 
+  mors->rotarCabeza(30-sin(t*0.5)*2,0,0);
   mors->abrirFauces(abs(sin(t)*1.5));
-  mors->inclinarCabezaSuperior(sin(t)*2);
+  mors->inclinarCabezaSuperior(sin(t)*3);
+
+  mors->trasladarTorsoAislado(sin(t*0.5)*0.03);
+  mors->rotarTorsoAislado(sin(t*0.5));
+
+  mors->rotarBrazoIzq(-25+cos(t*0.5)*0.5,-60,-70+sin(t*0.5)*0.5);
+  mors->rotarBrazoDech(-25+sin(t*0.5)*0.5,60,70+sin(t*0.5)*0.5);
+
+  mors->rotarPiernaIzq(-60+sin(t*0.5),0,10);
+  mors->rotarRodillaIzq(40-sin(t*0.5),-30,0);
+  mors->rotarTalonIzq(-10-sin(t*0.5),0,0);
+
+  mors->rotarPiernaDech(-60+sin(t*0.5),0,-10);
+  mors->rotarRodillaDech(40-sin(t*0.5),30,0);
+  mors->rotarTalonDech(-10-sin(t*0.5),0,0);
 }
 
 Escena::Escena()

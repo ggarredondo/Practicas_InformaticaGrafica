@@ -34,6 +34,9 @@ Morsmanum::Morsmanum()
 	PiernaDechX = 0; 
 	PiernaDechY = 0;
 	PiernaDechZ = 0;
+
+	respiracionT = 0;
+	respiracionR = 0;
 }
 
 void Morsmanum::draw(dibujado d, patron p)
@@ -55,7 +58,11 @@ void Morsmanum::draw(dibujado d, patron p)
 		glRotatef(torsoX,1,0,0);
 		glRotatef(torsoY,0,1,0);
 		glRotatef(torsoZ,0,0,1);
-		torso->draw(d,p);
+		glPushMatrix();
+			glTranslatef(0,respiracionT,0);
+			glRotatef(respiracionR,1,0,0);
+			torso->draw(d,p);
+		glPopMatrix();
 
 		glPushMatrix();
 			glTranslatef(1.9,-1.1,-0.1);
