@@ -10,17 +10,22 @@ private:
 	ObjPLY* lowerleg = nullptr;
 	ObjPLY* foot = nullptr;
 
-	float PiernaInfX, PieX;
+	float PiernaInfX, PiernaInfY, PiernaInfZ,
+		PieX, PieY, PieZ;
 
 public:
 	PiernaIzq();
 	void draw(dibujado d, patron p);
 
-	inline void rotarRodilla(float x) {
+	inline void rotarRodilla(float x, float y, float z) {
 		PiernaInfX = x;
+		PiernaInfY = y;
+		PiernaInfZ = z;
 	}
-	inline void rotarTalon(float x) {
+	inline void rotarTalon(float x, float y, float z) {
 		PieX = x;
+		PieY = y;
+		PieZ = z;
 	}
 };
 

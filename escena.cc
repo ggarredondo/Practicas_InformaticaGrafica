@@ -14,6 +14,19 @@ void Escena::actualizarTapas()
   sph->actualizarTapas(tapas);
 }
 
+void Escena::animarModeloJerarquico() 
+{
+  mors->rotarTorso(20,0,0);
+
+  mors->rotarPiernaIzq(-60,0,10);
+  mors->rotarRodillaIzq(40,-30,0);
+  mors->rotarTalonIzq(-10,0,0);
+
+  mors->rotarPiernaDech(-60,0,-10);
+  mors->rotarRodillaDech(40,30,0);
+  mors->rotarTalonDech(-10,0,0);
+}
+
 Escena::Escena()
 {
   Front_plane       = 50.0;

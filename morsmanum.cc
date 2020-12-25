@@ -167,12 +167,12 @@ void Morsmanum::rotarPiernaIzq(float x, float y, float z) {
 	PiernaIzqZ = z;
 }
 
-void Morsmanum::rotarRodillaIzq(float x) {
-	pierna_izq->rotarRodilla(x);
+void Morsmanum::rotarRodillaIzq(float x, float y, float z) {
+	pierna_izq->rotarRodilla(x,y,z);
 }
 
-void Morsmanum::rotarTalonIzq(float x) {
-	pierna_izq->rotarTalon(x);
+void Morsmanum::rotarTalonIzq(float x, float y, float z) {
+	pierna_izq->rotarTalon(x,y,z);
 }
 
 
@@ -183,10 +183,10 @@ void Morsmanum::rotarPiernaDech(float x, float y, float z) {
 	PiernaDechZ = z;
 }
 
-void Morsmanum::rotarRodillaDech(float x) {
-	pierna_dech->rotarRodilla(x);
+void Morsmanum::rotarRodillaDech(float x, float y, float z) {
+	pierna_dech->rotarRodilla(x,y,z);
 }
 
-void Morsmanum::rotarTalonDech(float x) {
-	pierna_dech->rotarTalon(x);
+void Morsmanum::rotarTalonDech(float x, float y, float z) {
+	pierna_dech->rotarTalon(x,y,z);
 }
