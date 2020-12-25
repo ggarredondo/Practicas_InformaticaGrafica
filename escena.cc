@@ -16,15 +16,7 @@ void Escena::actualizarTapas()
 
 void Escena::animarModeloJerarquico() 
 {
-  mors->rotarTorso(20,0,0);
-
-  mors->rotarPiernaIzq(-60,0,10);
-  mors->rotarRodillaIzq(40,-30,0);
-  mors->rotarTalonIzq(-10,0,0);
-
-  mors->rotarPiernaDech(-60,0,-10);
-  mors->rotarRodillaDech(40,30,0);
-  mors->rotarTalonDech(-10,0,0);
+  mors->abrirFauces(5);
 }
 
 Escena::Escena()
@@ -48,6 +40,19 @@ Escena::Escena()
   cil->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,0,0),Tupla4f(0,1,0,0), 50));
 
   mors = new Morsmanum();
+  mors->rotarCabeza(30,0,0);
+  mors->rotarTorso(20,0,0);
+
+  mors->rotarBrazoIzq(-20,-60,-70);
+  mors->rotarBrazoDech(-20,60,70);
+
+  mors->rotarPiernaIzq(-60,0,10);
+  mors->rotarRodillaIzq(40,-30,0);
+  mors->rotarTalonIzq(-10,0,0);
+
+  mors->rotarPiernaDech(-60,0,-10);
+  mors->rotarRodillaDech(40,30,0);
+  mors->rotarTalonDech(-10,0,0);
   
   luzP = new LuzPosicional(Tupla3f(100,0,0), GL_LIGHT0, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
   luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
