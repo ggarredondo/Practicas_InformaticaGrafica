@@ -2,7 +2,7 @@
 //
 // Informática Gráfica (Grado Informática)
 //
-// Archivo: cilindro.h
+// Archivo: objply.h
 
 //
 // #############################################################################
