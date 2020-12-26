@@ -9,11 +9,10 @@
 
 void Malla3D::preparar_ajedrez()
 {
-	for (unsigned i = 0; i < v.size(); ++i) 
+	for (unsigned i = 0; i < v.size(); ++i) {
 		cAjedrezPares.push_back({1,0,1});
-
-	for (unsigned i = 0; i < v.size(); ++i)
 		cAjedrezImpares.push_back({0,0,0});
+	}
 
 	for (unsigned i = 0; i < tam1; ++i) {
 		if (i%2 == 0)
