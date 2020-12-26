@@ -46,7 +46,7 @@ void Morsmanum::draw(dibujado d, patron p)
 		glTranslatef(0,70,0);
 			
 		glPushMatrix();
-			glTranslatef(0,8,3);
+			glTranslatef(0,8,4);
 			glRotatef(cabezaX,1,0,0);
 			glRotatef(cabezaY,0,1,0);
 			glRotatef(cabezaZ,0,0,1);
