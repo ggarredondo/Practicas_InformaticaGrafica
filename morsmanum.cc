@@ -62,22 +62,22 @@ void Morsmanum::draw(dibujado d, patron p)
 			glTranslatef(0,respiracionT,0);
 			glRotatef(respiracionR,1,0,0);
 			torso->draw(d,p);
-		glPopMatrix();
+		
+			glPushMatrix();
+				glTranslatef(1.9,-1.1,-0.1);
+				glRotatef(BrazoIzqX,1,0,0);
+				glRotatef(BrazoIzqY,0,1,0);
+				glRotatef(BrazoIzqZ,0,0,1);
+				brazo_izq->draw(d,p);
+			glPopMatrix();
 
-		glPushMatrix();
-			glTranslatef(1.9,-1.1,-0.1);
-			glRotatef(BrazoIzqX,1,0,0);
-			glRotatef(BrazoIzqY,0,1,0);
-			glRotatef(BrazoIzqZ,0,0,1);
-			brazo_izq->draw(d,p);
-		glPopMatrix();
-
-		glPushMatrix();
-			glTranslatef(-1.9,-1.1,-0.1);
-			glRotatef(BrazoDechX,1,0,0);
-			glRotatef(BrazoDechY,0,1,0);
-			glRotatef(BrazoDechZ,0,0,1);
-			brazo_dech->draw(d,p);
+			glPushMatrix();
+				glTranslatef(-1.9,-1.1,-0.1);
+				glRotatef(BrazoDechX,1,0,0);
+				glRotatef(BrazoDechY,0,1,0);
+				glRotatef(BrazoDechZ,0,0,1);
+				brazo_dech->draw(d,p);
+			glPopMatrix();
 		glPopMatrix();
 
 		glPushMatrix();
