@@ -37,6 +37,7 @@ class Escena
 	void change_projection( const float ratio_xy );
 	void change_observer();
   	void actualizarTapas();
+  	void pose_idle();
 
 
    void clear_window();
@@ -53,12 +54,15 @@ class Escena
    bool conActivo = false; //K
    bool sphActivo = false; //M
 
-   bool luzActiva = false;
+   bool luzActiva = true;
    bool luzPActiva = false;
-   bool luzDActiva = false;
+   bool luzDActiva = true;
 
    bool tapas = true;
    bool suavizado = true;
+
+   bool animacionActiva = false;
+   float velocidadAnimacion = 0.01;
 
    angulo angle = NINGUNO;
 

@@ -14,27 +14,51 @@ void Escena::actualizarTapas()
   sph->actualizarTapas(tapas);
 }
 
+void Escena::pose_idle()
+{
+  mors->rotarCabeza(30,0,0);
+  mors->rotarTorso(30,0,0);
+  mors->abrirFauces(0);
+  mors->inclinarCabezaSuperior(0);
+
+  mors->trasladarTorsoAislado(0);
+  mors->rotarTorsoAislado(0);
+
+  mors->rotarBrazoIzq(-25,-60,-70);
+  mors->rotarBrazoDech(-25,60,70);
+
+  mors->rotarPiernaIzq(-60,0,10);
+  mors->rotarRodillaIzq(40,-30,0);
+  mors->rotarTalonIzq(-10,0,0);
+
+  mors->rotarPiernaDech(-60,0,-10);
+  mors->rotarRodillaDech(40,30,0);
+  mors->rotarTalonDech(-10,0,0);
+}
+
 void Escena::animarModeloJerarquico() 
 {
-  float t = 0.01*glutGet(GLUT_ELAPSED_TIME);
+  float t = velocidadAnimacion*glutGet(GLUT_ELAPSED_TIME);
 
-  mors->rotarCabeza(30-sin(t*0.5)*4,0,0);
-  mors->abrirFauces(abs(sin(t)*1.5));
-  mors->inclinarCabezaSuperior(sin(t)*2.5);
+  if (animacionActiva) {
+    mors->rotarCabeza(30-sin(t*0.5)*4,0,0);
+    mors->abrirFauces(abs(sin(t)*1.5));
+    mors->inclinarCabezaSuperior(sin(t)*2.5);
 
-  mors->trasladarTorsoAislado(sin(t*0.5)*0.05);
-  mors->rotarTorsoAislado(sin(t*0.5)*0.5);
+    mors->trasladarTorsoAislado(sin(t*0.5)*0.05);
+    mors->rotarTorsoAislado(sin(t*0.5)*0.05);
 
-  mors->rotarBrazoIzq(-25+cos(t*0.5)*0.5,-60,-70+sin(t*0.5)*0.5);
-  mors->rotarBrazoDech(-25+sin(t*0.5)*0.5,60,70+sin(t*0.5)*0.5);
+    mors->rotarBrazoIzq(-25+cos(t*0.5)*0.5,-60,-70+sin(t*0.5)*0.5);
+    mors->rotarBrazoDech(-25+sin(t*0.5)*0.5,60,70+sin(t*0.5)*0.5);
 
-  mors->rotarPiernaIzq(-60+sin(t*0.5)*1.5,0,10);
-  mors->rotarRodillaIzq(40-sin(t*0.5)*1.5,-30,0);
-  mors->rotarTalonIzq(-10-sin(t*0.5)*1.5,0,0);
+    mors->rotarPiernaIzq(-60+sin(t*0.5)*1.5,0,10);
+    mors->rotarRodillaIzq(40-sin(t*0.5)*1.5,-30,0);
+    mors->rotarTalonIzq(-10-sin(t*0.5)*1.5,0,0);
 
-  mors->rotarPiernaDech(-60+sin(t*0.5)*1.5,0,-10);
-  mors->rotarRodillaDech(40-sin(t*0.5)*1.5,30,0);
-  mors->rotarTalonDech(-10-sin(t*0.5)*1.5,0,0);
+    mors->rotarPiernaDech(-60+sin(t*0.5)*1.5,0,-10);
+    mors->rotarRodillaDech(40-sin(t*0.5)*1.5,30,0);
+    mors->rotarTalonDech(-10-sin(t*0.5)*1.5,0,0);
+  }
 }
 
 Escena::Escena()
@@ -58,19 +82,7 @@ Escena::Escena()
   cil->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,0,0),Tupla4f(0,1,0,0), 50));
 
   mors = new Morsmanum();
-  mors->rotarCabeza(30,0,0);
-  mors->rotarTorso(30,0,0);
-
-  mors->rotarBrazoIzq(-25,-60,-70);
-  mors->rotarBrazoDech(-25,60,70);
-
-  mors->rotarPiernaIzq(-60,0,10);
-  mors->rotarRodillaIzq(40,-30,0);
-  mors->rotarTalonIzq(-10,0,0);
-
-  mors->rotarPiernaDech(-60,0,-10);
-  mors->rotarRodillaDech(40,30,0);
-  mors->rotarTalonDech(-10,0,0);
+  pose_idle();
   
   luzP = new LuzPosicional(Tupla3f(100,0,0), GL_LIGHT0, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
   luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
@@ -96,7 +108,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
   glEnable(GL_CULL_FACE);
   glEnable(GL_NORMALIZE);
   glPointSize(3);
-  polygonMode.insert(std::pair<patron, GLenum>(SOLIDO, GL_FILL));
+  polygonMode.insert(std::pair<patron, GLenum>(LUZ, GL_FILL));
 }
 
 
@@ -412,6 +424,27 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case '2' :
         if (modoMenu==SELDIBUJADO)
           modoDibujado = DIFERIDO;
+      break;
+
+    case 'N' :
+      if (animacionActiva) {
+        animacionActiva = false;
+        pose_idle();
+      }
+      else {
+        printf("Opciones disponibles: \n'+': Acelerar animación\n'-': Decelerar animación\n");
+        animacionActiva = true;
+      }
+    break;
+      case '+' :
+        if (animacionActiva)
+          velocidadAnimacion += 0.01;
+        std::cout << velocidadAnimacion << std::endl;
+      break;
+      case '-' :
+        if (animacionActiva && velocidadAnimacion > 0) 
+          velocidadAnimacion -= 0.01;
+        std::cout << velocidadAnimacion << std::endl;
       break;
   }
   return salir;
