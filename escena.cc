@@ -212,7 +212,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
     case 'O' :
     // ESTAMOS EN MODO SELECCION DE OBJETO
       modoMenu=SELOBJETO; 
-      printf("Opciones disponibles: \n'C': Cubo \n'T': Tetraedro\n'G': Objeto ply\n'H': Objeto revolución\n'J': Cilindro\n'K': Cono\n'M': Esfera\n");
+      printf("Opciones disponibles: \n'C': Cubo \n'T': Tetraedro\n'G': Objeto ply\n'H': Objeto revolución\n'J': Cilindro\n'K': Cono\n'U': Esfera\n");
       break ;
       case 'C' :
         if (modoMenu==SELOBJETO) {
@@ -262,7 +262,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             conActivo = true;
         }
       break;
-      case 'M' :
+      case 'U' :
         if (modoMenu==SELOBJETO) {
           if (sphActivo)
             sphActivo = false;
