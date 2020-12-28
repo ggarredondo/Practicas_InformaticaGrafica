@@ -446,6 +446,56 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
           velocidadAnimacion -= 0.01;
         std::cout << velocidadAnimacion << std::endl;
       break;
+
+    case 'M' :
+      if (animacionActiva) {
+        animacionActiva = false;
+        pose_idle();
+      }
+      printf("Opciones disponibles: \n'5': Fauces\n'6': Rotación cabeza superior\n'7': Rotación cabeza completa\n");
+      printf("'.': Aumentar valor\n',': Disminuir valor\n");
+      break;
+      case '5' :
+        manual = FAUCES;
+      break;
+      case '6' :
+        manual = CSUP;
+      break;
+      case '7' :
+        manual = C;
+      break;
+      case '.' :
+        switch (manual) {
+          case FAUCES :
+            gValor[0] += 0.5;
+            mors->abrirFauces(gValor[0]);
+          break;
+          case CSUP :
+            gValor[1] += 0.5;
+            mors->inclinarCabezaSuperior(gValor[1]);
+          break;
+          case C :
+            gValor[2] += 0.5;
+            mors->rotarCabeza(30+gValor[2],0,0);
+          break;
+        }
+      break;
+      case ',' :
+        switch (manual) {
+          case FAUCES :
+            gValor[0] -= 0.5;
+            mors->abrirFauces(gValor[0]);
+          break;
+          case CSUP :
+            gValor[1] -= 0.5;
+            mors->inclinarCabezaSuperior(gValor[1]);
+          break;
+          case C :
+            gValor[2] -= 0.5;
+            mors->rotarCabeza(30+gValor[2],0,0);
+          break;
+        }
+      break;
   }
   return salir;
 }
