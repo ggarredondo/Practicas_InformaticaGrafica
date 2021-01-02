@@ -17,7 +17,7 @@
 
 #include "morsmanum.h" //temporal
 
-typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
+typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELDIBUJADO} menu;
 typedef enum {NINGUNO, ALFA, BETA} angulo;
 typedef enum {NULO, FAUCES, CSUP, C} gLibertad;
 
@@ -56,7 +56,7 @@ class Escena
    bool conActivo = false; //K
    bool sphActivo = false; //M
 
-   bool luzActiva = true;
+   bool luzActiva;
    bool luzPActiva = false;
    bool luzDActiva = true;
 

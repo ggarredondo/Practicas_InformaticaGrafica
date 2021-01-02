@@ -126,6 +126,8 @@ void Escena::dibujar()
   glLoadIdentity();
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 	change_observer();
+
+  luzActiva = polygonMode.find(LUZ) != polygonMode.end();
   if (luzActiva)
     glDisable(GL_LIGHTING);
   ejes.draw();
@@ -203,11 +205,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
   switch( toupper(tecla) )
   {
     case 'Q' :
-    if (modoMenu!=NADA)
-      modoMenu=NADA;            
-    else {
-    salir=true ;
-    }
+      if (modoMenu != NADA) 
+        modoMenu = NADA;         
+      else 
+        salir = true;
     break ;
     case 'O' :
     // ESTAMOS EN MODO SELECCION DE OBJETO
@@ -283,7 +284,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             polygonMode.insert(std::pair<patron, GLenum>(LINEA,GL_LINE));
             polygonMode.erase(LUZ); 
             glDisable(GL_LIGHTING);
-            luzActiva = false;
           }
           else
             polygonMode.erase(LINEA);
@@ -303,7 +303,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             polygonMode.insert(std::pair<patron, GLenum>(SOLIDO,GL_FILL));
             polygonMode.erase(LUZ); 
             glDisable(GL_LIGHTING);
-            luzActiva = false;
           }
           else
             polygonMode.erase(SOLIDO);
@@ -315,7 +314,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             polygonMode.insert(std::pair<patron, GLenum>(AJEDREZ,GL_FILL));
             polygonMode.erase(LUZ); 
             glDisable(GL_LIGHTING);
-            luzActiva = false;
           }
           else
             polygonMode.erase(AJEDREZ);
@@ -348,7 +346,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       case 'I' :
         if (modoMenu==SELVISUALIZACION) {
           if (polygonMode.find(LUZ) == polygonMode.end()) {
-            luzActiva = true;
             polygonMode.erase(SOLIDO);
             polygonMode.erase(AJEDREZ);
             polygonMode.erase(LINEA);
@@ -357,14 +354,13 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             printf("'<': decrementar ángulo\n");
           }
           else {
-            luzActiva = false;
             glDisable(GL_LIGHTING);
             polygonMode.erase(LUZ); 
           }
         }
         break;
         case '3' :
-          if (modoMenu==SELVISUALIZACION && luzActiva) {
+          if (luzActiva) {
             if (luzPActiva) {
               luzPActiva = false;
               luzP->desactivar();
@@ -376,7 +372,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
           }
         break;
         case '4' :
-          if (modoMenu==SELVISUALIZACION && luzActiva) {
+          if (luzActiva) {
             if (luzDActiva) {
               luzDActiva = false;
               luzD->desactivar();
@@ -388,15 +384,15 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
           }
         break;
         case 'X' :
-          if (modoMenu==SELVISUALIZACION && luzActiva)
+          if (luzActiva)
             angle = ALFA;
         break;
         case 'B' :
-          if (modoMenu==SELVISUALIZACION && luzActiva)
+          if (luzActiva)
             angle = BETA;
         break;
         case '>' :
-          if (modoMenu==SELVISUALIZACION && luzActiva) {
+          if (luzActiva) {
             if (angle == ALFA)
               luzD->variarAnguloAlpha(0.1);
             else if (angle == BETA)
@@ -404,7 +400,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
           }
         break;
         case '<' :
-          if (modoMenu==SELVISUALIZACION && luzActiva) {
+          if (luzActiva) {
             if (angle == ALFA)
               luzD->variarAnguloAlpha(-0.1);
             else if (angle == BETA)
