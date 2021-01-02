@@ -51,13 +51,13 @@ void Escena::animarModeloJerarquico()
     mors->rotarBrazoIzq(-25+cos(t*0.5)*0.5,-60,-70+sin(t*0.5)*0.5);
     mors->rotarBrazoDech(-25+sin(t*0.5)*0.5,60,70+sin(t*0.5)*0.5);
 
-    mors->rotarPiernaIzq(-60+sin(t*0.5)*1.5,0,10);
-    mors->rotarRodillaIzq(40-sin(t*0.5)*1.5,-30,0);
-    mors->rotarTalonIzq(-10-sin(t*0.5)*1.5,0,0);
+    mors->rotarPiernaIzq(-60+sin(t*0.5),0,10);
+    mors->rotarRodillaIzq(40-sin(t*0.5),-30,0);
+    mors->rotarTalonIzq(-10-sin(t*0.5),0,0);
 
-    mors->rotarPiernaDech(-60+sin(t*0.5)*1.5,0,-10);
-    mors->rotarRodillaDech(40-sin(t*0.5)*1.5,30,0);
-    mors->rotarTalonDech(-10-sin(t*0.5)*1.5,0,0);
+    mors->rotarPiernaDech(-60+sin(t*0.5),0,-10);
+    mors->rotarRodillaDech(40-sin(t*0.5),30,0);
+    mors->rotarTalonDech(-10-sin(t*0.5),0,0);
   }
 }
 
@@ -302,6 +302,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
           if (polygonMode.find(SOLIDO) == polygonMode.end()) {
             polygonMode.insert(std::pair<patron, GLenum>(SOLIDO,GL_FILL));
             polygonMode.erase(LUZ); 
+            polygonMode.erase(AJEDREZ);
             glDisable(GL_LIGHTING);
           }
           else
@@ -312,7 +313,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
         if (modoMenu==SELVISUALIZACION) {
           if (polygonMode.find(AJEDREZ) == polygonMode.end()) {
             polygonMode.insert(std::pair<patron, GLenum>(AJEDREZ,GL_FILL));
-            polygonMode.erase(LUZ); 
+            polygonMode.erase(LUZ);
+            polygonMode.erase(SOLIDO); 
             glDisable(GL_LIGHTING);
           }
           else
