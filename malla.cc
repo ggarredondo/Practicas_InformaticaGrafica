@@ -122,7 +122,7 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 		id_vbo_c = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, c.size()*3*sizeof(float), c.data());
 	if (id_vbo_normales == 0)
 		id_vbo_normales = CrearVBO(GL_ARRAY_BUFFER, nv.size()*3*sizeof(float), nv.data());
-	if (id_vbo_textura)
+	if (id_vbo_textura == 0)
 		id_vbo_textura = CrearVBO(GL_ARRAY_BUFFER, ct.size()*2*sizeof(float), ct.data());
 
 	glBindBuffer(GL_ARRAY_BUFFER, id_vbo_c);
