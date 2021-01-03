@@ -81,16 +81,20 @@ void Malla3D::draw_ModoInmediato(std::vector<Tupla3f>& c, std::vector<Tupla3i>& 
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glNormalPointer(GL_FLOAT, 0, nv.data());
 
+	if (!ct.empty()) {
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glTexCoordPointer(2, GL_FLOAT, 0, ct.data());
+	}
+
 	//visualizar, indicando: tipo de primitva, número de índices,
 	//tipo de los índices, y dirección de la tabla de índices
 	glDrawElements(GL_TRIANGLES, tam*3, GL_UNSIGNED_INT, f0.data());
 
 	//deshabilitar array de vértices
 	glDisableClientState(GL_VERTEX_ARRAY);
-
 	glDisableClientState(GL_COLOR_ARRAY);
-
 	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
@@ -118,6 +122,8 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 		id_vbo_c = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, c.size()*3*sizeof(float), c.data());
 	if (id_vbo_normales == 0)
 		id_vbo_normales = CrearVBO(GL_ARRAY_BUFFER, nv.size()*3*sizeof(float), nv.data());
+	if (id_vbo_textura)
+		id_vbo_textura = CrearVBO(GL_ARRAY_BUFFER, ct.size()*2*sizeof(float), ct.data());
 
 	glBindBuffer(GL_ARRAY_BUFFER, id_vbo_c);
 	glColorPointer(3, GL_FLOAT, 0, 0);
@@ -137,6 +143,15 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glEnableClientState(GL_NORMAL_ARRAY);
 
+	//texturas
+	if (!ct.empty())
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, id_vbo_textura);
+		glTexCoordPointer(2, GL_FLOAT, 0, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	}
+
 	//visualizar triángulos con glDrawElements (puntero a tabla == 0)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tr); //activar VBO de triángulos
@@ -144,7 +159,7 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); //desactivar VBO de triángulos
 
 	//desactivar uso de array de vértices
-
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
