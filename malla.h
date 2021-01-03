@@ -12,6 +12,7 @@
 
 #include "aux.h"
 #include "material.h"
+#include "textura.h"
 
 // *****************************************************************************
 //
@@ -55,6 +56,9 @@ class Malla3D
    std::vector<Tupla3f> nv ; // vector de normales de vértices
    std::vector<Tupla3i> f ; // una terna de 3 enteros por cada cara o triángulo
 
+   Textura *textura = nullptr;
+   std::vector<Tupla2f> ct; // tablas de coordenadas de textura
+
    std::vector<Tupla3i> f1;
    std::vector<Tupla3i> f2;
 
@@ -68,7 +72,7 @@ class Malla3D
 
    GLuint id_vbo_ver = 0, id_vbo_tri = 0, id_vbo_tri1 = 0, id_vbo_tri2 = 0,
    id_vbo_cSolido = 0, id_vbo_cAjedrezPares = 0, id_vbo_cAjedrezImpares = 0,
-   id_vbo_cLinea = 0, id_vbo_cPunto = 0, id_vbo_normales = 0;
+   id_vbo_cLinea = 0, id_vbo_cPunto = 0, id_vbo_normales = 0, id_vbo_textura = 0;
 
 } ;
 

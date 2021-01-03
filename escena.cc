@@ -107,6 +107,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 	glViewport( 0, 0, UI_window_width, UI_window_height );
   glEnable(GL_CULL_FACE);
   glEnable(GL_NORMALIZE);
+  glEnable(GL_TEXTURE_2D);
   glPointSize(3);
   polygonMode.insert(std::pair<patron, GLenum>(LUZ, GL_FILL));
 }
