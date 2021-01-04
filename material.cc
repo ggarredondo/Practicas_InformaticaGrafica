@@ -2,7 +2,7 @@
 
 Material::Material()
 {
-	difuso = Tupla4f(1,0,0,0);
+	difuso = Tupla4f(1,1,1,1);
 	especular = Tupla4f(0,0,0,0);
 	ambiente = Tupla4f(0,0,0,0);
 	brillo = 1;

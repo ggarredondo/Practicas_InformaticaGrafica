@@ -51,7 +51,7 @@ class Escena
    bool cuboActivo = false; //C
    bool tetraedroActivo = false; //T
    bool plyActivo = false; //G
-   bool revActivo = false; //H
+   bool revActivo = true; //H
    bool cilActivo = false; //J
    bool conActivo = false; //K
    bool sphActivo = false; //M
@@ -79,6 +79,8 @@ class Escena
    Cilindro* cil = nullptr;
    Cono* con = nullptr;
    Esfera* sph = nullptr;
+
+   ObjRevolucion* lata = nullptr;
 
    LuzPosicional* luzP = nullptr;
    LuzDireccional* luzD = nullptr;

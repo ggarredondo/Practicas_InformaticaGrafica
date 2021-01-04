@@ -46,18 +46,18 @@ void Escena::animarModeloJerarquico()
     mors->inclinarCabezaSuperior(sin(t)*2.5);
 
     mors->trasladarTorsoAislado(sin(t*0.5)*0.05);
-    mors->rotarTorsoAislado(sin(t*0.5)*0.05);
+    mors->rotarTorsoAislado(sin(t*0.5)*0.3);
 
     mors->rotarBrazoIzq(-25+cos(t*0.5)*0.5,-60,-70+sin(t*0.5)*0.5);
     mors->rotarBrazoDech(-25+sin(t*0.5)*0.5,60,70+sin(t*0.5)*0.5);
 
-    mors->rotarPiernaIzq(-60+sin(t*0.5),0,10);
-    mors->rotarRodillaIzq(40-sin(t*0.5),-30,0);
-    mors->rotarTalonIzq(-10-sin(t*0.5),0,0);
+    mors->rotarPiernaIzq(-60+sin(t*0.5)*0.75,0,10);
+    mors->rotarRodillaIzq(40-sin(t*0.5)*0.75,-30,0);
+    mors->rotarTalonIzq(-10-sin(t*0.5)*0.75,0,0);
 
-    mors->rotarPiernaDech(-60+sin(t*0.5),0,-10);
-    mors->rotarRodillaDech(40-sin(t*0.5),30,0);
-    mors->rotarTalonDech(-10-sin(t*0.5),0,0);
+    mors->rotarPiernaDech(-60+sin(t*0.5)*0.75,0,-10);
+    mors->rotarRodillaDech(40-sin(t*0.5)*0.75,30,0);
+    mors->rotarTalonDech(-10-sin(t*0.5)*0.75,0,0);
   }
 }
 
@@ -75,6 +75,7 @@ Escena::Escena()
   ply = new ObjPLY("./plys/ant.ply");
 
   rev = new ObjRevolucion("./plys/peon.ply", 50, tapas);
+  lata = new ObjRevolucion("./plys/lata-pcue.ply", 50, false, "./texturas/text-lata-1.jpg");
   cil = new Cilindro(2, 50, 70, 50, tapas);
   con = new Cono(20, 50, 70, 50, tapas);
   sph = new Esfera(20, 50, 60, tapas);
@@ -107,7 +108,6 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 	glViewport( 0, 0, UI_window_width, UI_window_height );
   glEnable(GL_CULL_FACE);
   glEnable(GL_NORMALIZE);
-  glEnable(GL_TEXTURE_2D);
   glPointSize(3);
   polygonMode.insert(std::pair<patron, GLenum>(LUZ, GL_FILL));
 }
@@ -183,6 +183,11 @@ void Escena::dibujar()
     }
 
     mors->draw(modoDibujado, i.first);
+    glPushMatrix();
+      glTranslatef(-30,0,40);
+      glScalef(40,40,40);
+      lata->draw(modoDibujado, i.first);
+    glPopMatrix();
   }
   if (luzPActiva)
     luzP->activar();

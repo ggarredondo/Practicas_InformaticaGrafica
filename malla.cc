@@ -84,6 +84,7 @@ void Malla3D::draw_ModoInmediato(std::vector<Tupla3f>& c, std::vector<Tupla3i>& 
 	if (!ct.empty()) {
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glTexCoordPointer(2, GL_FLOAT, 0, ct.data());
+		textura->activar();
 	}
 
 	//visualizar, indicando: tipo de primitva, número de índices,
@@ -150,6 +151,7 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 		glTexCoordPointer(2, GL_FLOAT, 0, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		textura->activar();
 	}
 
 	//visualizar triángulos con glDrawElements (puntero a tabla == 0)
@@ -160,6 +162,7 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 
 	//desactivar uso de array de vértices
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);

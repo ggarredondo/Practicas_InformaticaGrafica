@@ -16,12 +16,14 @@
 
 ObjRevolucion::ObjRevolucion() {}
 
-ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias, bool tapas) {
+ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias, bool tapas, std::string tex) {
 	std::vector<Tupla3f> vertices;
 	ply::read_vertices(archivo, vertices);
 
 	if (vertices[0][1] > vertices[vertices.size()-1][1])
 		std::reverse(vertices.begin(), vertices.end());
+	if (tex.compare("n") != 0)
+		textura = new Textura(tex);
 	prepararObj(vertices, num_instancias, tapas);
 }
 
@@ -48,6 +50,8 @@ void ObjRevolucion::actualizarTapas(bool tapas) {
 
 void ObjRevolucion::prepararObj(const std::vector<Tupla3f>& perfil, int num_instancias, bool tapas) {
 	crearMalla(perfil, num_instancias);
+	if (textura != nullptr)
+		calcularCoordTextura(num_instancias, perfil.size());
     insertarPolos(perfil, num_instancias);
 	preparar_modos();
 	actualizarTapas(tapas);
@@ -64,6 +68,11 @@ void ObjRevolucion::crearMalla(const std::vector<Tupla3f>& perfil_original, int 
 			v_aux[0] *= cos(2*M_PI*i/N);
 			v.push_back(v_aux);
 		}
+	}
+	if (textura) {
+		for (unsigned j = 0; j < M; ++j)
+			v.push_back(v[j]);
+		N++;
 	}
 
 	unsigned a, b;
@@ -111,4 +120,23 @@ void ObjRevolucion::insertarPolos(const std::vector<Tupla3f>& perfil_original, i
 	}
 	f.push_back(Tupla3i(anterior, primero, polo));
 	size_tapas++;
+}
+
+inline float modulo(const Tupla3f& t) {
+	return sqrt( t[0]*t[0] + t[1]*t[1] + t[2]*t[2] );
+}
+
+void ObjRevolucion::calcularCoordTextura(unsigned N, unsigned M)
+{
+	ct.resize(v.size());
+	std::vector<float> d(M,0);
+	N++;
+
+	for (unsigned i = 1; i < M; ++i) 
+		d[i] = d[i-1] + modulo(v[0]-v[i]);
+
+	for (unsigned i = 0; i < N; ++i) {
+		for (unsigned j = 0; j < M; ++j)
+			ct[j+M*i] = { i/(N-1.0), 1-d[j]/d[M-1] };
+	}
 }

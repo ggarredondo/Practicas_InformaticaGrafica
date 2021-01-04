@@ -27,7 +27,7 @@ class ObjRevolucion : public Malla3D
 {
 public:
 	ObjRevolucion();
-	ObjRevolucion(const std::string & archivo, int num_instancias, bool tapas=true) ;
+	ObjRevolucion(const std::string & archivo, int num_instancias, bool tapas=true, std::string tex="n") ;
 	ObjRevolucion(const std::vector<Tupla3f>& archivo, int num_instancias, bool tapas=true) ;
 	void actualizarTapas(bool tapas);
 
@@ -37,6 +37,7 @@ protected:
 	void crearMalla(const std::vector<Tupla3f>& perfil_original, int num_instancias);
 	void insertarPolos(const std::vector<Tupla3f>& perfil_original, int num_instancias);
 	void prepararObj(const std::vector<Tupla3f>& perfil, int num_instancias, bool tapas);
+	void calcularCoordTextura(unsigned M, unsigned N);
 };
 
 
