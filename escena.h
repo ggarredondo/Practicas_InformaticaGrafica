@@ -51,7 +51,7 @@ class Escena
    bool cuboActivo = false; //C
    bool tetraedroActivo = false; //T
    bool plyActivo = false; //G
-   bool revActivo = true; //H
+   bool revActivo = false; //H
    bool cilActivo = false; //J
    bool conActivo = false; //K
    bool sphActivo = false; //M
