@@ -75,12 +75,17 @@ Escena::Escena()
   ply = new ObjPLY("./plys/ant.ply");
 
   rev = new ObjRevolucion("./plys/peon.ply", 50, tapas);
-  lata = new ObjRevolucion("./plys/lata-pcue.ply", 50, false, "./texturas/text-lata-1.jpg");
   cil = new Cilindro(2, 50, 70, 50, tapas);
   con = new Cono(20, 50, 70, 50, tapas);
   sph = new Esfera(20, 50, 60, tapas);
   rev->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,1,0),Tupla4f(0,0,0,0), 10));
   cil->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,0,0),Tupla4f(0,1,0,0), 50));
+
+  lata = new ObjRevolucion("./plys/lata-pcue.ply", 50, false, "./texturas/text-lata-1.jpg");
+  lataSup = new ObjRevolucion("./plys/lata-psup.ply", 50, false);
+  lataInf = new ObjRevolucion("./plys/lata-pinf.ply", 50, false);
+
+  cuadro = new Cuadro();
 
   mors = new Morsmanum();
   pose_idle();
@@ -145,7 +150,7 @@ void Escena::dibujar()
     }
     if (tetraedroActivo) {
       glPushMatrix();
-        glTranslatef(0, 0, -100);
+        glTranslatef(0, 0, -130);
         tetraedro->draw(modoDibujado, i.first);
       glPopMatrix();
     }
@@ -184,10 +189,13 @@ void Escena::dibujar()
 
     mors->draw(modoDibujado, i.first);
     glPushMatrix();
-      glTranslatef(-30,0,40);
+      glTranslatef(-50,0,40);
       glScalef(40,40,40);
       lata->draw(modoDibujado, i.first);
+      lataSup->draw(modoDibujado, i.first);
+      lataInf->draw(modoDibujado, i.first);
     glPopMatrix();
+    cuadro->draw(modoDibujado, i.first);
   }
   if (luzPActiva)
     luzP->activar();

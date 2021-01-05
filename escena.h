@@ -15,7 +15,8 @@
 #include "luzdireccional.h"
 #include <map>
 
-#include "morsmanum.h" //temporal
+#include "morsmanum.h"
+#include "cuadro.h"
 
 typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELDIBUJADO} menu;
 typedef enum {NINGUNO, ALFA, BETA} angulo;
@@ -81,6 +82,10 @@ class Escena
    Esfera* sph = nullptr;
 
    ObjRevolucion* lata = nullptr;
+   ObjRevolucion* lataSup = nullptr;
+   ObjRevolucion* lataInf = nullptr;
+
+   Cuadro* cuadro = nullptr;
 
    LuzPosicional* luzP = nullptr;
    LuzDireccional* luzD = nullptr;

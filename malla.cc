@@ -62,8 +62,10 @@ void Malla3D::calcular_normales()
 			nv[cara[i]] = nv[cara[i]] + nc;
 	}
 
-	for (auto n : nv)
-		n = n.normalized();
+	for (auto n : nv) {
+		if (n[0]+n[1]+n[2] != 0)
+			n = n.normalized();
+	}
 }
 
 // Visualización en modo inmediato con 'glDrawElements'
