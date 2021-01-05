@@ -80,7 +80,7 @@ class Escena
    Cono* con = nullptr;
    Esfera* sph = nullptr;
 
-   ObjRevolucion* lata = nullptr;
+   ObjRevolucion* lata = nullptr;z
 
    LuzPosicional* luzP = nullptr;
    LuzDireccional* luzD = nullptr;

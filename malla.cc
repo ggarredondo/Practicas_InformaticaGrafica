@@ -102,7 +102,7 @@ void Malla3D::draw_ModoInmediato(std::vector<Tupla3f>& c, std::vector<Tupla3i>& 
 
 GLuint Malla3D::CrearVBO (GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid* puntero_ram)
 {
-	GLuint id_vbo; //identificador de VBO
+	GLuint id_vbo; //identificador de VBOzz
 	glGenBuffers(1, &id_vbo); //crear nuevo VBO, obtener identificador
 	glBindBuffer(tipo_vbo, id_vbo); //activar el VBO usando su identificador
 
