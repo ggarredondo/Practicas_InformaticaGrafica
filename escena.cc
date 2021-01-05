@@ -36,7 +36,7 @@ void Escena::pose_idle()
   mors->rotarTalonDech(-10,0,0);
 }
 
-void Escena::animarModeloJerarquico() 
+void Escena::animacion() 
 {
   float t = velocidadAnimacion*glutGet(GLUT_ELAPSED_TIME);
 
@@ -58,6 +58,8 @@ void Escena::animarModeloJerarquico()
     mors->rotarPiernaDech(-60+sin(t*0.5)*0.75,0,-10);
     mors->rotarRodillaDech(40-sin(t*0.5)*0.75,30,0);
     mors->rotarTalonDech(-10-sin(t*0.5)*0.75,0,0);
+
+    luzP->trasladarLuz(cos(t*0.1)*1000,0,-sin(t*0.1)*1000);
   }
 }
 
@@ -90,7 +92,7 @@ Escena::Escena()
   mors = new Morsmanum();
   pose_idle();
   
-  luzP = new LuzPosicional(Tupla3f(100,0,0), GL_LIGHT0, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
+  luzP = new LuzPosicional(Tupla3f(-50,0,100), GL_LIGHT0, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
   luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
 }
 
@@ -442,6 +444,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       if (animacionActiva) {
         animacionActiva = false;
         pose_idle();
+        luzP->trasladarLuz(-50,0,100);
       }
       else {
         printf("Opciones disponibles: \n'+': Acelerar animación\n'-': Decelerar animación\n");
@@ -450,12 +453,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
     break;
       case '+' :
         if (animacionActiva)
-          velocidadAnimacion += 0.01;
+          velocidadAnimacion += 0.001;
         std::cout << velocidadAnimacion << std::endl;
       break;
       case '-' :
         if (animacionActiva && velocidadAnimacion > 0) 
-          velocidadAnimacion -= 0.01;
+          velocidadAnimacion -= 0.001;
         std::cout << velocidadAnimacion << std::endl;
       break;
 

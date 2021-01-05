@@ -92,7 +92,7 @@ void special_keys( int tecla, int x, int y )
 void funcion_idle()
 {
   if (escena!=NULL)
-    escena->animarModeloJerarquico();
+    escena->animacion();
   glutPostRedisplay();
 }
 

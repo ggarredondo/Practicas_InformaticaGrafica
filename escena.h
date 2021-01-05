@@ -58,8 +58,8 @@ class Escena
    bool sphActivo = false; //M
 
    bool luzActiva;
-   bool luzPActiva = false;
-   bool luzDActiva = true;
+   bool luzPActiva = true;
+   bool luzDActiva = false;
 
    bool tapas = true;
    bool suavizado = true;
@@ -107,7 +107,7 @@ class Escena
 	bool teclaPulsada( unsigned char Tecla1, int x, int y ) ;
 	void teclaEspecial( int Tecla1, int x, int y );
 
-	void animarModeloJerarquico();
+	void animacion();
 
 };
 #endif
