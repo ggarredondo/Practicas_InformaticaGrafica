@@ -34,6 +34,8 @@ void Escena::pose_idle()
   mors->rotarPiernaDech(-60,0,-10);
   mors->rotarRodillaDech(40,30,0);
   mors->rotarTalonDech(-10,0,0);
+
+  gValor = {0,0,0};
 }
 
 void Escena::animacion() 
@@ -117,6 +119,8 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
   glEnable(GL_NORMALIZE);
   glPointSize(3);
   polygonMode.insert(std::pair<patron, GLenum>(LUZ, GL_FILL));
+  printf("Opciones disponibles: \n'O': Selección de objeto\n'V': Selección de modo de visualización\n'D': Selección de modo de dibujado\n");
+  printf("'A': Activar animación automática\n'M': Animación manual\n'Q': Salir del programa\n");
 }
 
 
@@ -221,296 +225,320 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
   switch( toupper(tecla) )
   {
     case 'Q' :
-      if (modoMenu != NADA) 
-        modoMenu = NADA;         
+      if (modoMenu != NADA) {
+        modoMenu = NADA;   
+        printf("Opciones disponibles: \n'O': Selección de objeto\n'V': Selección de modo de visualización\n'D': Selección de modo de dibujado\n");
+        printf("'A': Activar animación automática\n'M': Animación manual\n'Q': Salir del programa\n");      
+      }
       else 
         salir = true;
     break ;
+
     case 'O' :
     // ESTAMOS EN MODO SELECCION DE OBJETO
-      modoMenu=SELOBJETO; 
-      printf("Opciones disponibles: \n'C': Cubo \n'T': Tetraedro\n'G': Objeto ply\n'H': Objeto revolución\n'J': Cilindro\n'K': Cono\n'U': Esfera\n");
-      break ;
-      case 'C' :
-        if (modoMenu==SELOBJETO) {
-          if (cuboActivo)
-            cuboActivo = false;
-          else
-            cuboActivo = true;
-        }
-      break;
-      case 'T' :
-        if (modoMenu==SELOBJETO) {
-          if (tetraedroActivo)
-            tetraedroActivo = false;
-          else
-            tetraedroActivo = true;
-        }
-      break;
-      case 'G' :
-        if (modoMenu==SELOBJETO) {
-          if (plyActivo)
-            plyActivo = false;
-          else
-            plyActivo = true;
-        }
-      break;
-      case 'H' :
-        if (modoMenu==SELOBJETO) {
-          if (revActivo)
-            revActivo = false;
-          else
-            revActivo = true;
-        }
-      break;
-      case 'J' :
-        if (modoMenu==SELOBJETO) {
-          if (cilActivo)
-            cilActivo = false;
-          else
-            cilActivo = true;
-        }
-      break;
-      case 'K' :
-        if (modoMenu==SELOBJETO) {
-          if (conActivo)
-            conActivo = false;
-          else
-            conActivo = true;
-        }
-      break;
-      case 'U' :
-        if (modoMenu==SELOBJETO) {
-          if (sphActivo)
-            sphActivo = false;
-          else
-            sphActivo = true;
-        }
-      break;
+      modoMenu = SELOBJETO; 
+      printf("Opciones disponibles: \n'C': Cubo \n'T': Tetraedro\n'G': Objeto ply\n'H': Objeto revolución\n'J': Cilindro\n'K': Cono\n'L': Esfera\n");
+    break;
 
     case 'V' :
     // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
-      modoMenu=SELVISUALIZACION;
-      printf("Opciones disponibles: \n'L': Línea \n'P': Puntos\n'S': Sólido\n'A': Ajedrez\n'Y': Activar tapas\n");
+      modoMenu = SELVISUALIZACION;
+      printf("Opciones disponibles: \n'L': Línea \n'P': Puntos\n'S': Sólido\n'A': Ajedrez\n'T': Activar tapas\n");
       printf("'R': Desactivar suavizado\n'I': Activar iluminación\n");
-      break ;
-      case 'L' :
-        if (modoMenu==SELVISUALIZACION) {
-          if (polygonMode.find(LINEA) == polygonMode.end()) {
-            polygonMode.insert(std::pair<patron, GLenum>(LINEA,GL_LINE));
-            polygonMode.erase(LUZ); 
-            glDisable(GL_LIGHTING);
-          }
-          else
-            polygonMode.erase(LINEA);
-        }
-      break;
-      case 'P' :
-        if (modoMenu==SELVISUALIZACION) {
-          if (polygonMode.find(PUNTO) == polygonMode.end())
-            polygonMode.insert(std::pair<patron, GLenum>(PUNTO,GL_POINT));
-          else
-            polygonMode.erase(PUNTO);
-        }
-      break;
-      case 'S' :
-        if (modoMenu==SELVISUALIZACION) {
-          if (polygonMode.find(SOLIDO) == polygonMode.end()) {
-            polygonMode.insert(std::pair<patron, GLenum>(SOLIDO,GL_FILL));
-            polygonMode.erase(LUZ); 
-            polygonMode.erase(AJEDREZ);
-            glDisable(GL_LIGHTING);
-          }
-          else
-            polygonMode.erase(SOLIDO);
-        }
-      break;
-      case 'A' :
-        if (modoMenu==SELVISUALIZACION) {
-          if (polygonMode.find(AJEDREZ) == polygonMode.end()) {
-            polygonMode.insert(std::pair<patron, GLenum>(AJEDREZ,GL_FILL));
-            polygonMode.erase(LUZ);
-            polygonMode.erase(SOLIDO); 
-            glDisable(GL_LIGHTING);
-          }
-          else
-            polygonMode.erase(AJEDREZ);
-        }
-      break;
-      case 'Y' :
-        if (modoMenu==SELVISUALIZACION) {
-          if (tapas) {
-            tapas = false;
-            actualizarTapas();
-          }
-          else {
-            tapas = true;
-            actualizarTapas();
-          }
-        }
-      break;
-      case 'R' :
-        if (modoMenu==SELVISUALIZACION) {
-          if (suavizado) {
-            suavizado = false;
-            glShadeModel(GL_FLAT);
-          }
-          else {
-            suavizado = true;
-            glShadeModel(GL_SMOOTH);
-          }
-        }
-      break;
-      case 'I' :
-        if (modoMenu==SELVISUALIZACION) {
-          if (polygonMode.find(LUZ) == polygonMode.end()) {
-            polygonMode.erase(SOLIDO);
-            polygonMode.erase(AJEDREZ);
-            polygonMode.erase(LINEA);
-            polygonMode.insert(std::pair<patron, GLenum>(LUZ,GL_FILL));
-            printf("Opciones de iluminación: \n'3-4': Activar luz n\n'X': variación de alfa\n'B': variación de beta\n'>': incrementar ángulo\n");
-            printf("'<': decrementar ángulo\n");
-          }
-          else {
-            glDisable(GL_LIGHTING);
-            polygonMode.erase(LUZ); 
-          }
-        }
-        break;
-        case '3' :
-          if (luzActiva) {
-            if (luzPActiva) {
-              luzPActiva = false;
-              luzP->desactivar();
-            }
-            else {
-              luzPActiva = true;
-              dibujar();
-            }
-          }
-        break;
-        case '4' :
-          if (luzActiva) {
-            if (luzDActiva) {
-              luzDActiva = false;
-              luzD->desactivar();
-            }
-            else {
-              luzDActiva = true;
-              dibujar();
-            }
-          }
-        break;
-        case 'X' :
-          if (luzActiva)
-            angle = ALFA;
-        break;
-        case 'B' :
-          if (luzActiva)
-            angle = BETA;
-        break;
-        case '>' :
-          if (luzActiva) {
-            if (angle == ALFA)
-              luzD->variarAnguloAlpha(0.1);
-            else if (angle == BETA)
-              luzD->variarAnguloBeta(0.1);
-          }
-        break;
-        case '<' :
-          if (luzActiva) {
-            if (angle == ALFA)
-              luzD->variarAnguloAlpha(-0.1);
-            else if (angle == BETA)
-              luzD->variarAnguloBeta(-0.1);
-          }
-        break;
+    break;
 
     case 'D' :
     // ESTAMOS EN MODO SELECCION DE DIBUJADO
-      modoMenu=SELDIBUJADO;
+      modoMenu = SELDIBUJADO;
       printf("Opciones disponibles: \n'1': Modo Inmediato\n'2': Modo diferido\n");
-      break ;
-      case '1' :
-        if (modoMenu==SELDIBUJADO)
-          modoDibujado = INMEDIATO;
-      break;
-      case '2' :
-        if (modoMenu==SELDIBUJADO)
-          modoDibujado = DIFERIDO;
       break;
 
-    case 'N' :
+    case '1' :
+      if (modoMenu == SELDIBUJADO) {
+        printf("Modo inmediato\n");
+        modoDibujado = INMEDIATO;
+      }
+      else if (luzActiva && modoMenu == SELVISUALIZACION) {
+        if (luzPActiva) {
+          luzPActiva = false;
+          luzP->desactivar();
+        }
+        else {
+          luzPActiva = true;
+          dibujar();
+        }
+      }
+      else if (modoMenu == MANUAL)
+        gLibertad = 1;
+    break;
+
+    case '2' :
+      if (modoMenu == SELDIBUJADO) {
+        printf("Modo diferido\n");
+        modoDibujado = DIFERIDO;
+      }
+      else if (luzActiva && modoMenu == SELVISUALIZACION) {
+        if (luzDActiva) {
+          luzDActiva = false;
+          luzD->desactivar();
+        }
+        else {
+          luzDActiva = true;
+          dibujar();
+        }
+      }
+      else if (modoMenu == MANUAL)
+        gLibertad = 2;
+    break;
+
+    case '3' :
+      if (modoMenu == MANUAL)
+        gLibertad = 3;
+    break;
+
+    case 'C' :
+      if (modoMenu == SELOBJETO) {
+        if (cuboActivo)
+          cuboActivo = false;
+        else
+          cuboActivo = true;
+      }
+    break;
+
+    case 'T' :
+      if (modoMenu == SELOBJETO) {
+        if (tetraedroActivo)
+          tetraedroActivo = false;
+        else
+          tetraedroActivo = true;
+      }
+      else if (modoMenu==SELVISUALIZACION) {
+        if (tapas) {
+          tapas = false;
+          actualizarTapas();
+        }
+        else {
+          tapas = true;
+          actualizarTapas();
+        }
+      }
+    break;
+
+    case 'G' :
+      if (modoMenu == SELOBJETO) {
+        if (plyActivo)
+          plyActivo = false;
+        else
+          plyActivo = true;
+      }
+    break;
+
+    case 'H' :
+      if (modoMenu == SELOBJETO) {
+        if (revActivo)
+          revActivo = false;
+        else
+          revActivo = true;
+      }
+    break;
+
+    case 'J' :
+      if (modoMenu == SELOBJETO) {
+        if (cilActivo)
+          cilActivo = false;
+        else
+          cilActivo = true;
+      }
+    break;
+
+    case 'K' :
+      if (modoMenu == SELOBJETO) {
+        if (conActivo)
+          conActivo = false;
+        else
+          conActivo = true;
+      }
+    break;
+
+    case 'L' :
+      if (modoMenu == SELOBJETO) {
+        if (sphActivo)
+          sphActivo = false;
+        else
+          sphActivo = true;
+      }
+      else if (modoMenu==SELVISUALIZACION) {
+        if (polygonMode.find(LINEA) == polygonMode.end()) {
+          polygonMode.insert(std::pair<patron, GLenum>(LINEA,GL_LINE));
+          polygonMode.erase(LUZ); 
+          glDisable(GL_LIGHTING);
+        }
+        else
+          polygonMode.erase(LINEA);
+      }
+    break;
+
+    case 'P' :
+      if (modoMenu==SELVISUALIZACION) {
+        if (polygonMode.find(PUNTO) == polygonMode.end())
+          polygonMode.insert(std::pair<patron, GLenum>(PUNTO,GL_POINT));
+        else
+          polygonMode.erase(PUNTO);
+      }
+    break;
+
+    case 'S' :
+      if (modoMenu==SELVISUALIZACION) {
+        if (polygonMode.find(SOLIDO) == polygonMode.end()) {
+          polygonMode.insert(std::pair<patron, GLenum>(SOLIDO,GL_FILL));
+          polygonMode.erase(LUZ); 
+          polygonMode.erase(AJEDREZ);
+          glDisable(GL_LIGHTING);
+        }
+        else
+          polygonMode.erase(SOLIDO);
+      }
+    break;
+
+    case 'A' :
+      if (modoMenu==SELVISUALIZACION) {
+        if (polygonMode.find(AJEDREZ) == polygonMode.end()) {
+          polygonMode.insert(std::pair<patron, GLenum>(AJEDREZ,GL_FILL));
+          polygonMode.erase(LUZ);
+          polygonMode.erase(SOLIDO); 
+          glDisable(GL_LIGHTING);
+        }
+        else
+          polygonMode.erase(AJEDREZ);
+      }
+      else {
+        modoMenu = ANIM;
+        if (animacionActiva) {
+          animacionActiva = false;
+          pose_idle();
+          luzP->trasladarLuz(-50,0,100);
+        }
+        else {
+          printf("Opciones disponibles: \n'+': Acelerar animación\n'-': Decelerar animación\n");
+          animacionActiva = true;
+        }
+      }
+    break;
+
+    case '+' :
+      if (animacionActiva && modoMenu == ANIM) {
+        velocidadAnimacion += 0.001;
+        std::cout << velocidadAnimacion << std::endl;
+      }
+      else if (modoMenu == MANUAL) {
+        switch (gLibertad) {
+          case 1 :
+            gValor[0] += 0.5;
+            mors->abrirFauces(gValor[0]);
+          break;
+          case 2 :
+            gValor[1] += 0.5;
+            mors->inclinarCabezaSuperior(gValor[1]);
+          break;
+          case 3 :
+            gValor[2] += 0.5;
+            mors->rotarCabeza(30+gValor[2],0,0);
+          break;
+        }
+      }
+    break;
+    
+    case '-' :
+      if (animacionActiva && modoMenu == ANIM && velocidadAnimacion > 0) {
+        velocidadAnimacion -= 0.001;
+        std::cout << velocidadAnimacion << std::endl;
+      }
+      else if (modoMenu == MANUAL) {
+        switch (gLibertad) {
+          case 1 :
+            gValor[0] -= 0.5;
+            mors->abrirFauces(gValor[0]);
+          break;
+          case 2 :
+            gValor[1] -= 0.5;
+            mors->inclinarCabezaSuperior(gValor[1]);
+          break;
+          case 3 :
+            gValor[2] -= 0.5;
+            mors->rotarCabeza(30+gValor[2],0,0);
+          break;
+        }
+      }
+    break;
+
+    case 'M' :
+      modoMenu = MANUAL;
       if (animacionActiva) {
         animacionActiva = false;
         pose_idle();
         luzP->trasladarLuz(-50,0,100);
       }
-      else {
-        printf("Opciones disponibles: \n'+': Acelerar animación\n'-': Decelerar animación\n");
-        animacionActiva = true;
+      printf("Opciones disponibles: \n'1': Fauces\n'2': Rotación cabeza superior\n'3': Rotación cabeza completa\n");
+      printf("'+': Aumentar valor\n'-': Disminuir valor\n");
+    break;
+
+    case 'R' :
+      if (modoMenu==SELVISUALIZACION) {
+        if (suavizado) {
+          suavizado = false;
+          glShadeModel(GL_FLAT);
+        }
+        else {
+          suavizado = true;
+          glShadeModel(GL_SMOOTH);
+        }
       }
     break;
-      case '+' :
-        if (animacionActiva)
-          velocidadAnimacion += 0.001;
-        std::cout << velocidadAnimacion << std::endl;
-      break;
-      case '-' :
-        if (animacionActiva && velocidadAnimacion > 0) 
-          velocidadAnimacion -= 0.001;
-        std::cout << velocidadAnimacion << std::endl;
-      break;
 
-    case 'M' :
-      if (animacionActiva) {
-        animacionActiva = false;
-        pose_idle();
+    case 'I' :
+      if (modoMenu==SELVISUALIZACION) {
+        if (polygonMode.find(LUZ) == polygonMode.end()) {
+          polygonMode.erase(SOLIDO);
+          polygonMode.erase(AJEDREZ);
+          polygonMode.erase(LINEA);
+          polygonMode.insert(std::pair<patron, GLenum>(LUZ,GL_FILL));
+          printf("Opciones de iluminación: \n'1-2': Activar luz n\n'X': variación de alfa\n'B': variación de beta\n'>': incrementar ángulo\n");
+          printf("'<': decrementar ángulo\n");
+        }
+        else {
+          glDisable(GL_LIGHTING);
+          polygonMode.erase(LUZ); 
+        }
       }
-      printf("Opciones disponibles: \n'5': Fauces\n'6': Rotación cabeza superior\n'7': Rotación cabeza completa\n");
-      printf("'.': Aumentar valor\n',': Disminuir valor\n");
-      break;
-      case '5' :
-        manual = FAUCES;
-      break;
-      case '6' :
-        manual = CSUP;
-      break;
-      case '7' :
-        manual = C;
-      break;
-      case '.' :
-        switch (manual) {
-          case FAUCES :
-            gValor[0] += 0.5;
-            mors->abrirFauces(gValor[0]);
-          break;
-          case CSUP :
-            gValor[1] += 0.5;
-            mors->inclinarCabezaSuperior(gValor[1]);
-          break;
-          case C :
-            gValor[2] += 0.5;
-            mors->rotarCabeza(30+gValor[2],0,0);
-          break;
-        }
-      break;
-      case ',' :
-        switch (manual) {
-          case FAUCES :
-            gValor[0] -= 0.5;
-            mors->abrirFauces(gValor[0]);
-          break;
-          case CSUP :
-            gValor[1] -= 0.5;
-            mors->inclinarCabezaSuperior(gValor[1]);
-          break;
-          case C :
-            gValor[2] -= 0.5;
-            mors->rotarCabeza(30+gValor[2],0,0);
-          break;
-        }
-      break;
+    break;
+
+    case 'X' :
+      if (luzActiva && modoMenu == SELVISUALIZACION)
+        angle = ALFA;
+    break;
+
+    case 'B' :
+      if (luzActiva && modoMenu == SELVISUALIZACION)
+        angle = BETA;
+    break;
+
+    case '>' :
+      if (luzActiva && modoMenu == SELVISUALIZACION) {
+        if (angle == ALFA)
+          luzD->variarAnguloAlpha(0.1);
+        else if (angle == BETA)
+          luzD->variarAnguloBeta(0.1);
+      }
+    break;
+
+    case '<' :
+      if (luzActiva && modoMenu == SELVISUALIZACION) {
+        if (angle == ALFA)
+          luzD->variarAnguloAlpha(-0.1);
+        else if (angle == BETA)
+          luzD->variarAnguloBeta(-0.1);
+      }
+    break;
   }
   return salir;
 }

@@ -18,9 +18,8 @@
 #include "morsmanum.h"
 #include "cuadro.h"
 
-typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELDIBUJADO} menu;
+typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELDIBUJADO, ANIM, MANUAL} menu;
 typedef enum {NINGUNO, ALFA, BETA} angulo;
-typedef enum {NULO, FAUCES, CSUP, C} gLibertad;
 
 class Escena
 {
@@ -91,8 +90,8 @@ class Escena
    LuzDireccional* luzD = nullptr;
 
    Morsmanum* mors = nullptr;
-   gLibertad manual = NULO;
-   float gValor[3] = {0,0,0};
+   int gLibertad = -1;
+   std::vector<float> gValor;
    
    public:
 

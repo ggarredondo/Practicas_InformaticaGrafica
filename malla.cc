@@ -94,6 +94,7 @@ void Malla3D::draw_ModoInmediato(std::vector<Tupla3f>& c, std::vector<Tupla3i>& 
 	glDrawElements(GL_TRIANGLES, tam*3, GL_UNSIGNED_INT, f0.data());
 
 	//deshabilitar array de vértices
+	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
