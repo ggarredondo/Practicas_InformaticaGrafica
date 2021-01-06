@@ -3,15 +3,15 @@
 BrazoDech::BrazoDech() 
 {
 	shoulder = new ObjPLY("./morsmanum/ply/Rarm.ply");
-	shoulder->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
+	shoulder->setTextura("./texturas/redead1.jpg");
 	forearm = new ObjPLY("./morsmanum/ply/Rforearm.ply");
-	forearm->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
+	forearm->setTextura("./texturas/redead1.jpg");
 	hand = new ObjPLY("./morsmanum/ply/Rhand.ply");
-	hand->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
+	hand->setTextura("./texturas/redead1.jpg");
 	fingers = new ObjPLY("./morsmanum/ply/Rfingers.ply");
-	fingers->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
+	fingers->setTextura("./texturas/redead1.jpg");
 	thumb = new ObjPLY("./morsmanum/ply/Rthumb.ply");
-	thumb->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
+	thumb->setTextura("./texturas/redead1.jpg");
 
 	AntebrazoY = 0;
 	ManoY = 0;

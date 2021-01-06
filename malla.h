@@ -41,11 +41,14 @@ class Malla3D
       m = mat;
    }
 
-   //establecer textura manualmente
+   //asignación textura manual
    inline void setTextura(std::string tex, const std::vector<Tupla2f>& coord) {
       textura = new Textura(tex);
       ct = coord;
    }
+
+   //asignación textura procedural por coordenadas cilíndricas
+   void setTextura(std::string tex);
 
    protected:
 

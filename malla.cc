@@ -1,5 +1,6 @@
 #include "aux.h"
 #include "malla.h"
+#include <cfloat>
 
 // *****************************************************************************
 //
@@ -65,6 +66,27 @@ void Malla3D::calcular_normales()
 	for (auto n : nv) {
 		if (n[0]+n[1]+n[2] != 0)
 			n = n.normalized();
+	}
+}
+
+void Malla3D::setTextura(std::string tex)
+{
+	textura = new Textura(tex);
+	float a, h, y_min = FLT_MAX, y_max = FLT_MIN;
+	ct.resize(v.size());
+
+	for (auto i : v) {
+		if (y_min > i[1])
+			y_min = i[1];
+
+		if (y_max < i[1])
+			y_max = i[1];
+	}
+
+	for (unsigned i = 0; i < v.size(); ++i) {
+		a = atan2(v[i][2], v[i][0]);
+		h = v[i][1];
+		ct[i] = { 0.5f+a/(2.0f*M_PI), 1.0f-(h-y_min)/(y_max-y_min) };
 	}
 }
 

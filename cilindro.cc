@@ -1,6 +1,6 @@
 #include "cilindro.h"
 
-Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, const float altura, const float radio, bool tapas)
+Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, const float altura, const float radio, bool tapas, std::string tex)
 {
 	std::vector<Tupla3f> perfil;
 	int n = num_vert_perfil-1;
@@ -12,5 +12,5 @@ Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, con
 	}
 
 	if (n >= 0)
-		prepararObj(perfil, num_instancias_perf, tapas);
+		prepararObj(perfil, num_instancias_perf, tapas, tex);
 }

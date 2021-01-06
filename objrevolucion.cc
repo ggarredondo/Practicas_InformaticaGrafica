@@ -19,20 +19,17 @@ ObjRevolucion::ObjRevolucion() {}
 ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias, bool tapas, std::string tex) {
 	std::vector<Tupla3f> vertices;
 	ply::read_vertices(archivo, vertices);
-
 	if (vertices[0][1] > vertices[vertices.size()-1][1])
 		std::reverse(vertices.begin(), vertices.end());
-	if (tex.compare("n") != 0)
-		textura = new Textura(tex);
-	prepararObj(vertices, num_instancias, tapas);
+	prepararObj(vertices, num_instancias, tapas, tex);
 }
 
 // *****************************************************************************
 // objeto de revolución obtenido a partir de un perfil (en un vector de puntos)
 
  
-ObjRevolucion::ObjRevolucion(const std::vector<Tupla3f>& archivo, int num_instancias, bool tapas) {
-    prepararObj(archivo, num_instancias, tapas);
+ObjRevolucion::ObjRevolucion(const std::vector<Tupla3f>& archivo, int num_instancias, bool tapas, std::string tex) {
+    prepararObj(archivo, num_instancias, tapas, tex);
 }
 
 void ObjRevolucion::actualizarTapas(bool tapas) {
@@ -48,7 +45,9 @@ void ObjRevolucion::actualizarTapas(bool tapas) {
 	tamB = tam1-tamA;
 }
 
-void ObjRevolucion::prepararObj(const std::vector<Tupla3f>& perfil, int num_instancias, bool tapas) {
+void ObjRevolucion::prepararObj(const std::vector<Tupla3f>& perfil, int num_instancias, bool tapas, std::string tex) {
+	if (tex.compare("n") != 0) 
+		textura = new Textura(tex);
 	crearMalla(perfil, num_instancias);
 	if (textura != nullptr)
 		calcularCoordTextura(num_instancias, perfil.size());

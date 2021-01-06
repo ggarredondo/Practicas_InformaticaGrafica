@@ -3,16 +3,19 @@
 PiernaDech::PiernaDech()
 {
 	thigh = new ObjPLY("./morsmanum/ply/Rleg.ply");
-	thigh->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
+	thigh->setTextura("./texturas/redead1.jpg");
 	lowerleg = new ObjPLY("./morsmanum/ply/Rshin.ply");
-	lowerleg->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
+	lowerleg->setTextura("./texturas/redead1.jpg");
 	foot = new ObjPLY("./morsmanum/ply/Rfoot.ply");
-	foot->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
+	foot->setTextura("./texturas/redead1.jpg");
 
 	PiernaInfX = 0;
 	PiernaInfY = 0;
 	PiernaInfZ = 0;
+
 	PieX = 0;
+	PieY = 0;
+	PieZ = 0;
 }
 
 void PiernaDech::draw(dibujado d, patron p)

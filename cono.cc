@@ -1,6 +1,6 @@
 #include "cono.h"
 
-Cono::Cono(const int num_vert_perfil, const int num_instancias_perf, const float altura, const float radio, bool tapas)
+Cono::Cono(const int num_vert_perfil, const int num_instancias_perf, const float altura, const float radio, bool tapas, std::string tex)
 {
 	std::vector<Tupla3f> perfil;
 	int n = num_vert_perfil-1;
@@ -14,5 +14,5 @@ Cono::Cono(const int num_vert_perfil, const int num_instancias_perf, const float
 	}
 
 	if (n >= 0)
-		prepararObj(perfil, num_instancias_perf, tapas);
+		prepararObj(perfil, num_instancias_perf, tapas, tex);
 }

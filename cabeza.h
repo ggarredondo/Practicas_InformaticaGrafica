@@ -2,6 +2,7 @@
 #define CABEZA_H_INCLUDED
 
 #include "objply.h"
+#include "cilindro.h"
 
 class Cabeza {
 
@@ -11,6 +12,8 @@ private:
 	ObjPLY* lowerhead = nullptr;
 	ObjPLY* tendon = nullptr;
 	ObjPLY* fangs = nullptr;
+	Cilindro* ojo_izq = nullptr;
+	Cilindro* ojo_dech = nullptr;
 
 	float aperturaFauces, cabezaSup;
 

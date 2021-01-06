@@ -48,7 +48,7 @@ void Escena::animacion()
     mors->inclinarCabezaSuperior(sin(t)*2.5);
 
     mors->trasladarTorsoAislado(sin(t*0.5)*0.05);
-    mors->rotarTorsoAislado(sin(t*0.5)*0.3);
+    mors->rotarTorsoAislado(sin(t*0.5)*0.2);
 
     mors->rotarBrazoIzq(-25+cos(t*0.5)*0.5,-60,-70+sin(t*0.5)*0.5);
     mors->rotarBrazoDech(-25+sin(t*0.5)*0.5,60,70+sin(t*0.5)*0.5);
@@ -92,7 +92,7 @@ Escena::Escena()
   cuadro = new Cuadro();
 
   mors = new Morsmanum();
-  pose_idle();
+  //pose_idle();
   
   luzP = new LuzPosicional(Tupla3f(-50,0,100), GL_LIGHT0, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
   luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));

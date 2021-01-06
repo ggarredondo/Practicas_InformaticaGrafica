@@ -3,19 +3,16 @@
 Cabeza::Cabeza() 
 {
 	hair = new ObjPLY("./morsmanum/ply/hair.ply");
-	hair->setMaterial(Material({0.01,0.01,0.01,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
-
+	hair->setTextura("./texturas/blackhair2.jpg");
 	upperhead = new ObjPLY("./morsmanum/ply/upperhead.ply");
-	upperhead->setMaterial(Material({0.34,0.25,0.18,1},{0,0,0,0},{0,0,0,0},1));
-
+	upperhead->setTextura("./texturas/bark.jpg");
 	lowerhead = new ObjPLY("./morsmanum/ply/lowerhead.ply");
-	lowerhead->setMaterial(Material({0.34,0.25,0.18,1},{0,0,0,0},{0,0,0,0},1));
-
+	lowerhead->setTextura("./texturas/bark.jpg");
 	fangs = new ObjPLY("./morsmanum/ply/fang.ply");
-	fangs->setMaterial(Material({1,1,1,1},{0,0,0,0},{0,0,0,0},1));
-
 	tendon = new ObjPLY("./morsmanum/ply/tendon.ply");
-	tendon->setMaterial(Material({1,0.5,0.5,1},{0,0,0,1},{0,0,0,0},1));
+	tendon->setTextura("./texturas/flesh2.jpg");
+
+	ojo_izq = new Cilindro(2, 50, 1, 50, true);
 
 	aperturaFauces = 0;
 	cabezaSup = 0;
@@ -42,6 +39,10 @@ void Cabeza::draw(dibujado d, patron p)
 	glPushMatrix();
 		glScalef(2, 1.1, 2);
 		lowerhead->draw(d, p);
+	glPopMatrix();
+
+	glPushMatrix();
+		ojo_izq->draw(d,p);
 	glPopMatrix();
 
 	glPushMatrix();

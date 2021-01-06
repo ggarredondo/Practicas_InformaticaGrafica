@@ -7,7 +7,7 @@
 class Esfera : public ObjRevolucion
 {
 public:
-	Esfera(const int num_vert_perfil, const int num_instancias_perf, const float radio, bool tapas=true);
+	Esfera(const int num_vert_perfil, const int num_instancias_perf, const float radio, bool tapas=true, std::string tex="n");
 };
 
 #endif

@@ -3,7 +3,7 @@
 Morsmanum::Morsmanum()
 {
 	torso = new ObjPLY("./morsmanum/ply/torso.ply");
-	torso->setMaterial(Material({0.67,0.54,0.51,1},{0.01,0.01,0.01,1},{0,0,0,0},1));
+	torso->setTextura("./texturas/redead1.jpg");
 
 	cabeza = new Cabeza();
 	brazo_izq = new BrazoIzq();
