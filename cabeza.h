@@ -4,6 +4,16 @@
 #include "objply.h"
 #include "cilindro.h"
 
+class Ojo {
+private:
+	Cilindro* cil = nullptr;
+	bool dech;
+
+public:
+	Ojo(bool derecho);
+	void draw(dibujado d, patron p);
+};
+
 class Cabeza {
 
 private:
@@ -12,8 +22,8 @@ private:
 	ObjPLY* lowerhead = nullptr;
 	ObjPLY* tendon = nullptr;
 	ObjPLY* fangs = nullptr;
-	Cilindro* ojo_izq = nullptr;
-	Cilindro* ojo_dech = nullptr;
+	Ojo* ojo_izq = nullptr;
+	Ojo* ojo_dech = nullptr;
 
 	float aperturaFauces, cabezaSup;
 

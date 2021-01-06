@@ -50,7 +50,6 @@ void Morsmanum::draw(dibujado d, patron p)
 			glRotatef(cabezaX,1,0,0);
 			glRotatef(cabezaY,0,1,0);
 			glRotatef(cabezaZ,0,0,1);
-			glRotatef(120,0,1,0);
 			cabeza->draw(d,p);
 		glPopMatrix();
 

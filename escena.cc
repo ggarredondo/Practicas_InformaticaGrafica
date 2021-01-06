@@ -92,7 +92,7 @@ Escena::Escena()
   cuadro = new Cuadro();
 
   mors = new Morsmanum();
-  //pose_idle();
+  pose_idle();
   
   luzP = new LuzPosicional(Tupla3f(-50,0,100), GL_LIGHT0, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
   luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
