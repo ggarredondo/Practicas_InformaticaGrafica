@@ -42,7 +42,7 @@ void Camara::mover(float x, float y, float z)
 
 void Camara::zoom(float factor)
 {
-	//seguramente sea near += factor;
+	//seguramente sea near += factor; Pues no
 }
 
 void Camara::setObserver() {
