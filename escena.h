@@ -83,10 +83,6 @@ class Escena
    Cono* con = nullptr;
    Esfera* sph = nullptr;
 
-   ObjRevolucion* lata = nullptr;
-   ObjRevolucion* lataSup = nullptr;
-   ObjRevolucion* lataInf = nullptr;
-
    Cuadro* cuadro = nullptr;
    Skysphere* sky = nullptr;
 
