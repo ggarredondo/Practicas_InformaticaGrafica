@@ -52,6 +52,7 @@ void Camara::setObserver() {
 void Camara::setProyeccion()
 {
 	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 	if (tipo == ORTOGONAL)
 		glOrtho(left,right,bottom,top,near,far);
 	else
