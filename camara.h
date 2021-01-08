@@ -13,7 +13,7 @@ private:
 	float left, right, bottom, top, near, far;
 
 public:
-	Camara();
+	Camara(Tupla3f eye, Tupla3f at, Tupla3f up, float left, float right, float bottom, float top, float near, float far, tipoCamara tipo);
 
 	void rotarXExaminar(float angle);
 	void rotarYExaminar(float angle);

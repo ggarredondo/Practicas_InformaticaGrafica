@@ -1,8 +1,17 @@
 #include "camara.h"
 
-Camara::Camara() 
+Camara::Camara(Tupla3f eye, Tupla3f at, Tupla3f up, float left, float right, float bottom, float top, float near, float far, tipoCamara tipo)
 {
-
+	this->eye = eye;
+	this->at = at;
+	this->up = up;
+	this->left = left;
+	this->right = right;
+	this->bottom = bottom;
+	this->top = top;
+	this->near = near;
+	this->far = far;
+	this->tipo = tipo;
 }
 
 void Camara::rotarXExaminar(float angle)
