@@ -49,13 +49,15 @@ class Escena
    menu modoMenu=NADA;
    dibujado modoDibujado = DIFERIDO;
 
-   bool cuboActivo = false; //C
-   bool tetraedroActivo = false; //T
-   bool plyActivo = false; //G
-   bool revActivo = false; //H
-   bool cilActivo = false; //J
-   bool conActivo = false; //K
-   bool sphActivo = false; //M
+   bool cuboActivo = false;
+   bool tetraedroActivo = false; 
+   bool plyActivo = false; 
+   bool revActivo = false; 
+   bool cilActivo = false; 
+   bool conActivo = false; 
+   bool sphActivo = false; 
+
+   bool ejesActivo = false;
 
    bool luzActiva;
    bool luzPActiva = true;

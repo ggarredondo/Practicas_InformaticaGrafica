@@ -104,7 +104,7 @@ Escena::Escena()
 
 void Escena::inicializar( int UI_window_width, int UI_window_height )
 {
-	glClearColor( 1.0, 1.0, 1.0, 1.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
+	glClearColor( 0.0, 0.0, 0.0, 0.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
 
 	glEnable( GL_DEPTH_TEST );	// se habilita el z-bufer
 
@@ -117,6 +117,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
   glEnable(GL_NORMALIZE);
   glPointSize(3);
   polygonMode.insert(std::pair<patron, GLenum>(LUZ, GL_FILL));
+  glEnable(GL_LIGHTING);
   printf("Opciones disponibles: \n'O': Selección de objeto\n'V': Selección de modo de visualización\n'D': Selección de modo de dibujado\n");
   printf("'A': Activar animación automática\n'M': Animación manual\n'Q': Salir del programa\n");
 }
@@ -138,14 +139,17 @@ void Escena::dibujar()
 	change_observer();
 
   luzActiva = polygonMode.find(LUZ) != polygonMode.end();
-  if (luzActiva)
-    glDisable(GL_LIGHTING);
-  ejes.draw();
-  if (luzActiva)
-    glEnable(GL_LIGHTING);
+  if (ejesActivo) {
+    if (luzActiva)
+      glDisable(GL_LIGHTING);
+    ejes.draw();
+    if (luzActiva)
+      glEnable(GL_LIGHTING);
+  }
 
   for (auto i : polygonMode) {
     glPolygonMode(GL_FRONT, i.second);
+
     if (cuboActivo) {
       glPushMatrix();
         glTranslatef(100, 0, -100);
@@ -195,7 +199,7 @@ void Escena::dibujar()
     cuadro->draw(modoDibujado, i.first);
 
     glPushMatrix();
-      glTranslatef(0,-110,0);
+      glTranslatef(0,-150,0);
       sky->draw(modoDibujado, i.first);
     glPopMatrix();
   }
@@ -234,6 +238,16 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
     // ESTAMOS EN MODO SELECCION DE OBJETO
       modoMenu = SELOBJETO; 
       printf("Opciones disponibles: \n'C': Cubo \n'T': Tetraedro\n'G': Objeto ply\n'H': Objeto revolución\n'J': Cilindro\n'K': Cono\n'L': Esfera\n");
+      printf("'E': Ejes\n");
+    break;
+
+    case 'E' :
+      if (modoMenu == SELOBJETO) {
+        if (ejesActivo)
+          ejesActivo = false;
+        else
+          ejesActivo = true;
+      }
     break;
 
     case 'V' :

@@ -8,7 +8,7 @@ Cuadro::Cuadro()
 								{1,0},
 								{0,0} };
 	cubo->setTextura("./texturas/grass.jpg",ct);
-	cubo->setMaterial(Material(Tupla4f(0.6,0.6,0.6,0.6),Tupla4f(0,0,0,0),Tupla4f(0.2,0.2,0.2,0.2),1));
+	cubo->setMaterial(Material(Tupla4f(0.7,0.7,0.7,0.7),Tupla4f(0,0,0,0),Tupla4f(0.2,0.2,0.2,0.2),1));
 }
 
 void Cuadro::draw(dibujado d, patron p)
