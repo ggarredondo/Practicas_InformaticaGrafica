@@ -512,6 +512,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
           polygonMode.erase(AJEDREZ);
           polygonMode.erase(LINEA);
           polygonMode.insert(std::pair<patron, GLenum>(LUZ,GL_FILL));
+          glEnable(GL_LIGHTING);
           printf("Opciones de iluminación: \n'1-2': Activar luz n\n'X': variación de alfa\n'B': variación de beta\n'>': incrementar ángulo\n");
           printf("'<': decrementar ángulo\n");
         }
