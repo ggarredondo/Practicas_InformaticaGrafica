@@ -61,7 +61,7 @@ void Escena::animacion()
     mors->rotarRodillaDech(40-sin(t*0.5)*0.75,30,0);
     mors->rotarTalonDech(-10-sin(t*0.5)*0.75,0,0);
 
-    luzP->trasladarLuz(cos(t*0.1)*1000,0,-sin(t*0.1)*1000);
+    luzP->trasladarLuz(cos(t*0.1)*1000,1000,-sin(t*0.1)*1000);
   }
 }
 
@@ -85,17 +85,15 @@ Escena::Escena()
   rev->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,1,0),Tupla4f(0,0,0,0), 10));
   cil->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,0,0),Tupla4f(0,1,0,0), 50));
 
-  lata = new ObjRevolucion("./plys/lata-pcue.ply", 50, false, "./texturas/text-lata-1.jpg");
-  lataSup = new ObjRevolucion("./plys/lata-psup.ply", 50, false);
-  lataInf = new ObjRevolucion("./plys/lata-pinf.ply", 50, false);
-
   cuadro = new Cuadro();
+  sky = new Skysphere(1000,50,1500,"./texturas/nightsky.jpg");
+  sky->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,0,0),Tupla4f(1,1,1,1), 1));
 
   mors = new Morsmanum();
   pose_idle();
   
-  luzP = new LuzPosicional(Tupla3f(-50,0,100), GL_LIGHT0, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
-  luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(1,1,1,1), Tupla4f(1,1,1,1), Tupla4f(1,1,1,1));
+  luzP = new LuzPosicional(Tupla3f(-50,0,100), GL_LIGHT0, Tupla4f(0.8,0.8,1,0.8), Tupla4f(0.8,0.8,1,0.8), Tupla4f(0.8,0.8,1,0.8));
+  luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(0.8,0.8,1,0.8), Tupla4f(0.8,0.8,1,0.8), Tupla4f(0.8,0.8,1,0.8));
 }
 
 //**************************************************************************
@@ -194,14 +192,12 @@ void Escena::dibujar()
     }
 
     mors->draw(modoDibujado, i.first);
-    glPushMatrix();
-      glTranslatef(-50,0,40);
-      glScalef(40,40,40);
-      lata->draw(modoDibujado, i.first);
-      lataSup->draw(modoDibujado, i.first);
-      lataInf->draw(modoDibujado, i.first);
-    glPopMatrix();
     cuadro->draw(modoDibujado, i.first);
+
+    glPushMatrix();
+      glTranslatef(0,-110,0);
+      sky->draw(modoDibujado, i.first);
+    glPopMatrix();
   }
   if (luzPActiva)
     luzP->activar();

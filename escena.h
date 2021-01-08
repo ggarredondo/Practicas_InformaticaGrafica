@@ -17,6 +17,7 @@
 
 #include "morsmanum.h"
 #include "cuadro.h"
+#include "skysphere.h"
 
 typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELDIBUJADO, ANIM, MANUAL} menu;
 typedef enum {NINGUNO, ALFA, BETA} angulo;
@@ -64,7 +65,7 @@ class Escena
    bool suavizado = true;
 
    bool animacionActiva = false;
-   float velocidadAnimacion = 0.01;
+   float velocidadAnimacion = 0.01, x = 0, y = 0, z = 0;
 
    angulo angle = NINGUNO;
 
@@ -85,6 +86,7 @@ class Escena
    ObjRevolucion* lataInf = nullptr;
 
    Cuadro* cuadro = nullptr;
+   Skysphere* sky = nullptr;
 
    LuzPosicional* luzP = nullptr;
    LuzDireccional* luzD = nullptr;

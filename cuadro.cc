@@ -7,14 +7,16 @@ Cuadro::Cuadro()
 								{0,1},
 								{1,0},
 								{0,0} };
-	cubo->setTextura("./texturas/minecraft.jpg",ct);
+	cubo->setTextura("./texturas/grass.jpg",ct);
+	cubo->setMaterial(Material(Tupla4f(0.6,0.6,0.6,0.6),Tupla4f(0,0,0,0),Tupla4f(0.2,0.2,0.2,0.2),1));
 }
 
 void Cuadro::draw(dibujado d, patron p)
 {
 	glPushMatrix();
-		glTranslatef(-100,0,0);
-		glScalef(1,1,0.1);
+		glTranslatef(0,-110,0);
+		glRotatef(-90,1,0,0);
+		glScalef(30,30,0);
 		cubo->draw(d,p);
 	glPopMatrix();
 }

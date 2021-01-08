@@ -10,8 +10,8 @@
 #ifndef OBJREVOLUCION_H_INCLUDED
 #define OBJREVOLUCION_H_INCLUDED
 
-#include "aux.h"
 #include "malla.h"
+#include <algorithm>
 
 // *****************************************************************************
 //
@@ -34,9 +34,9 @@ public:
 protected:
 	unsigned size_tapas = 0, diferencia = 0;
 
-	void crearMalla(const std::vector<Tupla3f>& perfil_original, int num_instancias);
+	void crearMalla(const std::vector<Tupla3f>& perfil_original, int num_instancias, bool invertido = false);
 	void insertarPolos(const std::vector<Tupla3f>& perfil_original, int num_instancias);
-	void prepararObj(const std::vector<Tupla3f>& perfil, int num_instancias, bool tapas, std::string tex);
+	void prepararObj(const std::vector<Tupla3f>& perfil, int num_instancias, bool tapas, std::string tex, bool invertido = false);
 	void calcularCoordTextura(unsigned M, unsigned N);
 };
 

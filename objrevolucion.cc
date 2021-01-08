@@ -1,7 +1,5 @@
-#include "aux.h"
 #include "objrevolucion.h"
 #include "ply_reader.h"
-#include <algorithm>
 
 
 // *****************************************************************************
@@ -45,10 +43,10 @@ void ObjRevolucion::actualizarTapas(bool tapas) {
 	tamB = tam1-tamA;
 }
 
-void ObjRevolucion::prepararObj(const std::vector<Tupla3f>& perfil, int num_instancias, bool tapas, std::string tex) {
+void ObjRevolucion::prepararObj(const std::vector<Tupla3f>& perfil, int num_instancias, bool tapas, std::string tex, bool invertido) {
 	if (tex.compare("n") != 0) 
 		textura = new Textura(tex);
-	crearMalla(perfil, num_instancias);
+	crearMalla(perfil, num_instancias, invertido);
 	if (textura != nullptr)
 		calcularCoordTextura(num_instancias, perfil.size());
     insertarPolos(perfil, num_instancias);
@@ -56,7 +54,7 @@ void ObjRevolucion::prepararObj(const std::vector<Tupla3f>& perfil, int num_inst
 	actualizarTapas(tapas);
 }
 
-void ObjRevolucion::crearMalla(const std::vector<Tupla3f>& perfil_original, int num_instancias) {
+void ObjRevolucion::crearMalla(const std::vector<Tupla3f>& perfil_original, int num_instancias, bool invertido) {
 	Tupla3f v_aux;
 	unsigned N = num_instancias, M = perfil_original.size();
 
@@ -79,8 +77,14 @@ void ObjRevolucion::crearMalla(const std::vector<Tupla3f>& perfil_original, int 
 		for (unsigned j = 0; j < M-1; ++j) {
 			a = M*i + j;
 			b = M*((i+1)%N)+j;
-			f.push_back(Tupla3i(a, b, b+1));
-			f.push_back(Tupla3i(a, b+1, a+1));
+			if (invertido) {
+				f.push_back(Tupla3i(b, a, b+1));
+				f.push_back(Tupla3i(b+1, a, a+1));
+			}
+			else {
+				f.push_back(Tupla3i(a, b, b+1));
+				f.push_back(Tupla3i(a, b+1, a+1));
+			}
 		}
 	}
 }

@@ -9,6 +9,7 @@ Cabeza::Cabeza()
 	lowerhead = new ObjPLY("./morsmanum/ply/lowerhead.ply");
 	lowerhead->setTextura("./texturas/bark.jpg");
 	fangs = new ObjPLY("./morsmanum/ply/fang.ply");
+	fangs->setMaterial(Material(Tupla4f(1,1,1,1),Tupla4f(1,1,1,1),Tupla4f(0,0,0,0), 1));
 	tendon = new ObjPLY("./morsmanum/ply/tendon.ply");
 	tendon->setTextura("./texturas/flesh2.jpg");
 
