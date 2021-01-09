@@ -59,7 +59,7 @@ void Camara::rotarZFirstPerson(float angle)
 
 void Camara::girar(int x, int y)
 {
-	rotarXFirstPerson(x);
+	rotarXFirstPerson(x); //esto no va a ser así
 	rotarYFirstPerson(y);
 }
 
