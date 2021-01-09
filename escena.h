@@ -21,81 +21,83 @@
 
 typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELDIBUJADO, ANIM, MANUAL} menu;
 typedef enum {NINGUNO, ALFA, BETA} angulo;
+typedef enum {EXAMINAR, FIRSTPERSON} camara;
 
 class Escena
 {
 
-   private:
- // ** PARÁMETROS DE LA CÁMARA (PROVISIONAL)
-       
-       // variables que definen la posicion de la camara en coordenadas polares
-   GLfloat Observer_distance;
-   GLfloat Observer_angle_x;
-   GLfloat Observer_angle_y;
+	private:
+	// ** PARÁMETROS DE LA CÁMARA (PROVISIONAL)
+	   
+	   // variables que definen la posicion de la camara en coordenadas polares
+	GLfloat Observer_distance;
+	GLfloat Observer_angle_x;
+	GLfloat Observer_angle_y;
 
-   // variables que controlan la ventana y la transformacion de perspectiva
-   GLfloat Width, Height, Front_plane, Back_plane;
+	// variables que controlan la ventana y la transformacion de perspectiva
+	GLfloat Width, Height, Front_plane, Back_plane;
 
-    // Transformación de cámara
+	// Transformación de cámara
 	void change_projection( const float ratio_xy );
 	void change_observer();
-  	void actualizarTapas();
-  	void pose_idle();
+	void actualizarTapas();
+	void pose_idle();
+	void ratonMovido(int x, int y);
 
+	void clear_window();
 
-   void clear_window();
+	//variables de estado para el menú
+	menu modoMenu=NADA;
+	dibujado modoDibujado = DIFERIDO;
 
-   //variables de estado para el menú
-   menu modoMenu=NADA;
-   dibujado modoDibujado = DIFERIDO;
+	bool cuboActivo = false;
+	bool tetraedroActivo = false; 
+	bool plyActivo = false; 
+	bool revActivo = false; 
+	bool cilActivo = false; 
+	bool conActivo = false; 
+	bool sphActivo = false; 
 
-   bool cuboActivo = false;
-   bool tetraedroActivo = false; 
-   bool plyActivo = false; 
-   bool revActivo = false; 
-   bool cilActivo = false; 
-   bool conActivo = false; 
-   bool sphActivo = false; 
+	bool ejesActivo = false;
 
-   bool ejesActivo = false;
+	bool luzActiva;
+	bool luzPActiva = true;
+	bool luzDActiva = false;
 
-   bool luzActiva;
-   bool luzPActiva = true;
-   bool luzDActiva = false;
+	bool tapas = true;
+	bool suavizado = true;
 
-   bool tapas = true;
-   bool suavizado = true;
+	bool animacionActiva = false;
+	float velocidadAnimacion = 0.01, x = 0, y = 0, z = 0;
 
-   bool animacionActiva = false;
-   float velocidadAnimacion = 0.01, x = 0, y = 0, z = 0;
+	angulo angle = NINGUNO;
+	camara estadoRaton;
 
-   angulo angle = NINGUNO;
+	std::map<patron,GLenum> polygonMode;
 
-   std::map<patron,GLenum> polygonMode;
+	// Objetos de la escena
+	Ejes ejes;
+	Cubo * cubo = nullptr ;
+	Tetraedro * tetraedro= nullptr ; 
+	ObjPLY* ply = nullptr;
+	ObjRevolucion* rev = nullptr;
+	Cilindro* cil = nullptr;
+	Cono* con = nullptr;
+	Esfera* sph = nullptr;
 
-   // Objetos de la escena
-   Ejes ejes;
-   Cubo * cubo = nullptr ;
-   Tetraedro * tetraedro= nullptr ; 
-   ObjPLY* ply = nullptr;
-   ObjRevolucion* rev = nullptr;
-   Cilindro* cil = nullptr;
-   Cono* con = nullptr;
-   Esfera* sph = nullptr;
+	Cuadro* cuadro = nullptr;
+	Skysphere* sky = nullptr;
 
-   Cuadro* cuadro = nullptr;
-   Skysphere* sky = nullptr;
+	LuzPosicional* luzP = nullptr;
+	LuzDireccional* luzD = nullptr;
 
-   LuzPosicional* luzP = nullptr;
-   LuzDireccional* luzD = nullptr;
+	Morsmanum* mors = nullptr;
+	int gLibertad = -1;
+	std::vector<float> gValor;
 
-   Morsmanum* mors = nullptr;
-   int gLibertad = -1;
-   std::vector<float> gValor;
-   
-   public:
+public:
 
-    Escena();
+	Escena();
 	void inicializar( int UI_window_width, int UI_window_height );
 	void redimensionar( int newWidth, int newHeight ) ;
 

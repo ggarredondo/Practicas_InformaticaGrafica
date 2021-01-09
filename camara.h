@@ -23,7 +23,9 @@ public:
 	void rotarYFirstPerson(float angle);
 	void rotarZFirstPerson(float angle);
 
-	void mover(float x, float y, float z);
+	inline void mover(float x, float y, float z) {
+		eye = {x,y,z};
+	}
 	void zoom(float factor);
 
 	void setObserver();

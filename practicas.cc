@@ -87,6 +87,11 @@ void special_keys( int tecla, int x, int y )
 	glutPostRedisplay();
 }
 
+void clickRaton(int boton, int estado, int x, int y)
+{
+
+}
+
 //////////////////
 
 void funcion_idle()

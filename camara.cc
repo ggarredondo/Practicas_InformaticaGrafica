@@ -14,44 +14,52 @@ Camara::Camara(Tupla3f eye, Tupla3f at, Tupla3f up, float left, float right, flo
 	this->tipo = tipo;
 }
 
+//examinar
 void Camara::rotarXExaminar(float angle)
 {
-
+	eye[1] = eye[1]*cos(angle) - eye[2]*sin(angle);	
+	eye[2] = eye[1]*sin(angle) + eye[2]*cos(angle);
 }
 
 void Camara::rotarYExaminar(float angle)
 {
-
+	eye[0] = eye[2]*sin(angle) + eye[0]*cos(angle);
+	eye[2] = eye[2]*cos(angle) - eye[0]*sin(angle);
 }
 
 void Camara::rotarZExaminar(float angle)
 {
-
+	eye[0] = eye[0]*cos(angle) - eye[1]*sin(angle);	
+	eye[1] = eye[0]*sin(angle) + eye[1]*cos(angle);
 }
 
+//firstperson
 void Camara::rotarXFirstPerson(float angle)
 {
-
+	at[1] = at[1]*cos(angle) - at[2]*sin(angle);	
+	at[2] = at[1]*sin(angle) + at[2]*cos(angle);
 }
 
 void Camara::rotarYFirstPerson(float angle)
 {
-
+	at[0] = at[2]*sin(angle) + at[0]*cos(angle);
+	at[2] = at[2]*cos(angle) - at[0]*sin(angle);
 }
 
 void Camara::rotarZFirstPerson(float angle)
 {
-
+	at[0] = at[0]*cos(angle) - at[1]*sin(angle);	
+	at[1] = at[0]*sin(angle) + at[1]*cos(angle);
 }
 
-void Camara::mover(float x, float y, float z)
-{
-
-}
+//
 
 void Camara::zoom(float factor)
 {
-	//seguramente sea near += factor; Pues no
+	left -= factor;
+	right -= factor;
+	top -= factor;
+	bottom -= factor;
 }
 
 void Camara::setObserver() {

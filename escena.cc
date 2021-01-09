@@ -553,6 +553,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
   }
   return salir;
 }
+
+void Escena::ratonMovido(int x, int y)
+{
+  
+}
+
 //**************************************************************************
 
 void Escena::teclaEspecial( int Tecla1, int x, int y )
