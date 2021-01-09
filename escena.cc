@@ -70,8 +70,6 @@ Escena::Escena()
   Front_plane       = 50.0;
   Back_plane        = 2000.0;
   Observer_distance = 4*Front_plane;
-  Observer_angle_x  = 0.0 ;
-  Observer_angle_y  = 0.0 ;
 
   ejes.changeAxisSize( 5000 );
   cubo = new Cubo(70);
@@ -94,6 +92,9 @@ Escena::Escena()
   
   luzP = new LuzPosicional(Tupla3f(-50,0,100), GL_LIGHT0, Tupla4f(0.8,0.8,1,0.8), Tupla4f(0.8,0.8,1,0.8), Tupla4f(0.8,0.8,1,0.8));
   luzD = new LuzDireccional(Tupla2f(0,0), GL_LIGHT1, Tupla4f(0.8,0.8,1,0.8), Tupla4f(0.8,0.8,1,0.8), Tupla4f(0.8,0.8,1,0.8));
+
+  polygonMode.insert(std::pair<patron, GLenum>(LUZ, GL_FILL));
+  camaras.push_back(Camara({0,0,Observer_distance},{0,0,0},{0,1,0},0,0,0,0,0,0,PERSPECTIVA));
 }
 
 //**************************************************************************
@@ -104,20 +105,20 @@ Escena::Escena()
 
 void Escena::inicializar( int UI_window_width, int UI_window_height )
 {
-	glClearColor( 0.0, 0.0, 0.0, 0.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
+  glClearColor( 0.0, 0.0, 0.0, 0.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
 
-	glEnable( GL_DEPTH_TEST );	// se habilita el z-bufer
+  glEnable( GL_DEPTH_TEST );	// se habilita el z-bufer
 
-	Width  = UI_window_width/10;
-	Height = UI_window_height/10;
+  Width  = UI_window_width/10;
+  Height = UI_window_height/10;
 
-   change_projection( float(UI_window_width)/float(UI_window_height) );
-	glViewport( 0, 0, UI_window_width, UI_window_height );
+  change_projection( float(UI_window_width)/float(UI_window_height) );
+  glViewport( 0, 0, UI_window_width, UI_window_height );
   glEnable(GL_CULL_FACE);
   glEnable(GL_NORMALIZE);
   glPointSize(3);
-  polygonMode.insert(std::pair<patron, GLenum>(LUZ, GL_FILL));
   glEnable(GL_LIGHTING);
+  
   printf("Opciones disponibles: \n'O': Selección de objeto\n'V': Selección de modo de visualización\n'D': Selección de modo de dibujado\n");
   printf("'A': Activar animación automática\n'M': Animación manual\n'Q': Salir del programa\n");
 }
@@ -554,36 +555,53 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
   return salir;
 }
 
+void Escena::clickRaton(int boton, int estado, int x, int y)
+{
+  if (boton == GLUT_RIGHT_BUTTON) {
+    if (estado == GLUT_DOWN) {
+      x0 = x;
+      y0 = y;
+      estadoRaton = FIRSTPERSON;
+    }
+    else
+      estadoRaton = EXAMINAR;
+  }
+}
+
 void Escena::ratonMovido(int x, int y)
 {
-  
+  if (estadoRaton == FIRSTPERSON) {
+    camaras[camaraActiva].girar(x - x0, y - y0);
+    x0 = x;
+    y0 = y;
+  }
 }
 
 //**************************************************************************
 
 void Escena::teclaEspecial( int Tecla1, int x, int y )
 {
-   switch ( Tecla1 )
-   {
-	   case GLUT_KEY_LEFT:
-         Observer_angle_y-- ;
-         break;
-	   case GLUT_KEY_RIGHT:
-         Observer_angle_y++ ;
-         break;
-	   case GLUT_KEY_UP:
-         Observer_angle_x-- ;
-         break;
-	   case GLUT_KEY_DOWN:
-         Observer_angle_x++ ;
-         break;
-	   case GLUT_KEY_PAGE_UP:
-         Observer_distance *=1.2 ;
-         break;
-	   case GLUT_KEY_PAGE_DOWN:
-         Observer_distance /= 1.2 ;
-         break;
-	}
+  switch ( Tecla1 )
+  {
+   case GLUT_KEY_LEFT:
+      camaras[camaraActiva].rotarYExaminar(-0.1);
+      break;
+   case GLUT_KEY_RIGHT:
+      camaras[camaraActiva].rotarYExaminar(0.1);
+      break;
+   case GLUT_KEY_UP:
+      camaras[camaraActiva].rotarXExaminar(-0.1);
+      break;
+   case GLUT_KEY_DOWN:
+      camaras[camaraActiva].rotarXExaminar(0.1);
+      break;
+   case GLUT_KEY_PAGE_UP:
+      Observer_distance *= 1.2 ;
+      break;
+   case GLUT_KEY_PAGE_DOWN:
+      Observer_distance /= 1.2 ;
+      break;
+  }
 
 	//std::cout << Observer_distance << std::endl;
 }
@@ -597,10 +615,9 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
 
 void Escena::change_projection( const float ratio_xy )
 {
-   glMatrixMode( GL_PROJECTION );
-   glLoadIdentity();
-   const float wx = float(Height)*ratio_xy ;
-   glFrustum( -wx, wx, -Height, Height, Front_plane, Back_plane );
+  const float wx = float(Height)*ratio_xy ;
+  camaras[camaraActiva].modificarVisualizacion( -wx, wx, -Height, Height, Front_plane, Back_plane );
+  camaras[camaraActiva].setProyeccion();
 }
 //**************************************************************************
 // Funcion que se invoca cuando cambia el tamaño de la ventana
@@ -608,10 +625,10 @@ void Escena::change_projection( const float ratio_xy )
 
 void Escena::redimensionar( int newWidth, int newHeight )
 {
-   Width  = newWidth/10;
-   Height = newHeight/10;
-   change_projection( float(newHeight)/float(newWidth) );
-   glViewport( 0, 0, newWidth, newHeight );
+  Width  = newWidth/10;
+  Height = newHeight/10;
+  change_projection( float(newHeight)/float(newWidth) );
+  glViewport( 0, 0, newWidth, newHeight );
 }
 
 //**************************************************************************
@@ -620,10 +637,6 @@ void Escena::redimensionar( int newWidth, int newHeight )
 
 void Escena::change_observer()
 {
-   // posicion del observador
-   glMatrixMode(GL_MODELVIEW);
-   glLoadIdentity();
-   glTranslatef( 0.0, 0.0, -Observer_distance );
-   glRotatef( Observer_angle_y, 0.0 ,1.0, 0.0 );
-   glRotatef( Observer_angle_x, 1.0, 0.0, 0.0 );
+  // posicion del observador
+  camaras[camaraActiva].setObserver();
 }

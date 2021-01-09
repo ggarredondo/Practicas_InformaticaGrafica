@@ -14,6 +14,7 @@ private:
 
 public:
 	Camara(Tupla3f eye, Tupla3f at, Tupla3f up, float left, float right, float bottom, float top, float near, float far, tipoCamara tipo);
+	void modificarVisualizacion(float left, float right, float bottom, float top, float near, float far);
 
 	void rotarXExaminar(float angle);
 	void rotarYExaminar(float angle);
@@ -22,9 +23,10 @@ public:
 	void rotarXFirstPerson(float angle);
 	void rotarYFirstPerson(float angle);
 	void rotarZFirstPerson(float angle);
+	void girar(int x, int y);
 
 	inline void mover(float x, float y, float z) {
-		eye = {x,y,z};
+		eye = eye + Tupla3f(x,y,z);
 	}
 	void zoom(float factor);
 

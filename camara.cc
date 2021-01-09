@@ -1,10 +1,7 @@
 #include "camara.h"
 
-Camara::Camara(Tupla3f eye, Tupla3f at, Tupla3f up, float left, float right, float bottom, float top, float near, float far, tipoCamara tipo)
+void Camara::modificarVisualizacion(float left, float right, float bottom, float top, float near, float far)
 {
-	this->eye = eye;
-	this->at = at;
-	this->up = up;
 	this->left = left;
 	this->right = right;
 	this->bottom = bottom;
@@ -12,6 +9,14 @@ Camara::Camara(Tupla3f eye, Tupla3f at, Tupla3f up, float left, float right, flo
 	this->near = near;
 	this->far = far;
 	this->tipo = tipo;
+}
+
+Camara::Camara(Tupla3f eye, Tupla3f at, Tupla3f up, float left, float right, float bottom, float top, float near, float far, tipoCamara tipo)
+{
+	this->eye = eye;
+	this->at = at;
+	this->up = up;
+	modificarVisualizacion(left,right,bottom,top,near,far);
 }
 
 //examinar
@@ -52,17 +57,25 @@ void Camara::rotarZFirstPerson(float angle)
 	at[1] = at[0]*sin(angle) + at[1]*cos(angle);
 }
 
+void Camara::girar(int x, int y)
+{
+	rotarXFirstPerson(x);
+	rotarYFirstPerson(y);
+}
+
 //
 
 void Camara::zoom(float factor)
 {
-	left -= factor;
+	left -= factor; //no funciona
 	right -= factor;
 	top -= factor;
-	bottom -= factor;
+	bottom -= factor; //y además hace falta hacer setProyeccion
 }
 
 void Camara::setObserver() {
+	glMatrixMode(GL_MODELVIEW);
+  	glLoadIdentity();
 	gluLookAt(eye[0],eye[1],eye[2],at[0],at[1],at[2],up[0],up[1],up[2]);
 }
 

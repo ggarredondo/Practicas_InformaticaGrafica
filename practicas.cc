@@ -87,9 +87,16 @@ void special_keys( int tecla, int x, int y )
 	glutPostRedisplay();
 }
 
-void clickRaton(int boton, int estado, int x, int y)
-{
+void clickRaton(int boton, int estado, int x, int y) {
+  if (escena!=NULL)
+    escena->clickRaton(boton,estado,x,y);
+  glutPostRedisplay();
+}
 
+void ratonMovido(int x, int y) {
+  if (escena!=NULL)
+    escena->ratonMovido(x,y);
+  glutPostRedisplay();
 }
 
 //////////////////
@@ -110,68 +117,71 @@ void funcion_idle()
 
 int main( int argc, char **argv )
 {
-   using namespace std ;
+  using namespace std ;
 
-   // crear la escena (un puntero a la misma)
-   escena = new Escena();
+  // crear la escena (un puntero a la misma)
+  escena = new Escena();
 
-   // Incialización de GLUT
+  // Incialización de GLUT
 
-   // se llama a la inicialización de glut
-   glutInit( &argc, argv );
+  // se llama a la inicialización de glut
+  glutInit( &argc, argv );
 
-   // se indica las caracteristicas que se desean para la visualización con OpenGL
-   glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
+  // se indica las caracteristicas que se desean para la visualización con OpenGL
+  glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 
-   // variables que determninan la posicion y tamaño de la ventana X
-   const int UI_window_pos_x  = 50,
-             UI_window_pos_y  = 50,
-             UI_window_width  = 700,
-             UI_window_height = 700;
+  // variables que determninan la posicion y tamaño de la ventana X
+  const int UI_window_pos_x  = 50,
+           UI_window_pos_y  = 50,
+           UI_window_width  = 700,
+           UI_window_height = 700;
 
-   // posicion de la esquina inferior izquierdad de la ventana
-   glutInitWindowPosition(UI_window_pos_x,UI_window_pos_y);
+  // posicion de la esquina inferior izquierdad de la ventana
+  glutInitWindowPosition(UI_window_pos_x,UI_window_pos_y);
 
-   // tamaño de la ventana (ancho y alto)
-   glutInitWindowSize(UI_window_width,UI_window_height);
+  // tamaño de la ventana (ancho y alto)
+  glutInitWindowSize(UI_window_width,UI_window_height);
 
-   // llamada para crear la ventana, indicando el titulo
-   // SUSTITUIR EL NOMBRE DEL ALUMNO
-   glutCreateWindow("Practicas IG: Guillermo García Arredondo (ggarredondo@correo.ugr.es)");
+  // llamada para crear la ventana, indicando el titulo
+  // SUSTITUIR EL NOMBRE DEL ALUMNO
+  glutCreateWindow("Practicas IG: Guillermo García Arredondo (ggarredondo@correo.ugr.es)");
 
-   // asignación de la funcion llamada "dibujar" al evento de dibujo
-   glutDisplayFunc( draw_scene );
+  // asignación de la funcion llamada "dibujar" al evento de dibujo
+  glutDisplayFunc( draw_scene );
 
-   // asignación de la funcion llamada "cambiar_tamanio_ventana" al evento correspondiente
-   glutReshapeFunc( change_window_size );
+  // asignación de la funcion llamada "cambiar_tamanio_ventana" al evento correspondiente
+  glutReshapeFunc( change_window_size );
 
-   // asignación de la funcion llamada "tecla_normal" al evento correspondiente
-   glutKeyboardFunc( normal_keys );
+  // asignación de la funcion llamada "tecla_normal" al evento correspondiente
+  glutKeyboardFunc( normal_keys );
 
-   // asignación de la funcion llamada "tecla_Especial" al evento correspondiente
-   glutSpecialFunc( special_keys );
+  // asignación de la funcion llamada "tecla_Especial" al evento correspondiente
+  glutSpecialFunc( special_keys );
 
-   glutIdleFunc(funcion_idle);
+  glutMouseFunc(clickRaton);
+  glutMotionFunc(ratonMovido);
 
-   // inicialización de librería GLEW (solo en Linux)
-   #ifdef LINUX
-   const GLenum codigoError = glewInit();
+  glutIdleFunc(funcion_idle);
 
-   if ( codigoError != GLEW_OK ) // comprobar posibles errores
-   {
-      cout << "Imposible inicializar ’GLEW’, mensaje recibido: "
-             << glewGetErrorString(codigoError) << endl ;
-      exit(1) ;
-   }
-   #endif
+  // inicialización de librería GLEW (solo en Linux)
+  #ifdef LINUX
+  const GLenum codigoError = glewInit();
 
-   // funcion de inicialización de la escena (necesita que esté la ventana creada)
-   escena->inicializar( UI_window_width, UI_window_height );
+  if ( codigoError != GLEW_OK ) // comprobar posibles errores
+  {
+    cout << "Imposible inicializar ’GLEW’, mensaje recibido: "
+           << glewGetErrorString(codigoError) << endl ;
+    exit(1) ;
+  }
+  #endif
+
+  // funcion de inicialización de la escena (necesita que esté la ventana creada)
+  escena->inicializar( UI_window_width, UI_window_height );
 
 
 
-   // ejecutar del bucle de eventos
-   glutMainLoop();
+  // ejecutar del bucle de eventos
+  glutMainLoop();
 
-   return 0;
+  return 0;
 }

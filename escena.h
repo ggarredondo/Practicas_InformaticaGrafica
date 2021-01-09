@@ -14,10 +14,10 @@
 #include "luzposicional.h"
 #include "luzdireccional.h"
 #include <map>
-
 #include "morsmanum.h"
 #include "cuadro.h"
 #include "skysphere.h"
+#include "camara.h"
 
 typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELDIBUJADO, ANIM, MANUAL} menu;
 typedef enum {NINGUNO, ALFA, BETA} angulo;
@@ -31,8 +31,6 @@ class Escena
 	   
 	   // variables que definen la posicion de la camara en coordenadas polares
 	GLfloat Observer_distance;
-	GLfloat Observer_angle_x;
-	GLfloat Observer_angle_y;
 
 	// variables que controlan la ventana y la transformacion de perspectiva
 	GLfloat Width, Height, Front_plane, Back_plane;
@@ -42,7 +40,6 @@ class Escena
 	void change_observer();
 	void actualizarTapas();
 	void pose_idle();
-	void ratonMovido(int x, int y);
 
 	void clear_window();
 
@@ -95,6 +92,10 @@ class Escena
 	int gLibertad = -1;
 	std::vector<float> gValor;
 
+	std::vector<Camara> camaras;
+	unsigned camaraActiva = 0;
+	float x0, y0;
+
 public:
 
 	Escena();
@@ -107,6 +108,9 @@ public:
 	// Interacción con la escena
 	bool teclaPulsada( unsigned char Tecla1, int x, int y ) ;
 	void teclaEspecial( int Tecla1, int x, int y );
+
+	void clickRaton(int boton, int estado, int x, int y);
+	void ratonMovido(int x, int y);
 
 	void animacion();
 
