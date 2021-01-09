@@ -24,18 +24,27 @@ void Camara::rotarXExaminar(float angle)
 {
 	eye[1] = eye[1]*cos(angle) - eye[2]*sin(angle);	
 	eye[2] = eye[1]*sin(angle) + eye[2]*cos(angle);
+
+	up[1] = up[1]*cos(angle) - up[2]*sin(angle);	
+	up[2] = up[1]*sin(angle) + up[2]*cos(angle);
 }
 
 void Camara::rotarYExaminar(float angle)
 {
 	eye[0] = eye[2]*sin(angle) + eye[0]*cos(angle);
 	eye[2] = eye[2]*cos(angle) - eye[0]*sin(angle);
+
+	up[0] = up[2]*sin(angle) + up[0]*cos(angle);
+	up[2] = up[2]*cos(angle) - up[0]*sin(angle);
 }
 
 void Camara::rotarZExaminar(float angle)
 {
 	eye[0] = eye[0]*cos(angle) - eye[1]*sin(angle);	
 	eye[1] = eye[0]*sin(angle) + eye[1]*cos(angle);
+
+	up[0] = up[0]*cos(angle) - up[1]*sin(angle);	
+	up[1] = up[0]*sin(angle) + up[1]*cos(angle);
 }
 
 //firstperson

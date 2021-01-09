@@ -2,10 +2,6 @@
 #include "escena.h"
 #include "malla.h" // objetos: Cubo y otros....
 
-//**************************************************************************
-// constructor de la escena (no puede usar ordenes de OpenGL)
-//**************************************************************************
-
 void Escena::actualizarTapas()
 {
   rev->actualizarTapas(tapas);
