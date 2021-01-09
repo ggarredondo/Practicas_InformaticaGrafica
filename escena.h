@@ -68,8 +68,8 @@ class Escena
 	bool suavizado = true;
 
 	bool animacionActiva = false;
-	float velocidadAnimacion = 0.01, x = 0, y = 0, z = 0;
-
+	float velocidadAnimacion = 0.01;
+	
 	angulo angle = NINGUNO;
 	camara estadoRaton;
 
