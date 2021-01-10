@@ -13,6 +13,7 @@ Cuadro::Cuadro()
 
 void Cuadro::draw(dibujado d, patron p)
 {
+	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 		glTranslatef(0,-110,0);
 		glRotatef(-90,1,0,0);

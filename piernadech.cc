@@ -20,6 +20,7 @@ PiernaDech::PiernaDech()
 
 void PiernaDech::draw(dibujado d, patron p)
 {
+	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 		thigh->draw(d,p);
 		

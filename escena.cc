@@ -91,6 +91,8 @@ Escena::Escena()
 
   polygonMode.insert(std::pair<patron, GLenum>(LUZ, GL_FILL));
   camaras.push_back(Camara({0,0,Observer_distance},{0,0,0},{0,1,0},0,0,0,0,0,0,PERSPECTIVA));
+  camaras.push_back(Camara({0,0,Observer_distance},{0,0,0},{0,1,0},0,0,0,0,0,0,ORTOGONAL));
+  camaras.push_back(Camara({Observer_distance,0,0},{0,0,0},{0,1,0},0,0,0,0,0,0,PERSPECTIVA));
 }
 
 //**************************************************************************
@@ -116,7 +118,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
   glEnable(GL_LIGHTING);
   
   printf("Opciones disponibles: \n'O': Selección de objeto\n'V': Selección de modo de visualización\n'D': Selección de modo de dibujado\n");
-  printf("'A': Activar animación automática\n'M': Animación manual\n'Q': Salir del programa\n");
+  printf("'A': Activar animación automática\n'M': Animación manual\n'C': Selección de cámara\n'Q': Salir del programa\n");
 }
 
 
@@ -131,7 +133,6 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 void Escena::dibujar()
 {
   glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 	change_observer();
 
@@ -214,6 +215,12 @@ void Escena::dibujar()
 //
 //**************************************************************************
 
+void Escena::cambiarCamara(unsigned index) {
+  camaras[index] = camaras[camaraActiva];
+  camaraActiva = index;
+  camaras[index].setProyeccion();
+}
+
 bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 {
   using namespace std ;
@@ -225,7 +232,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       if (modoMenu != NADA) {
         modoMenu = NADA;   
         printf("Opciones disponibles: \n'O': Selección de objeto\n'V': Selección de modo de visualización\n'D': Selección de modo de dibujado\n");
-        printf("'A': Activar animación automática\n'M': Animación manual\n'Q': Salir del programa\n");      
+        printf("'A': Activar animación automática\n'M': Animación manual\n'C': Selección de cámara\n'Q': Salir del programa\n");      
       }
       else 
         salir = true;
@@ -277,6 +284,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       }
       else if (modoMenu == MANUAL)
         gLibertad = 1;
+      else if (modoMenu == CAMARA)
+        cambiarCamara(0);
     break;
 
     case '2' :
@@ -296,11 +305,29 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
       }
       else if (modoMenu == MANUAL)
         gLibertad = 2;
+      else if (modoMenu == CAMARA)
+        cambiarCamara(1);
     break;
 
     case '3' :
       if (modoMenu == MANUAL)
         gLibertad = 3;
+      else if (modoMenu == CAMARA)
+        cambiarCamara(2);
+    break;
+
+    case ',' :
+      if (modoMenu == CAMARA) {
+        camaras[camaraActiva].zoom(-1);
+        camaras[camaraActiva].setProyeccion();
+      }
+    break;
+
+     case '.' :
+      if (modoMenu == CAMARA) {
+        camaras[camaraActiva].zoom(1);
+        camaras[camaraActiva].setProyeccion();
+      }
     break;
 
     case 'C' :
@@ -309,6 +336,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
           cuboActivo = false;
         else
           cuboActivo = true;
+      }
+      else {
+        modoMenu = CAMARA;
+        printf("Opciones disponibles: \n'1-3': Seleccionar cámara\n',': Zoom out\n'.': Zoom in\n");
       }
     break;
 
@@ -567,7 +598,7 @@ void Escena::clickRaton(int boton, int estado, int x, int y)
 void Escena::ratonMovido(int x, int y)
 {
   if (estadoRaton == FIRSTPERSON) {
-    camaras[camaraActiva].girar(x - x0, y - y0);
+    camaras[camaraActiva].girar((x - x0)*0.05, (y - y0)*0.05);
     x0 = x;
     y0 = y;
   }
@@ -586,10 +617,10 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
       camaras[camaraActiva].rotarYExaminar(0.1);
       break;
    case GLUT_KEY_UP:
-      camaras[camaraActiva].rotarXExaminar(-0.1);
+      camaras[camaraActiva].rotarVerticalExaminar(-0.1);
       break;
    case GLUT_KEY_DOWN:
-      camaras[camaraActiva].rotarXExaminar(0.1);
+      camaras[camaraActiva].rotarVerticalExaminar(0.1);
       break;
    case GLUT_KEY_PAGE_UP:
       Observer_distance *= 1.2 ;
@@ -612,7 +643,8 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
 void Escena::change_projection( const float ratio_xy )
 {
   const float wx = float(Height)*ratio_xy ;
-  camaras[camaraActiva].modificarVisualizacion( -wx, wx, -Height, Height, Front_plane, Back_plane );
+  for (auto& i : camaras)
+    i.modificarVisualizacion( -wx, wx, -Height, Height, Front_plane, Back_plane );
   camaras[camaraActiva].setProyeccion();
 }
 //**************************************************************************

@@ -19,7 +19,7 @@
 #include "skysphere.h"
 #include "camara.h"
 
-typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELDIBUJADO, ANIM, MANUAL} menu;
+typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELDIBUJADO, ANIM, MANUAL, CAMARA} menu;
 typedef enum {NINGUNO, ALFA, BETA} angulo;
 typedef enum {EXAMINAR, FIRSTPERSON} camara;
 
@@ -39,6 +39,7 @@ class Escena
 	void change_projection( const float ratio_xy );
 	void change_observer();
 	void actualizarTapas();
+	void cambiarCamara(unsigned index);
 	void pose_idle();
 
 	void clear_window();

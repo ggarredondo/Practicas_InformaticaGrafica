@@ -19,6 +19,7 @@ public:
 	void rotarXExaminar(float angle);
 	void rotarYExaminar(float angle);
 	void rotarZExaminar(float angle);
+	void rotarVerticalExaminar(float angle);
 
 	void rotarXFirstPerson(float angle);
 	void rotarYFirstPerson(float angle);
@@ -32,6 +33,11 @@ public:
 
 	void setObserver();
 	void setProyeccion();
+
+	inline Camara& operator=(const Camara& c) {
+		at = c.at;
+		return *this;
+	}
 };
 
 #endif
