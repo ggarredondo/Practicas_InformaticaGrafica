@@ -21,16 +21,28 @@ Camara::Camara(Tupla3f eye, Tupla3f at, Tupla3f up, float left, float right, flo
 	angleY = 0;
 }
 
+inline void rotarEjeX(Tupla3f& t, float angle) {
+	t[1] = t[1]*cos(angle) - t[2]*sin(angle);	
+	t[2] = t[1]*sin(angle) + t[2]*cos(angle);
+}
+
+inline void rotarEjeY(Tupla3f& t, float angle) {
+	t[0] = t[2]*sin(angle) + t[0]*cos(angle);
+	t[2] = t[2]*cos(angle) - t[0]*sin(angle);
+}
+
+inline void rotarEjeZ(Tupla3f& t, float angle) {
+	t[0] = t[0]*cos(angle) - t[1]*sin(angle);	
+	t[1] = t[0]*sin(angle) + t[1]*cos(angle);
+}
+
 //examinar
 void Camara::rotarXExaminar(float angle)
 {
 	float modulo = sqrt(vpn.lengthSq());
 
-	vpn[1] = vpn[1]*cos(angle) - vpn[2]*sin(angle);	
-	vpn[2] = vpn[1]*sin(angle) + vpn[2]*cos(angle);
-
-	up[1] = up[1]*cos(angle) - up[2]*sin(angle);	
-	up[2] = up[1]*sin(angle) + up[2]*cos(angle);
+	rotarEjeX(vpn, angle);
+	rotarEjeX(up, angle);
 
 	vpn = vpn.normalized()*modulo;
 
@@ -42,11 +54,8 @@ void Camara::rotarYExaminar(float angle)
 	angleY += angle;
 	float modulo = sqrt(vpn.lengthSq());
 
-	vpn[0] = vpn[2]*sin(angle) + vpn[0]*cos(angle);
-	vpn[2] = vpn[2]*cos(angle) - vpn[0]*sin(angle);
-
-	up[0] = up[2]*sin(angle) + up[0]*cos(angle);
-	up[2] = up[2]*cos(angle) - up[0]*sin(angle);
+	rotarEjeY(vpn, angle);
+	rotarEjeY(up, angle);
 
 	vpn = vpn.normalized()*modulo;
 
@@ -57,11 +66,8 @@ void Camara::rotarZExaminar(float angle)
 {
 	float modulo = sqrt(vpn.lengthSq());
 
-	vpn[0] = vpn[0]*cos(angle) - vpn[1]*sin(angle);	
-	vpn[1] = vpn[0]*sin(angle) + vpn[1]*cos(angle);
-
-	up[0] = up[0]*cos(angle) - up[1]*sin(angle);	
-	up[1] = up[0]*sin(angle) + up[1]*cos(angle);
+	rotarEjeZ(vpn, angle);
+	rotarEjeZ(up, angle);
 
 	vpn = vpn.normalized()*modulo;
 
@@ -69,8 +75,8 @@ void Camara::rotarZExaminar(float angle)
 }
 
 void Camara::rotarVerticalExaminar(float angle) 
-{ //no funciona correctamente
-	float aux = angleY; 
+{ 
+	float aux = angleY;
 	rotarYExaminar(-angleY);
 	rotarXExaminar(angle);
 	rotarYExaminar(aux);
