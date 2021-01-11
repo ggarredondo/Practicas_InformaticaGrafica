@@ -60,8 +60,8 @@ void Camara::rotarZExaminar(float angle)
 	vpn[0] = vpn[0]*cos(angle) - vpn[1]*sin(angle);	
 	vpn[1] = vpn[0]*sin(angle) + vpn[1]*cos(angle);
 
-	up[0] = up[2]*sin(angle) + up[0]*cos(angle);
-	up[2] = up[2]*cos(angle) - up[0]*sin(angle);
+	up[0] = up[0]*cos(angle) - up[1]*sin(angle);	
+	up[1] = up[0]*sin(angle) + up[1]*cos(angle);
 
 	vpn = vpn.normalized()*modulo;
 
