@@ -22,6 +22,7 @@ Cabeza::Cabeza()
 
 Ojo::Ojo(bool derecho) {
 	cil = new Cilindro(2, 50, 0, 4, true);
+	cil->setColor(Tupla3f(1.0f,1.0f,1.0f));
 	dech = derecho;
 }
 

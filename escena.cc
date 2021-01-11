@@ -69,15 +69,22 @@ Escena::Escena()
 
   ejes.changeAxisSize( 5000 );
   cubo = new Cubo(70);
+  cubo->setColor(Tupla3f(1,0,0));
   tetraedro = new Tetraedro();
+  tetraedro->setColor(Tupla3f(1,0,1));
   ply = new ObjPLY("./plys/ant.ply");
+  ply->setColor(Tupla3f(0.5,0.5,0.5));
 
   rev = new ObjRevolucion("./plys/peon.ply", 50, tapas);
-  cil = new Cilindro(2, 50, 70, 50, tapas);
-  con = new Cono(20, 50, 70, 50, tapas);
-  sph = new Esfera(20, 50, 60, tapas);
   rev->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,1,0),Tupla4f(0,0,0,0), 10));
+  rev->setColor(Tupla3f(0,0,1));
+  cil = new Cilindro(2, 50, 70, 50, tapas);
   cil->setMaterial(Material(Tupla4f(0,0,0,0),Tupla4f(0,0,0,0),Tupla4f(0,1,0,0), 50));
+  cil->setColor(Tupla3f(0,1,0));
+  con = new Cono(20, 50, 70, 50, tapas);
+  con->setColor(Tupla3f(1,0.5,0));
+  sph = new Esfera(20, 50, 60, tapas);
+  sph->setColor(Tupla3f(1,0.5,0.76));
 
   cuadro = new Cuadro();
   sky = new Skysphere(1000,50,1500,"./texturas/nightsky.jpg");
@@ -317,17 +324,13 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
     break;
 
     case ',' :
-      if (modoMenu == CAMARA) {
-        camaras[camaraActiva].zoom(-1);
-        camaras[camaraActiva].setProyeccion();
-      }
+      camaras[camaraActiva].zoom(-1);
+      camaras[camaraActiva].setProyeccion();
     break;
 
      case '.' :
-      if (modoMenu == CAMARA) {
-        camaras[camaraActiva].zoom(1);
-        camaras[camaraActiva].setProyeccion();
-      }
+      camaras[camaraActiva].zoom(1);
+      camaras[camaraActiva].setProyeccion();
     break;
 
     case 'C' :
@@ -582,17 +585,35 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
   return salir;
 }
 
+void Escena::seleccionar(int x, int y)
+{
+  float* rgb = new float(3);
+  if (polygonMode.find(SOLIDO) != polygonMode.end() && polygonMode.size() == 1) {
+    glReadPixels(x,y,1,1,GL_RGB,GL_FLOAT,rgb);
+
+    std::cout << rgb[0] << " " << rgb[1] << " " << rgb[2] << std::endl;
+  }
+}
+
 void Escena::clickRaton(int boton, int estado, int x, int y)
 {
-  if (boton == GLUT_RIGHT_BUTTON) {
-    if (estado == GLUT_DOWN) {
-      x0 = x;
-      y0 = y;
-      estadoRaton = FIRSTPERSON;
-    }
-    else
-      estadoRaton = EXAMINAR;
-  }
+  switch (boton)
+  {
+    case GLUT_RIGHT_BUTTON:
+      if (estado == GLUT_DOWN && !objetoSeleccionado) {
+        x0 = x;
+        y0 = y;
+        estadoRaton = FIRSTPERSON;
+      }
+      else
+        estadoRaton = EXAMINAR;
+    break;
+
+    case GLUT_LEFT_BUTTON:
+      if (estado == GLUT_DOWN)
+        seleccionar(x,y);
+    break;
+  }     
 }
 
 void Escena::ratonMovido(int x, int y)

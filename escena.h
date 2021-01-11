@@ -40,6 +40,7 @@ class Escena
 	void change_observer();
 	void actualizarTapas();
 	void cambiarCamara(unsigned index);
+	void seleccionar(int x, int y);
 	void pose_idle();
 
 	void clear_window();
@@ -67,6 +68,8 @@ class Escena
 
 	bool animacionActiva = false;
 	float velocidadAnimacion = 0.01;
+
+	bool objetoSeleccionado = false;
 	
 	angulo angle = NINGUNO;
 	camara estadoRaton;

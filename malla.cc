@@ -36,7 +36,7 @@ void Malla3D::preparar_modos()
 	}
 
 	for (unsigned i = 0; i < size; ++i)
-		cLinea.push_back({1,1,0});
+		cLinea.push_back({1,0.5,0.5});
 
 	for (unsigned i = 0; i < size; ++i)
 		cPunto.push_back({0,0,0});
@@ -105,7 +105,7 @@ void Malla3D::draw_ModoInmediato(std::vector<Tupla3f>& c, std::vector<Tupla3i>& 
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glNormalPointer(GL_FLOAT, 0, nv.data());
 
-	if (!ct.empty()) {
+	if (!ct.empty() && p==LUZ) {
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glTexCoordPointer(2, GL_FLOAT, 0, ct.data());
 		textura->activar();
@@ -170,7 +170,7 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 	glEnableClientState(GL_NORMAL_ARRAY);
 
 	//texturas
-	if (!ct.empty())
+	if (!ct.empty() && p==LUZ)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, id_vbo_textura);
 		glTexCoordPointer(2, GL_FLOAT, 0, 0);
@@ -198,6 +198,7 @@ void Malla3D::draw_ModoDiferido(GLuint& id_vbo_c, GLuint& id_vbo_tr, std::vector
 
 void Malla3D::draw(dibujado d, patron p)
 {
+	this->p = p;
 	m.aplicar();
 	switch(d)
 	{

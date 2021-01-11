@@ -128,9 +128,9 @@ void Camara::girar(int x, int y)
 	Tupla3f ateye = at-eye;
 	GLfloat distance = sqrt((at-eye).lengthSq());
 
-	rotarXFirstPerson(-a*ateye[2]/distance);
-	rotarZFirstPerson(a*ateye[0]/distance); 
-	rotarYFirstPerson(b);
+	rotarXFirstPerson(a*ateye[2]/distance);
+	rotarZFirstPerson(-a*ateye[0]/distance); 
+	rotarYFirstPerson(-b);
 }
 
 //

@@ -36,6 +36,12 @@ class Malla3D
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
    void draw(dibujado d, patron p);
 
+   void setColor(const Tupla3f& c) {
+      cSolido.clear();
+      for (unsigned i = 0; i < v.size(); ++i)
+         cSolido.push_back(c);
+   }
+
    inline void setMaterial(const Material& mat) {
       m = mat;
    }
@@ -51,6 +57,7 @@ class Malla3D
 
    protected:
 
+   patron p;
    GLuint tam1, tamA, tamB;
 
    void calcular_normales() ; // calcula tabla de normales de vértices (práctica 3)

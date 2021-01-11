@@ -43,6 +43,9 @@ public:
 	inline void rotarTorsoAislado(float x) {
 		respiracionR = x;
 	}
+	void setColor(const Tupla3f c) {
+		torso->setColor(c);
+	}
 
 	//BrazoIzq
 	void rotarBrazoIzq(float x, float y, float z);
