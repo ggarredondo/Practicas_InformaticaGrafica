@@ -15,14 +15,15 @@ Camara::Camara(Tupla3f eye, Tupla3f at, Tupla3f up, float left, float right, flo
 	this->eye = eye;
 	this->at = at;
 	this->up = up;
+	vpn = eye-at;
 	modificarVisualizacion(left,right,bottom,top,near,far);
 	this->tipo = tipo;
+	angleY = 0;
 }
 
 //examinar
 void Camara::rotarXExaminar(float angle)
 {
-	Tupla3f vpn = eye - at;
 	float modulo = sqrt(vpn.lengthSq());
 
 	vpn[1] = vpn[1]*cos(angle) - vpn[2]*sin(angle);	
@@ -38,7 +39,7 @@ void Camara::rotarXExaminar(float angle)
 
 void Camara::rotarYExaminar(float angle)
 {
-	Tupla3f vpn = eye - at;
+	angleY += angle;
 	float modulo = sqrt(vpn.lengthSq());
 
 	vpn[0] = vpn[2]*sin(angle) + vpn[0]*cos(angle);
@@ -54,7 +55,6 @@ void Camara::rotarYExaminar(float angle)
 
 void Camara::rotarZExaminar(float angle)
 {
-	Tupla3f vpn = eye - at;
 	float modulo = sqrt(vpn.lengthSq());
 
 	vpn[0] = vpn[0]*cos(angle) - vpn[1]*sin(angle);	
@@ -68,9 +68,12 @@ void Camara::rotarZExaminar(float angle)
 	eye = vpn + at;
 }
 
-void Camara::rotarVerticalExaminar(float angle)
-{
-
+void Camara::rotarVerticalExaminar(float angle) 
+{ //no funciona correctamente
+	float aux = angleY; 
+	rotarYExaminar(-angleY);
+	rotarXExaminar(angle);
+	rotarYExaminar(aux);
 }
 
 //firstperson
@@ -123,8 +126,8 @@ void Camara::rotarZFirstPerson(float angle)
 }
 
 void Camara::girar(int x, int y)
-{
-	rotarXFirstPerson(x); //no es así
+{ //no es así
+	rotarXFirstPerson(x); 
 	rotarYFirstPerson(y);
 }
 

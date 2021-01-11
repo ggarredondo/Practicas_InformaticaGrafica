@@ -598,7 +598,7 @@ void Escena::clickRaton(int boton, int estado, int x, int y)
 void Escena::ratonMovido(int x, int y)
 {
   if (estadoRaton == FIRSTPERSON) {
-    camaras[camaraActiva].girar((x - x0)*0.05, (y - y0)*0.05);
+    camaras[camaraActiva].girar((x - x0)*0.5, (y - y0)*0.5);
     x0 = x;
     y0 = y;
   }
