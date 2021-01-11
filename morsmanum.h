@@ -43,8 +43,9 @@ public:
 	inline void rotarTorsoAislado(float x) {
 		respiracionR = x;
 	}
-	void setColor(const Tupla3f c) {
-		torso->setColor(c);
+
+	void seleccionarObjeto(bool& objetoSeleccionado, float* rgb, const Tupla3f& og, Camara& camaraActiva, Tupla3f at) {
+		torso->seleccionarObjeto(objetoSeleccionado, rgb, og, camaraActiva, at);
 	}
 
 	//BrazoIzq

@@ -34,7 +34,7 @@ public:
 	void setObserver();
 	void setProyeccion();
 
-	inline void setAt(Tupla3f& at) {
+	inline void setAt(Tupla3f at) {
 		this->at = at;
 	}
 };

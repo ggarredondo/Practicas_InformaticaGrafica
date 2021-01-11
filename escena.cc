@@ -585,13 +585,20 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
   return salir;
 }
 
-void Escena::seleccionar(int x, int y)
+void Escena::seleccionar()
 {
   float* rgb = new float(3);
-  if (polygonMode.find(SOLIDO) != polygonMode.end() && polygonMode.size() == 1) {
-    glReadPixels(x,y,1,1,GL_RGB,GL_FLOAT,rgb);
 
-    std::cout << rgb[0] << " " << rgb[1] << " " << rgb[2] << std::endl;
+  if (polygonMode.find(SOLIDO) != polygonMode.end() && polygonMode.size() == 1) {
+    glReadPixels(Width*5,Height*5,1,1,GL_RGB,GL_FLOAT,rgb);
+    mors->seleccionarObjeto(objetoSeleccionado,rgb,{0.5,0.25,0},camaras[camaraActiva],{0,0,0});
+    cubo->seleccionarObjeto(objetoSeleccionado,rgb,{1,0,0},camaras[camaraActiva],{100,0,-100});
+    tetraedro->seleccionarObjeto(objetoSeleccionado,rgb,{1,0,1},camaras[camaraActiva],{0,0,-130});
+    ply->seleccionarObjeto(objetoSeleccionado,rgb,{0.5,0.5,0.5},camaras[camaraActiva],{-110,0,-100});
+    rev->seleccionarObjeto(objetoSeleccionado,rgb,{0,0,1},camaras[camaraActiva],{-110,110,-100});
+    cil->seleccionarObjeto(objetoSeleccionado,rgb,{0,1,0},camaras[camaraActiva],{0,100,-100});
+    con->seleccionarObjeto(objetoSeleccionado,rgb,{1,0.5,0},camaras[camaraActiva],{110,100,-100});
+    sph->seleccionarObjeto(objetoSeleccionado,rgb,{1,0.5,0.76},camaras[camaraActiva],{210,0,-60});
   }
 }
 
@@ -611,7 +618,7 @@ void Escena::clickRaton(int boton, int estado, int x, int y)
 
     case GLUT_LEFT_BUTTON:
       if (estado == GLUT_DOWN)
-        seleccionar(x,y);
+        seleccionar();
     break;
   }     
 }

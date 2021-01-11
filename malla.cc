@@ -8,6 +8,36 @@
 //
 // *****************************************************************************
 
+void Malla3D::setColor(const Tupla3f& c) {
+  id_vbo_cSolido = 0;
+  cSolido.clear();
+  for (unsigned i = 0; i < v.size(); ++i)
+     cSolido.push_back(c);
+}
+
+bool comprobarColor(float* rgb, float r, float g, float b) {
+  Tupla3i u = {rgb[0]*100,rgb[1]*100,rgb[2]*100}, v = {r*100,g*100,b*100};
+  return (u[0]==v[0] && u[1]==v[1] && u[2]==v[2]);
+}
+
+void Malla3D::seleccionarObjeto(bool& objetoSeleccionado, float* rgb, const Tupla3f& og, Camara& camaraActiva, Tupla3f at) {
+	Tupla3f yellow = Tupla3f(1.0f,1.0f,0);
+
+  if (!objetoSeleccionado) {
+    if (comprobarColor(rgb,og[0],og[1],og[2])) {
+      objetoSeleccionado = true;
+      setColor(yellow);
+      camaraActiva.setAt(at);
+    }
+  }
+  else {
+    if (comprobarColor(rgb,yellow[0],yellow[1],yellow[2])) {
+      objetoSeleccionado = false;
+      setColor(og);
+    }
+  }
+}
+
 void Malla3D::preparar_ajedrez()
 {
 	for (unsigned i = 0; i < v.size(); ++i) {

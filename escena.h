@@ -17,7 +17,6 @@
 #include "morsmanum.h"
 #include "cuadro.h"
 #include "skysphere.h"
-#include "camara.h"
 
 typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELDIBUJADO, ANIM, MANUAL, CAMARA} menu;
 typedef enum {NINGUNO, ALFA, BETA} angulo;
@@ -40,7 +39,7 @@ class Escena
 	void change_observer();
 	void actualizarTapas();
 	void cambiarCamara(unsigned index);
-	void seleccionar(int x, int y);
+	void seleccionar();
 	void pose_idle();
 
 	void clear_window();
