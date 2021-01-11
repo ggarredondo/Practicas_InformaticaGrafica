@@ -15,7 +15,6 @@ Camara::Camara(Tupla3f eye, Tupla3f at, Tupla3f up, float left, float right, flo
 	this->eye = eye;
 	this->at = at;
 	this->up = up;
-	vpn = eye-at;
 	modificarVisualizacion(left,right,bottom,top,near,far);
 	this->tipo = tipo;
 }
@@ -38,6 +37,7 @@ inline void rotarEjeZ(Tupla3f& t, float angle) {
 //examinar
 void Camara::rotarXExaminar(float angle)
 {
+	Tupla3f vpn = eye-at;
 	float modulo = sqrt(vpn.lengthSq());
 
 	rotarEjeX(vpn, angle);
@@ -50,6 +50,7 @@ void Camara::rotarXExaminar(float angle)
 
 void Camara::rotarYExaminar(float angle)
 {
+	Tupla3f vpn = eye-at;
 	float modulo = sqrt(vpn.lengthSq());
 
 	rotarEjeY(vpn, angle);
@@ -62,6 +63,7 @@ void Camara::rotarYExaminar(float angle)
 
 void Camara::rotarZExaminar(float angle)
 {
+	Tupla3f vpn = eye-at;
 	float modulo = sqrt(vpn.lengthSq());
 
 	rotarEjeZ(vpn, angle);
@@ -72,21 +74,26 @@ void Camara::rotarZExaminar(float angle)
 	eye = vpn + at;
 }
 
+void Camara::rotarVerticalExaminar(float angle)
+{
+	Tupla3f vpn = eye-at;
+	GLfloat distance = sqrt((vpn).lengthSq());
+	rotarXExaminar(angle*vpn[2]/distance);
+	rotarZExaminar(-angle*vpn[0]/distance);
+}
+
 //firstperson
 void Camara::rotarXFirstPerson(float angle)
 {
 	Tupla3f ateye = at - eye;
 	float modulo = sqrt(ateye.lengthSq());
 
-	ateye[1] = ateye[1]*cos(angle) - ateye[2]*sin(angle);	
-	ateye[2] = ateye[1]*sin(angle) + ateye[2]*cos(angle);
-
-	up[1] = up[1]*cos(angle) - up[2]*sin(angle);	
-	up[2] = up[1]*sin(angle) + up[2]*cos(angle);
+	rotarEjeX(ateye, angle);
+	rotarEjeX(up, angle);
 
 	ateye = ateye.normalized()*modulo;
 
-	at = ateye - eye;
+	at = ateye + eye;
 }
 
 void Camara::rotarYFirstPerson(float angle)
@@ -94,15 +101,12 @@ void Camara::rotarYFirstPerson(float angle)
 	Tupla3f ateye = at - eye;
 	float modulo = sqrt(ateye.lengthSq());
 
-	ateye[0] = ateye[2]*sin(angle) + ateye[0]*cos(angle);
-	ateye[2] = ateye[2]*cos(angle) - ateye[0]*sin(angle);
-
-	up[0] = up[2]*sin(angle) + up[0]*cos(angle);
-	up[2] = up[2]*cos(angle) - up[0]*sin(angle);
+	rotarEjeY(ateye, angle);
+	rotarEjeY(up, angle);
 
 	ateye = ateye.normalized()*modulo;
 
-	at = ateye - eye;
+	at = ateye + eye;
 }
 
 void Camara::rotarZFirstPerson(float angle)
@@ -110,21 +114,23 @@ void Camara::rotarZFirstPerson(float angle)
 	Tupla3f ateye = at - eye;
 	float modulo = sqrt(ateye.lengthSq());
 
-	ateye[0] = ateye[0]*cos(angle) - ateye[1]*sin(angle);	
-	ateye[1] = ateye[0]*sin(angle) + ateye[1]*cos(angle);
-
-	up[0] = up[2]*sin(angle) + up[0]*cos(angle);
-	up[2] = up[2]*cos(angle) - up[0]*sin(angle);
+	rotarEjeZ(ateye, angle);
+	rotarEjeZ(up, angle);
 
 	ateye = ateye.normalized()*modulo;
 
-	at = ateye - eye;
+	at = ateye + eye;
 }
 
 void Camara::girar(int x, int y)
-{ //no es así
-	rotarXFirstPerson(x); 
-	rotarYFirstPerson(y);
+{ 
+	float a = y*M_PI/180, b = x*M_PI/180;
+	Tupla3f ateye = at-eye;
+	GLfloat distance = sqrt((at-eye).lengthSq());
+
+	rotarXFirstPerson(-a*ateye[2]/distance);
+	rotarZFirstPerson(a*ateye[0]/distance); 
+	rotarYFirstPerson(b);
 }
 
 //

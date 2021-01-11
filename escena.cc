@@ -598,7 +598,7 @@ void Escena::clickRaton(int boton, int estado, int x, int y)
 void Escena::ratonMovido(int x, int y)
 {
   if (estadoRaton == FIRSTPERSON) {
-    camaras[camaraActiva].girar((x - x0)*0.5, (y - y0)*0.5);
+    camaras[camaraActiva].girar(x - x0, y - y0);
     x0 = x;
     y0 = y;
   }
@@ -608,25 +608,20 @@ void Escena::ratonMovido(int x, int y)
 
 void Escena::teclaEspecial( int Tecla1, int x, int y )
 {
+  float speed = 0.05f;
   switch ( Tecla1 )
   {
    case GLUT_KEY_LEFT:
-      camaras[camaraActiva].rotarYExaminar(-0.1);
+      camaras[camaraActiva].rotarYExaminar(-speed);
       break;
    case GLUT_KEY_RIGHT:
-      camaras[camaraActiva].rotarYExaminar(0.1);
+      camaras[camaraActiva].rotarYExaminar(speed);
       break;
    case GLUT_KEY_UP:
-      camaras[camaraActiva].rotarXExaminar(-0.1);
+      camaras[camaraActiva].rotarVerticalExaminar(-speed);
       break;
    case GLUT_KEY_DOWN:
-      camaras[camaraActiva].rotarXExaminar(0.1);
-      break;
-   case GLUT_KEY_PAGE_UP:
-      camaras[camaraActiva].rotarZExaminar(-0.1);
-      break;
-   case GLUT_KEY_PAGE_DOWN:
-      camaras[camaraActiva].rotarZExaminar(0.1);
+      camaras[camaraActiva].rotarVerticalExaminar(speed);
       break;
   }
 
