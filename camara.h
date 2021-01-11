@@ -11,7 +11,6 @@ private:
 	Tupla3f eye, at, up, vpn;
 	tipoCamara tipo;
 	float left, right, bottom, top, near, far;
-	float angleY;
 
 public:
 	Camara(Tupla3f eye, Tupla3f at, Tupla3f up, float left, float right, float bottom, float top, float near, float far, tipoCamara tipo);
@@ -34,11 +33,6 @@ public:
 
 	void setObserver();
 	void setProyeccion();
-
-	inline Camara& operator=(const Camara& c) {
-		at = c.at;
-		return *this;
-	}
 };
 
 #endif

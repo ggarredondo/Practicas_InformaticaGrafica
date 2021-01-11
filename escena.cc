@@ -145,6 +145,11 @@ void Escena::dibujar()
       glEnable(GL_LIGHTING);
   }
 
+  if (luzPActiva)
+    luzP->activar();
+  if (luzDActiva)
+    luzD->activar();
+
   for (auto i : polygonMode) {
     glPolygonMode(GL_FRONT, i.second);
 
@@ -201,10 +206,6 @@ void Escena::dibujar()
       sky->draw(modoDibujado, i.first);
     glPopMatrix();
   }
-  if (luzPActiva)
-    luzP->activar();
-  if (luzDActiva)
-    luzD->activar();
 }
 
 //**************************************************************************
@@ -216,7 +217,6 @@ void Escena::dibujar()
 //**************************************************************************
 
 void Escena::cambiarCamara(unsigned index) {
-  camaras[index] = camaras[camaraActiva];
   camaraActiva = index;
   camaras[index].setProyeccion();
 }
@@ -617,16 +617,16 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
       camaras[camaraActiva].rotarYExaminar(0.1);
       break;
    case GLUT_KEY_UP:
-      camaras[camaraActiva].rotarVerticalExaminar(-0.1);
+      camaras[camaraActiva].rotarXExaminar(-0.1);
       break;
    case GLUT_KEY_DOWN:
-      camaras[camaraActiva].rotarVerticalExaminar(0.1);
+      camaras[camaraActiva].rotarXExaminar(0.1);
       break;
    case GLUT_KEY_PAGE_UP:
-      Observer_distance *= 1.2 ;
+      camaras[camaraActiva].rotarZExaminar(-0.1);
       break;
    case GLUT_KEY_PAGE_DOWN:
-      Observer_distance /= 1.2 ;
+      camaras[camaraActiva].rotarZExaminar(0.1);
       break;
   }
 

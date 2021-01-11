@@ -18,7 +18,6 @@ Camara::Camara(Tupla3f eye, Tupla3f at, Tupla3f up, float left, float right, flo
 	vpn = eye-at;
 	modificarVisualizacion(left,right,bottom,top,near,far);
 	this->tipo = tipo;
-	angleY = 0;
 }
 
 inline void rotarEjeX(Tupla3f& t, float angle) {
@@ -51,7 +50,6 @@ void Camara::rotarXExaminar(float angle)
 
 void Camara::rotarYExaminar(float angle)
 {
-	angleY += angle;
 	float modulo = sqrt(vpn.lengthSq());
 
 	rotarEjeY(vpn, angle);
@@ -72,14 +70,6 @@ void Camara::rotarZExaminar(float angle)
 	vpn = vpn.normalized()*modulo;
 
 	eye = vpn + at;
-}
-
-void Camara::rotarVerticalExaminar(float angle) 
-{ 
-	float aux = angleY;
-	rotarYExaminar(-angleY);
-	rotarXExaminar(angle);
-	rotarYExaminar(aux);
 }
 
 //firstperson
