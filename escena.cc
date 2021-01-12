@@ -585,8 +585,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
   return salir;
 }
 
-Tupla3f rojo = Tupla3f(1,0,0);
-
 void Escena::seleccionar(int x, int y)
 {
   float* rgb = new float(3);
@@ -594,7 +592,7 @@ void Escena::seleccionar(int x, int y)
   if (polygonMode.find(SOLIDO) != polygonMode.end() && polygonMode.size() == 1) {
     glReadPixels(x,y,1,1,GL_RGB,GL_FLOAT,rgb);
     mors->seleccionarObjeto(objetoSeleccionado,rgb,{0.5,0.25,0},camaras[camaraActiva],{0,0,0});
-    cubo->seleccionarObjeto(objetoSeleccionado,rgb,rojo,camaras[camaraActiva],{100,0,-100});
+    cubo->seleccionarObjeto(objetoSeleccionado,rgb,{1,0,0},camaras[camaraActiva],{100,0,-100});
     tetraedro->seleccionarObjeto(objetoSeleccionado,rgb,{1,0,1},camaras[camaraActiva],{0,0,-130});
     ply->seleccionarObjeto(objetoSeleccionado,rgb,{0.5,0.5,0.5},camaras[camaraActiva],{-110,0,-100});
     rev->seleccionarObjeto(objetoSeleccionado,rgb,{0,0,1},camaras[camaraActiva],{-110,110,-100});
