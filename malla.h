@@ -55,6 +55,8 @@ class Malla3D
 
    protected:
 
+   bool seleccionado = false;
+
    patron p;
    GLuint tam1, tamA, tamB;
 

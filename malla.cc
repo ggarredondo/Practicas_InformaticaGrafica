@@ -23,19 +23,19 @@ bool comprobarColor(float* rgb, float r, float g, float b) {
 void Malla3D::seleccionarObjeto(bool& objetoSeleccionado, float* rgb, const Tupla3f& og, Camara& camaraActiva, Tupla3f at) {
 	Tupla3f yellow = Tupla3f(1.0f,1.0f,0);
 
-  if (!objetoSeleccionado) {
-    if (comprobarColor(rgb,og[0],og[1],og[2])) {
-      objetoSeleccionado = true;
-      setColor(yellow);
-      camaraActiva.setAt(at);
-    }
-  }
-  else {
-    if (comprobarColor(rgb,yellow[0],yellow[1],yellow[2])) {
-      objetoSeleccionado = false;
-      setColor(og);
-    }
-  }
+	if (!seleccionado) {
+		if (comprobarColor(rgb,og[0],og[1],og[2])) {
+			seleccionado = true;
+			objetoSeleccionado = true;
+			setColor(yellow);
+			camaraActiva.setAt(at);
+		}
+	}
+	else if (comprobarColor(rgb,yellow[0],yellow[1],yellow[2])) {
+		seleccionado = false;
+		objetoSeleccionado = false;
+		setColor(og);
+	}
 }
 
 void Malla3D::preparar_ajedrez()

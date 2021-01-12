@@ -39,7 +39,7 @@ class Escena
 	void change_observer();
 	void actualizarTapas();
 	void cambiarCamara(unsigned index);
-	void seleccionar();
+	void seleccionar(int x, int y);
 	void pose_idle();
 
 	void clear_window();
