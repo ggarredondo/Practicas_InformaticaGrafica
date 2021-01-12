@@ -122,18 +122,43 @@ void Camara::rotarZFirstPerson(float angle)
 	at = ateye + eye;
 }
 
-void Camara::girar(int x, int y)
-{ 
-	float a = y*M_PI/180, b = x*M_PI/180;
+void Camara::rotarVerticalFirstPerson(float angle)
+{
 	Tupla3f ateye = at-eye;
 	GLfloat distance = sqrt((at-eye).lengthSq());
+	rotarXFirstPerson(angle*ateye[2]/distance);
+	rotarZFirstPerson(-angle*ateye[0]/distance); 
+}
 
-	rotarXFirstPerson(a*ateye[2]/distance);
-	rotarZFirstPerson(-a*ateye[0]/distance); 
-	rotarYFirstPerson(-b);
+void Camara::girar(int x, int y, camara c)
+{ 
+	float a = y*M_PI/180, b = x*M_PI/180;
+	if (c == FIRSTPERSON) {
+		rotarVerticalFirstPerson(a);
+		rotarYFirstPerson(-b);
+	}
+	else if (c == EXAMINAR) {
+		rotarVerticalExaminar(a);
+		rotarYExaminar(b);
+	}
 }
 
 //
+
+void Camara::moverAdelante(float valor)
+{
+	Tupla3f ateye = at - eye;
+	eye = eye + ateye*valor;
+	at = at + ateye*valor;
+}
+
+void Camara::moverLateral(float valor)
+{
+	Tupla3f u = up.cross(eye-at);
+
+	eye = eye + u*valor;
+	at = at + u*valor;
+}
 
 void Camara::zoom(float factor)
 {

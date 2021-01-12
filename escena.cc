@@ -588,9 +588,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 void Escena::seleccionar(int x, int y)
 {
   float* rgb = new float(3);
+  GLint viewport[4];
+  glGetIntegerv(GL_VIEWPORT,viewport);
 
   if (polygonMode.find(SOLIDO) != polygonMode.end() && polygonMode.size() == 1) {
-    glReadPixels(x,y,1,1,GL_RGB,GL_FLOAT,rgb);
+    glReadPixels(x,viewport[3]-y,1,1,GL_RGB,GL_FLOAT,rgb);
     mors->seleccionarObjeto(objetoSeleccionado,rgb,{0.5,0.25,0},camaras[camaraActiva],{0,0,0});
     cubo->seleccionarObjeto(objetoSeleccionado,rgb,{1,0,0},camaras[camaraActiva],{100,0,-100});
     tetraedro->seleccionarObjeto(objetoSeleccionado,rgb,{1,0,1},camaras[camaraActiva],{0,0,-130});
@@ -613,47 +615,53 @@ void Escena::clickRaton(int boton, int estado, int x, int y)
         estadoRaton = FIRSTPERSON;
       }
       else
-        estadoRaton = EXAMINAR;
+        estadoRaton = NULO;
     break;
 
     case GLUT_LEFT_BUTTON:
-      if (estado == GLUT_DOWN)
+      if (estado == GLUT_DOWN) 
         seleccionar(x,y);
+      if (objetoSeleccionado) {
+        x0 = x;
+        y0 = y;
+        estadoRaton = EXAMINAR;
+      }
+      else
+        estadoRaton = NULO;
     break;
   }     
 }
 
 void Escena::ratonMovido(int x, int y)
 {
-  if (estadoRaton == FIRSTPERSON) {
-    camaras[camaraActiva].girar(x - x0, y - y0);
-    x0 = x;
-    y0 = y;
-  }
+  camaras[camaraActiva].girar(x - x0, y - y0, estadoRaton);
+  x0 = x;
+  y0 = y;
 }
 
 //**************************************************************************
 
 void Escena::teclaEspecial( int Tecla1, int x, int y )
 {
-  float speed = 0.05f;
-  switch ( Tecla1 )
-  {
-   case GLUT_KEY_LEFT:
-      camaras[camaraActiva].rotarYExaminar(-speed);
-      break;
-   case GLUT_KEY_RIGHT:
-      camaras[camaraActiva].rotarYExaminar(speed);
-      break;
-   case GLUT_KEY_UP:
-      camaras[camaraActiva].rotarVerticalExaminar(-speed);
-      break;
-   case GLUT_KEY_DOWN:
-      camaras[camaraActiva].rotarVerticalExaminar(speed);
-      break;
-  }
+  float speed = 0.1f;
 
-	//std::cout << Observer_distance << std::endl;
+  if (!objetoSeleccionado) {
+    switch ( Tecla1 )
+    {
+     case GLUT_KEY_LEFT:
+        camaras[camaraActiva].moverLateral(-speed);
+        break;
+     case GLUT_KEY_RIGHT:
+        camaras[camaraActiva].moverLateral(speed);
+        break;
+     case GLUT_KEY_UP:
+        camaras[camaraActiva].moverAdelante(speed);
+        break;
+     case GLUT_KEY_DOWN:
+        camaras[camaraActiva].moverAdelante(-speed);
+        break;
+    }
+  }
 }
 
 //**************************************************************************

@@ -20,7 +20,6 @@
 
 typedef enum {NADA, SELOBJETO, SELVISUALIZACION, SELDIBUJADO, ANIM, MANUAL, CAMARA} menu;
 typedef enum {NINGUNO, ALFA, BETA} angulo;
-typedef enum {EXAMINAR, FIRSTPERSON} camara;
 
 class Escena
 {

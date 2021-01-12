@@ -4,6 +4,7 @@
 #include "aux.h"
 
 typedef enum {ORTOGONAL, PERSPECTIVA} tipoCamara;
+typedef enum {NULO, EXAMINAR, FIRSTPERSON} camara;
 
 class Camara
 {
@@ -24,11 +25,15 @@ public:
 	void rotarXFirstPerson(float angle);
 	void rotarYFirstPerson(float angle);
 	void rotarZFirstPerson(float angle);
-	void girar(int x, int y);
+	void rotarVerticalFirstPerson(float angle);
+	void girar(int x, int y, camara c);
 
 	inline void mover(float x, float y, float z) {
 		eye = eye + Tupla3f(x,y,z);
 	}
+	void moverAdelante(float valor);
+	void moverLateral(float valor);
+
 	void zoom(float factor);
 
 	void setObserver();
