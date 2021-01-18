@@ -686,7 +686,7 @@ void Escena::redimensionar( int newWidth, int newHeight )
 {
   Width  = newWidth/10;
   Height = newHeight/10;
-  change_projection( float(newHeight)/float(newWidth) );
+  change_projection( float(newWidth)/float(newHeight) );
   glViewport( 0, 0, newWidth, newHeight );
 }
 
