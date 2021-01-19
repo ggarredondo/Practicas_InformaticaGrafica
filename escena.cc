@@ -609,10 +609,13 @@ void Escena::clickRaton(int boton, int estado, int x, int y)
   switch (boton)
   {
     case GLUT_RIGHT_BUTTON:
-      if (estado == GLUT_DOWN && !objetoSeleccionado) {
+      if (estado == GLUT_DOWN) {
         x0 = x;
         y0 = y;
-        estadoRaton = FIRSTPERSON;
+        if (!objetoSeleccionado)
+          estadoRaton = FIRSTPERSON;
+        else
+          estadoRaton = EXAMINAR;
       }
       else
         estadoRaton = NULO;
@@ -621,13 +624,6 @@ void Escena::clickRaton(int boton, int estado, int x, int y)
     case GLUT_LEFT_BUTTON:
       if (estado == GLUT_DOWN) 
         seleccionar(x,y);
-      if (objetoSeleccionado) {
-        x0 = x;
-        y0 = y;
-        estadoRaton = EXAMINAR;
-      }
-      else
-        estadoRaton = NULO;
     break;
   }     
 }
